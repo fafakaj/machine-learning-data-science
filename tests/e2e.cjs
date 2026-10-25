@@ -60,10 +60,11 @@ async function savedProgress(ready) {
     assert(h1.includes("Big-O"), `заголовок шага: ${h1}`);
     const top = await page.textContent("header.top");
     assert(top.includes("Неделя 1"), `шапка: ${top}`);
-    assert((await page.$$(".tl-week")).length === 13, "в таймлайне не 13 недель");
-    assert(await page.isVisible(".tl-week.cur"), "текущая неделя не выделена");
-    assert((await page.$$(".blocks .block-tab")).length === 3, "в неделе не 3 блока");
+    assert((await page.$$(".week-list li")).length === 13, "в списке недель не 13 недель");
+    assert(await page.$(".week-list li.cur"), "текущая неделя не выделена");
+    assert((await page.$$(".panel .mod")).length === 3, "в неделе не 3 блока");
     assert((await page.$$(".panel .steps li")).length >= 20, "в блоке 1 мало шагов");
+    assert((await page.$$(".step-bar .sq")).length >= 20, "в полосе шагов мало квадратиков");
     const text = await page.textContent("body");
     assert(!/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/u.test(text), "на странице есть эмодзи");
     assert(!/\d+\s?(мин|′)/.test(text), "на странице есть минуты");
@@ -188,9 +189,9 @@ async function savedProgress(ready) {
 
   await check("Блоки: вкладка блока 2 открывает его первый несданный шаг", async () => {
     await page.goto(`${BASE}/?today=2026-10-26#/block/w01-b2`);
-    await page.waitForSelector(".block-tab.active");
-    assert((await page.textContent(".block-tab.active")).includes("Блок 2"), "активен не блок 2");
-    assert((await page.textContent(".block-title")).includes("Математика"), "не тот блок");
+    await page.waitForSelector(".mod.open");
+    assert((await page.textContent(".mod.open .mod-h")).includes("Математика"), "открыт не блок 2");
+    assert((await page.$$(".mod.open .steps li")).length > 0, "в блоке 2 нет шагов");
   });
 
   await check("«Уже знаю» засчитывает шаг с отметкой в журнале; оценка шага сохраняется", async () => {

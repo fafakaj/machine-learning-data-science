@@ -33,7 +33,7 @@ export function renderTheory(root, step, ctx) {
         ${sourceCard(step.source, { big: true })}
         ${step.alt?.length ? `<details class="alt"><summary>Другие источники</summary>${step.alt.map((s) => sourceCard(s)).join("")}</details>` : ""}
         ${step.do ? `<div class="md do">${md(step.do)}</div>` : ""}
-        ${opened ? doneBar(step, "Прочитал") : `<div class="done-bar"><button class="btn primary" disabled title="Сначала откройте источник">Прочитал</button></div>`}
+        ${opened ? doneBar(step, "Прочитал") : `<div class="done-bar"><span class="muted small">Сначала откройте источник</span><button class="btn primary" disabled>Прочитал</button></div>`}
       </div>`;
   };
   root.addEventListener("click", (e) => {
@@ -106,7 +106,7 @@ export function renderPractice(root, step, ctx) {
     root.innerHTML = `<div class="card practice">
         ${step.intro ? `<div class="md">${md(step.intro)}</div>` : ""}
         <ol class="checklist">${items.join("")}</ol>
-        ${isDone(step.id) ? doneBar(step) : allOk ? doneBar(step, "Готово") : `<div class="done-bar"><button class="btn primary" disabled>Готово</button></div>`}
+        ${isDone(step.id) ? doneBar(step) : allOk ? doneBar(step, "Готово") : `<div class="done-bar"><span class="muted small">Отметьте все пункты</span><button class="btn primary" disabled>Готово</button></div>`}
       </div>`;
   };
   // Written notes: saved on every keystroke; the item counts as done once the answer has some substance.

@@ -8,6 +8,13 @@ import {
 const dark = () => document.documentElement.dataset.theme !== "light"
   && (document.documentElement.dataset.theme === "dark" || matchMedia("(prefers-color-scheme: dark)").matches);
 
+// oneDark on the page surface: the darker background lifts its token colours above 4.5:1 contrast.
+const darkSurface = EditorView.theme({
+  "&": { backgroundColor: "var(--surface)" },
+  ".cm-gutters": { backgroundColor: "var(--surface)", borderRight: "1px solid var(--line)" },
+  ".cm-activeLine, .cm-activeLineGutter": { backgroundColor: "rgba(255, 255, 255, .035)" },
+}, { dark: true });
+
 export function createEditor(parent, { doc, onChange, onRun, onSubmit }) {
   const keys = Prec.highest(keymap.of([
     { key: "Mod-Enter", run: () => (onRun?.(), true) },
@@ -31,8 +38,11 @@ export function createEditor(parent, { doc, onChange, onRun, onSubmit }) {
         indentUnit.of("    "),
         EditorState.tabSize.of(4),
         python(),
-        dark() ? oneDark : syntaxHighlighting(defaultHighlightStyle),
+        dark() ? [oneDark, Prec.highest(darkSurface)] : syntaxHighlighting(defaultHighlightStyle),
         keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...historyKeymap, indentWithTab]),
+        EditorView.contentAttributes.of({ "aria-label": "Редактор кода на Python" }),
+        // A phone screen is too narrow for sideways scrolling: long lines wrap instead.
+        matchMedia("(max-width: 820px)").matches ? EditorView.lineWrapping : [],
         EditorView.updateListener.of((u) => u.docChanged && onChange?.(u.state.doc.toString())),
         EditorView.theme({
           "&": { height: "100%", fontSize: "14px" },

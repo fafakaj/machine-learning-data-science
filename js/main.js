@@ -1,4 +1,5 @@
 import { accountConfigured, login, logout, session } from "./auth.js";
+import { icon, STEP_ICON } from "./icons.js";
 import { esc, md } from "./md.js";
 import { onStatus, warmUp } from "./py.js";
 import {
@@ -10,24 +11,29 @@ import { renderQuiz } from "./views/quiz.js";
 import { dueCount, renderReview } from "./views/review.js";
 import { renderAnki, renderPractice, renderTheory } from "./views/steps.js";
 
-const TYPE_RU = { leetcode: "Задача", review: "Повтор задачи", exercise: "Упражнение", theory: "Теория", quiz: "Квиз", oral: "Вопросы вслух", anki: "Anki", practice: "Практика" };
+const TYPE_RU = { leetcode: "Задача LeetCode", review: "Повтор задачи", exercise: "Упражнение", theory: "Теория", quiz: "Квиз", oral: "Вопросы вслух", anki: "Anki", practice: "Практика" };
+const CODE_TYPES = ["leetcode", "review", "exercise"];
 const PANEL_KEY = "ml-panel";
+const phone = () => matchMedia("(max-width: 820px)").matches;
 const app = document.getElementById("app");
 let cleanup = null;
 
 // ---------------------------------------------------------------- side panel prefs
 
 function panelPrefs() {
-  // On a phone the step list starts folded so the task itself is on the first screen.
-  const base = { w: 300, collapsed: matchMedia("(max-width: 820px)").matches };
+  const base = { w: 300, collapsed: false };
+  let saved = {};
   try {
-    return { ...base, ...JSON.parse(localStorage.getItem(PANEL_KEY) || "{}") };
+    saved = JSON.parse(localStorage.getItem(PANEL_KEY) || "{}");
   } catch {
-    return base;
+    /* defaults */
   }
+  // On a phone the panel is a drawer: it opens on demand and closes on every page.
+  return { ...base, ...saved, ...(phone() ? { collapsed: true } : {}) };
 }
 
 function savePanelPrefs(p) {
+  if (phone()) return;
   try {
     localStorage.setItem(PANEL_KEY, JSON.stringify(p));
   } catch {
@@ -37,77 +43,95 @@ function savePanelPrefs(p) {
 
 // ---------------------------------------------------------------- chrome
 
-function header() {
+function header({ menu = false } = {}) {
   const p = overallProgress();
   const cur = currentStep();
   const weekNo = cur ? getStep(cur.id).week.n : data.plan.weeks.length;
   const due = dueCount();
   const s = backend.user;
   return `<header class="top">
-      <a class="brand" href="#/">ML-дорожка</a>
-      <div class="top-mid">
-        <span class="small">Неделя ${weekNo} из ${data.plan.weeks.length}</span>
-        <div class="bar wide" title="${p.done} из ${p.total} шагов"><div style="width:${(100 * p.done) / p.total}%"></div></div>
+      ${menu ? `<button class="icon-btn menu-btn" data-menu aria-label="Шаги недели">${icon("menu")}</button>` : ""}
+      <a class="brand" href="#/" aria-label="ML-дорожка: текущий шаг"><span class="logo">${icon("trend")}</span><span class="brand-name">ML-дорожка</span></a>
+      <div class="course" title="${p.done} из ${p.total} обязательных шагов">
+        <span>Неделя ${weekNo} из ${data.plan.weeks.length}</span>
+        <span class="bar"><i style="width:${(100 * p.done) / p.total}%"></i></span>
+        <span class="muted">${p.done} из ${p.total} шагов</span>
       </div>
-      <nav class="top-right">
-        <a class="nav-link" href="#/review">Повторение${due ? ` <span class="count">${due}</span>` : ""}</a>
-        <a class="nav-link" href="#/map">Карта</a>
-        ${s ? `<button class="nav-link" data-logout title="${s.token ? "Выйти" : "Выйти. Синхронизация между устройствами пока выключена"}">${esc(s.user)}</button>` : `<a class="nav-link" href="#/login">Войти</a>`}
-        <span class="dot" data-py title="Python"></span><span class="dot" data-save title="Сохранение"></span>
+      <nav class="nav">
+        <a class="nav-link" href="#/review" title="Повторение">${icon("repeat")}<span class="nav-label">Повторение</span>${due ? `<span class="count">${due}</span>` : ""}</a>
+        <a class="nav-link" href="#/map" title="Карта курса">${icon("map")}<span class="nav-label">Карта курса</span></a>
+        <span class="status"><span class="dot" data-py title="Python"></span><span class="dot" data-save title="Сохранение"></span></span>
+        ${s
+          ? `<button class="user" data-logout title="${s.token ? "Выйти" : "Выйти. Синхронизация между устройствами выключена"}"><span class="avatar">${esc(s.user[0].toUpperCase())}</span><span class="user-name">${esc(s.user)}</span></button>`
+          : `<a class="nav-link" href="#/login">Войти</a>`}
       </nav>
     </header>`;
 }
 
-function timeline(activeWeek) {
-  const cal = calendarWeek();
-  return `<nav class="timeline">${data.plan.weeks
-    .map((w) => {
-      const p = weekProgress(w);
-      const cls = [w === cal ? "cur" : "", w.n === activeWeek ? "active" : "", p.done === p.total ? "full" : ""].join(" ");
-      return `<a class="tl-week ${cls}" href="#/block/${w.blocks[0].id}" title="Неделя ${w.n}: ${esc(w.title)}">
-          <span class="tl-fill" style="height:${(100 * p.done) / Math.max(1, p.total)}%"></span>
-          <span class="tl-n">${w.n}</span><span class="tl-label">${esc(w.short || w.title)}</span></a>`;
-    })
-    .join("")}</nav>`;
+function stepIcon(s) {
+  return icon(isDone(s.id) ? "check" : STEP_ICON[s.type]);
 }
 
 function stepRow(s, activeStepId) {
-  const done = isDone(s.id);
-  return `<li class="${done ? "done" : ""} ${s.id === activeStepId ? "active" : ""} ${s.optional ? "opt" : ""}">
-      <a href="#/step/${s.id}"><span class="st-mark"></span><span class="st-title">${esc(s.title)}</span></a></li>`;
+  const cls = [isDone(s.id) ? "done" : "", s.id === activeStepId ? "active" : "", s.optional ? "opt" : ""].join(" ");
+  return `<li class="${cls}"><a href="#/step/${s.id}">${stepIcon(s)}<span class="st-title">${esc(s.title)}</span></a></li>`;
+}
+
+function weekPicker(week) {
+  const cal = calendarWeek();
+  const items = data.plan.weeks
+    .map((w) => {
+      const p = weekProgress(w);
+      const cls = [w === week ? "active" : "", w === cal ? "cur" : "", p.done === p.total ? "full" : ""].join(" ");
+      return `<li class="${cls}"><a href="#/block/${w.blocks[0].id}"><span class="wk-n">${w.n}</span><span class="wk-t">${esc(w.title)}</span><span class="wk-c">${p.done}/${p.total}</span></a></li>`;
+    })
+    .join("");
+  return `<details class="week-pick"><summary><span class="wk-head"><b>Неделя ${week.n}</b><small>${esc(week.title)}</small></span>${icon("chevron")}</summary>
+      <ol class="week-list">${items}</ol></details>`;
 }
 
 function panel(week, block, activeStepId) {
   const prefs = panelPrefs();
-  const tabs = week.blocks
+  const mods = week.blocks
     .map((b) => {
       const p = blockProgress(b);
-      const cls = [b === block ? "active" : "", p.done === p.total ? "full" : "", blockLate(b) ? "late" : ""].join(" ");
-      return `<a class="block-tab ${cls}" href="#/block/${b.id}" title="${esc(b.title)}">
-          <span>Блок ${b.n}</span><i style="--p:${p.total ? p.done / p.total : 0}"></i></a>`;
+      const open = b === block;
+      const full = p.done === p.total;
+      const cls = ["mod", open ? "open" : "", full ? "full" : "", blockLate(b) ? "late" : ""].join(" ");
+      return `<section class="${cls}">
+          <a class="mod-h" href="#/block/${b.id}"><span class="n">${full ? icon("check") : b.n}</span>
+            <span class="t">${esc(b.title)}<small>${blockLate(b) ? "срок прошёл · " : ""}до ${fmtDate(b.due)}</small></span><span class="c">${p.done}/${p.total}</span></a>
+          ${open ? `<ol class="steps">${b.items.map((s) => stepRow(s, activeStepId)).join("")}</ol>` : ""}
+        </section>`;
     })
     .join("");
-  const p = blockProgress(block);
   return `<aside class="panel ${prefs.collapsed ? "collapsed" : ""}" style="--panel-w:${prefs.w}px">
-      <div class="panel-head">
-        <div class="week-title"><span class="muted small">Неделя ${week.n}</span><b>${esc(week.title)}</b></div>
-        <button class="icon-btn" data-collapse title="Свернуть или показать шаги" aria-label="Свернуть панель"><span class="chev"></span></button>
+      <div class="panel-head">${weekPicker(week)}
+        <button class="icon-btn collapse-btn" data-collapse title="Свернуть панель" aria-label="Свернуть панель">${icon("left")}</button>
       </div>
-      <div class="panel-body">
-        <div class="blocks">${tabs}</div>
-        <div class="block-title"><b>${esc(block.title)}</b> <span class="muted small">${p.done}/${p.total}</span></div>
-        <ol class="steps">${block.items.map((s) => stepRow(s, activeStepId)).join("")}</ol>
+      <div class="panel-body">${mods}
         ${week.goal ? `<details class="week-goal"><summary>Цель недели</summary><div class="md small">${md(week.goal)}</div></details>` : ""}
       </div>
       <div class="resizer" data-resize title="Потяните, чтобы изменить ширину"></div>
-    </aside>`;
+    </aside>
+    <div class="scrim" data-scrim></div>`;
 }
 
-function stageHead(step, isNow) {
+function stepBar(block, activeStepId) {
+  return `<nav class="step-bar" aria-label="Шаги блока">${block.items
+    .map((s, i) => {
+      const cls = [isDone(s.id) ? "done" : "", s.id === activeStepId ? "cur" : "", s.optional ? "opt" : ""].join(" ");
+      return `<a class="sq ${cls}" href="#/step/${s.id}" title="${i + 1}. ${esc(s.title)}">${stepIcon(s)}</a>`;
+    })
+    .join("")}</nav>`;
+}
+
+function stageHead(step, entry, isNow) {
+  const i = entry.block.items.indexOf(step);
   return `<div class="stage-head">
-      <div class="kind">${isNow ? '<span class="now">сейчас</span>' : ""}<span class="muted small">${TYPE_RU[step.type] || ""}${step.optional ? ", по желанию" : ""}</span></div>
+      <div class="kind">${isNow ? '<span class="now">Сейчас</span>' : ""}<span>${TYPE_RU[step.type] || ""} · шаг ${i + 1} из ${entry.block.items.length}${step.optional ? " · по желанию" : ""}</span></div>
       <h1>${esc(step.title)}</h1>
-      ${step.why && step.type !== "leetcode" ? `<div class="why">${md(step.why)}</div>` : ""}
+      ${step.why && step.type !== "leetcode" ? `<div class="why md">${md(step.why)}</div>` : ""}
     </div>`;
 }
 
@@ -124,8 +148,11 @@ function rateHTML(step) {
 
 function nextBanner(step) {
   const next = nextStepAfter(step.id);
-  return `<div class="callout ok"><span>Сдано.</span>${rateHTML(step)}<span class="spacer"></span>
-      ${next ? `<a class="btn primary" href="#/step/${next.id}">Дальше</a>` : "<span>Это был последний шаг плана.</span>"}</div>`;
+  return `<div class="next-card">
+      <span class="next-ok">${icon("check")}</span>
+      <div class="next-text"><b>Сдано</b><div class="rate-row"><span class="muted small">Как прошло?</span>${rateHTML(step)}</div></div>
+      ${next ? `<a class="btn primary big" href="#/step/${next.id}">Дальше ${icon("arrow")}</a>` : '<span class="muted">Это был последний шаг плана.</span>'}
+    </div>`;
 }
 
 // ---------------------------------------------------------------- pages
@@ -150,13 +177,17 @@ function render() {
   step ||= now;
   if (!step) return renderFinished();
   const entry = getStep(step.id);
+  const wide = CODE_TYPES.includes(step.type);
 
-  app.innerHTML = `${header()}${timeline(entry.week.n)}
+  app.innerHTML = `${header({ menu: true })}
     <main class="layout">${panel(entry.week, entry.block, step.id)}
-      <section class="stage">${stageHead(step, step === now)}<div data-next></div><div data-body></div>${stageFoot(step)}</section>
+      <section class="stage ${wide ? "wide" : ""}">${stepBar(entry.block, step.id)}
+        <div class="stage-in">${stageHead(step, entry, step === now)}<div data-next></div><div data-body></div>${stageFoot(step)}</div>
+      </section>
     </main>`;
   bindChrome();
   bindPanel();
+  centerStepBar();
   const body = app.querySelector("[data-body]");
   const nextEl = app.querySelector("[data-next]");
   const ctx = {
@@ -168,7 +199,7 @@ function render() {
       nextEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
     },
   };
-  if (["leetcode", "review", "exercise"].includes(step.type)) cleanup = renderCode(body, step, ctx);
+  if (wide) cleanup = renderCode(body, step, ctx);
   else if (step.type === "quiz" || step.type === "oral") renderQuiz(body, step, ctx);
   else if (step.type === "theory") renderTheory(body, step, ctx);
   else if (step.type === "anki") renderAnki(body, step, ctx);
@@ -190,28 +221,45 @@ function render() {
   window.scrollTo(0, 0);
 }
 
+/** Keep the current square of a long step bar in view (the bar scrolls sideways on a phone). */
+function centerStepBar() {
+  const bar = app.querySelector(".step-bar");
+  const cur = bar?.querySelector(".cur");
+  if (cur && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = cur.offsetLeft - bar.clientWidth / 2 + cur.offsetWidth / 2;
+}
+
 function refreshChrome(entry, step) {
-  app.querySelector("header.top").outerHTML = header();
-  app.querySelector("nav.timeline").outerHTML = timeline(entry.week.n);
-  app.querySelector("aside.panel").outerHTML = panel(entry.week, entry.block, step.id);
+  app.querySelector("header.top").outerHTML = header({ menu: true });
+  app.querySelector("aside.panel").remove();
+  app.querySelector("[data-scrim]").outerHTML = panel(entry.week, entry.block, step.id);
+  app.querySelector(".step-bar").outerHTML = stepBar(entry.block, step.id);
   bindChrome();
   bindPanel();
+  centerStepBar();
 }
 
 function renderMap() {
+  const cal = calendarWeek();
   const weeks = data.plan.weeks
     .map((w) => {
+      const wp = weekProgress(w);
       const blocks = w.blocks
         .map((b) => {
           const p = blockProgress(b);
           const cls = [p.done === p.total ? "full" : "", blockLate(b) ? "late" : ""].join(" ");
-          return `<a class="map-block ${cls}" href="#/block/${b.id}"><span>${esc(b.title)}</span><i style="--p:${p.total ? p.done / p.total : 0}"></i></a>`;
+          return `<a class="map-block ${cls}" href="#/block/${b.id}"><span class="mb-t">${esc(b.title)}</span>
+              <span class="mb-c">${p.done}/${p.total}</span><i style="--p:${p.total ? p.done / p.total : 0}"></i></a>`;
         })
         .join("");
-      return `<div class="map-week"><div class="map-head"><b>${w.n}.</b> ${esc(w.title)} <span class="muted small">${fmtDate(w.days[0].date, false)} – ${fmtDate(w.days[6].date, false)}</span></div><div class="map-blocks">${blocks}</div></div>`;
+      const cls = [w === cal ? "cur" : "", wp.done === wp.total ? "full" : ""].join(" ");
+      return `<section class="map-week ${cls}">
+          <div class="map-head"><span class="map-n">${wp.done === wp.total ? icon("check") : w.n}</span>
+            <div><b>${esc(w.title)}</b><small>Неделя ${w.n} · ${fmtDate(w.days[0].date, false)} – ${fmtDate(w.days[6].date, false)}${w === cal ? " · сейчас" : ""}</small></div></div>
+          <div class="map-blocks">${blocks}</div></section>`;
     })
     .join("");
-  app.innerHTML = `${header()}${timeline(0)}<main class="map">${weeks}</main>`;
+  const p = overallProgress();
+  app.innerHTML = `${header()}<main class="map"><div class="page-head"><h1>Карта курса</h1><p class="muted">13 недель, по 3 блока в неделе. Сдано ${p.done} из ${p.total} шагов.</p></div>${weeks}</main>`;
   bindChrome();
 }
 
@@ -222,17 +270,18 @@ function renderReviewPage() {
 }
 
 function renderFinished() {
-  app.innerHTML = `${header()}${timeline(0)}<main class="map"><div class="card"><h2>Все шаги плана сданы</h2></div></main>`;
+  app.innerHTML = `${header()}<main class="map"><div class="page-head"><h1>Все шаги плана сданы</h1></div></main>`;
   bindChrome();
 }
 
 function renderLogin(message = "") {
-  app.innerHTML = `<main class="login"><form class="card login-card" data-login>
-      <h1>ML-дорожка</h1>
+  app.innerHTML = `<main class="login"><form class="login-card" data-login>
+      <div class="brand"><span class="logo">${icon("trend")}</span><span class="brand-name">ML-дорожка</span></div>
+      <h1>Вход</h1>
       <label>Логин<input class="answer" name="user" autocomplete="username" autocapitalize="off" required></label>
       <label>Пароль<input class="answer" name="password" type="password" autocomplete="current-password" required></label>
       <div class="bad small" data-msg>${esc(message)}</div>
-      <button class="btn primary" type="submit">Войти</button>
+      <button class="btn primary big" type="submit">Войти</button>
       ${backend.server ? '<a class="small" href="#/">Продолжить без входа</a>' : ""}
     </form></main>`;
   app.querySelector("[data-login]").addEventListener("submit", async (e) => {
@@ -283,12 +332,15 @@ function bindChrome() {
 function bindPanel() {
   const aside = app.querySelector("aside.panel");
   if (!aside) return;
-  aside.querySelector("[data-collapse]").addEventListener("click", () => {
+  const toggle = () => {
     const p = panelPrefs();
-    p.collapsed = !p.collapsed;
+    p.collapsed = !aside.classList.contains("collapsed");
     savePanelPrefs(p);
     aside.classList.toggle("collapsed", p.collapsed);
-  });
+  };
+  aside.querySelector("[data-collapse]").addEventListener("click", toggle);
+  app.querySelector("[data-menu]")?.addEventListener("click", toggle);
+  app.querySelector("[data-scrim]").addEventListener("click", () => aside.classList.add("collapsed"));
   const handle = aside.querySelector("[data-resize]");
   handle.addEventListener("pointerdown", (e) => {
     e.preventDefault();
@@ -296,7 +348,7 @@ function bindPanel() {
     const startX = e.clientX;
     const startW = aside.getBoundingClientRect().width;
     const move = (ev) => {
-      const w = Math.max(200, Math.min(560, startW + ev.clientX - startX));
+      const w = Math.max(220, Math.min(560, startW + ev.clientX - startX));
       aside.style.setProperty("--panel-w", `${w}px`);
     };
     const up = () => {

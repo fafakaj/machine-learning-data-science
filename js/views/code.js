@@ -1,5 +1,6 @@
 // Code step: LeetCode problem, re-solve ("review") or Python exercise.
 import { createEditor } from "../editor.js";
+import { icon } from "../icons.js";
 import { esc, md } from "../md.js";
 import { runProblem, runScript, TimeoutError } from "../py.js";
 import { data, isDone, logEvent, markDone, progress, scheduleSave, stepState } from "../store.js";
@@ -84,18 +85,18 @@ export function renderCode(root, step, { onDone }) {
         ${step.source ? `<details class="alt"><summary>Теория по приёму</summary>${sourceCard(step.source)}</details>` : ""}
         <div class="sub">Подсказки</div>
         <div class="hints">${item.hints_ru.map((hint, i) => `<div class="hint ${i < hintsShown ? "" : "hidden"}"><b>${i + 1}.</b> ${md(hint)}</div>`).join("")}</div>
-        <button class="btn ghost small" data-act="hint" ${hintsShown >= item.hints_ru.length ? "disabled" : ""}>Подсказка ${Math.min(hintsShown + 1, item.hints_ru.length)} из ${item.hints_ru.length}</button>
+        <button class="btn small" data-act="hint" ${hintsShown >= item.hints_ru.length ? "disabled" : ""}>Подсказка ${Math.min(hintsShown + 1, item.hints_ru.length)} из ${item.hints_ru.length}</button>
       </section>
       <section class="workbench">
         <div class="toolbar">
-          <button class="btn" data-act="run" title="Ctrl+Enter">▶ Запустить</button>
+          <button class="btn" data-act="run" title="Ctrl+Enter">${icon("play")}Запустить</button>
           <button class="btn primary" data-act="submit" title="Ctrl+Shift+Enter">Сдать</button>
           <span class="spacer"></span>
           <button class="btn ghost small" data-act="reset">Сбросить</button>
         </div>
         <div class="editor" data-editor></div>
-        <div class="results card" data-results>
-          ${isDone(step.id) ? '<div class="verdict ok">Сдано</div>' : ""}
+        <div class="results" data-results>
+          ${isDone(step.id) ? '<div class="verdict ok">Сдано</div>' : '<div class="muted small">«Запустить» (Ctrl+Enter) проверяет примеры, «Сдать» (Ctrl+Shift+Enter) — все тесты.</div>'}
         </div>
       </section>
     </div>`;
