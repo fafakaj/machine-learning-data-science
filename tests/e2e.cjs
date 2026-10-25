@@ -228,6 +228,8 @@ async function savedProgress(ready) {
 
   await check("Вход: неверный пароль отклонён, верный пускает (пароль из TEST_PASS)", async () => {
     const ctx2 = await browser.newContext();
+    // The decrypted token is real: keep test events out of the account gist.
+    await ctx2.route("https://api.github.com/**", (r) => r.abort());
     const lp = await ctx2.newPage();
     await lp.goto(`${BASE}/#/login`);
     await lp.fill("[name=user]", "fafakaj");
