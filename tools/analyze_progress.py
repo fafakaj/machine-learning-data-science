@@ -10,6 +10,7 @@ topics to shorten or to strengthen, by simple rules (see `verdict`). Standard li
 
 import argparse
 import json
+import subprocess
 import sys
 from collections import defaultdict
 from datetime import datetime
@@ -274,11 +275,18 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("progress", nargs="?", default=str(DEFAULT_PROGRESS), help="путь к progress.json")
     ap.add_argument("--plan", default=str(DEFAULT_PLAN), help="путь к plan.json")
+    ap.add_argument("--gist", help="взять прогресс из gist аккаунта сайта (через gh)")
     args = ap.parse_args(argv)
     try:
-        progress = json.loads(Path(args.progress).expanduser().read_text(encoding="utf-8"))
+        if args.gist:
+            # The site saves progress.json to the account's secret gist.
+            raw = subprocess.run(["gh", "gist", "view", args.gist, "-f", "progress.json"], capture_output=True, text=True, check=True).stdout
+            args.progress = f"gist {args.gist}"
+        else:
+            raw = Path(args.progress).expanduser().read_text(encoding="utf-8")
+        progress = json.loads(raw)
         plan = json.loads(Path(args.plan).expanduser().read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as e:
+    except (OSError, json.JSONDecodeError, subprocess.CalledProcessError) as e:
         print(f"Ошибка чтения: {e}", file=sys.stderr)
         return 1
     print(report(progress, plan, args.progress))

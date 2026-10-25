@@ -111,11 +111,6 @@ export function renderCode(root, step, { onDone }) {
     onSubmit: () => run(true),
   });
 
-  // Time on the step is measured silently for the learning log; it is not shown.
-  const started = Date.now();
-  const saveTime = () => {
-    st.time_s = (st.time_s || 0) + Math.floor((Date.now() - started) / 1000);
-  };
 
   let busy = false;
   async function run(submit) {
@@ -131,7 +126,6 @@ export function renderCode(root, step, { onDone }) {
       logEvent(submit ? "submit" : "run", step.id, { passed: res.passed, total: res.total });
       const accepted = res.compiled && res.passed === res.total && res.total > 0 && (submit || isExercise);
       if (accepted && !isDone(step.id)) {
-        saveTime();
         markDone(step.id, { solution: source, hints: st.hints_used || 0 });
         onDone?.();
       }
@@ -167,5 +161,4 @@ export function renderCode(root, step, { onDone }) {
     }
   });
   if (!isExercise || step.type !== "review") editor.focus();
-  return () => saveTime();
 }

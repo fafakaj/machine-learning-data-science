@@ -3,7 +3,7 @@ import { esc, md } from "./md.js";
 import { onStatus, warmUp } from "./py.js";
 import {
   backend, blockLate, blockProgress, calendarWeek, currentStep, data, fmtDate, getStep, isDone, loadData, loadProgress,
-  markDone, nextStepAfter, onSaveState, overallProgress, progress, pullRemote, rateStep, weekProgress,
+  markDone, nextStepAfter, onSaveState, overallProgress, progress, pullRemote, rateStep, scheduleSave, weekProgress,
 } from "./store.js";
 import { renderCode } from "./views/code.js";
 import { renderQuiz } from "./views/quiz.js";
@@ -130,9 +130,28 @@ function nextBanner(step) {
 
 // ---------------------------------------------------------------- pages
 
+// Time on each step, for the learning log. Only visible time counts; one visit counts at most 2 hours.
+let timing = null;
+function stopTiming() {
+  if (!timing) return;
+  if (timing.since) timing.ms += Date.now() - timing.since;
+  const s = Math.min(7200, Math.round(timing.ms / 1000));
+  if (s >= 5) {
+    const st = progress.steps[timing.id] || (progress.steps[timing.id] = { status: "todo" });
+    st.time_s = (st.time_s || 0) + s;
+    scheduleSave();
+  }
+  timing = null;
+}
+function startTiming(id) {
+  stopTiming();
+  timing = { id, ms: 0, since: document.visibilityState === "visible" ? Date.now() : 0 };
+}
+
 function render() {
   cleanup?.();
   cleanup = null;
+  stopTiming();
   const hash = location.hash || "#/";
   const [, route, arg] = hash.match(/^#\/(\w*)\/?(.*)$/) || [];
 
@@ -150,6 +169,7 @@ function render() {
   step ||= now;
   if (!step) return renderFinished();
   const entry = getStep(step.id);
+  startTiming(step.id);
 
   app.innerHTML = `${header()}${timeline(entry.week.n)}
     <main class="layout">${panel(entry.week, entry.block, step.id)}
@@ -323,7 +343,21 @@ async function main() {
   warmUp();
   window.addEventListener("hashchange", render);
   document.addEventListener("visibilitychange", async () => {
+    if (timing) {
+      if (document.visibilityState === "visible") timing.since = Date.now();
+      else if (timing.since) {
+        timing.ms += Date.now() - timing.since;
+        timing.since = 0;
+      }
+    }
     if (document.visibilityState === "visible" && (await pullRemote())) render();
+    if (document.visibilityState === "hidden" && timing) {
+      // Save the time so far: a phone may close the tab without warning.
+      const id = timing.id;
+      stopTiming();
+      startTiming(id);
+      timing.since = 0;
+    }
   });
   render();
 }
