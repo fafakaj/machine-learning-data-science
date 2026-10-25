@@ -323,9 +323,9 @@ function bindChrome() {
   app.querySelector("[data-logout]")?.addEventListener("click", () => {
     if (!confirm("Выйти из аккаунта на этом устройстве?")) return;
     logout();
-    backend.gist = null;
-    backend.user = null;
+    // Reload so nothing of this account's progress stays in memory for the next one.
     location.hash = "#/login";
+    location.reload();
   });
 }
 

@@ -30,13 +30,13 @@ async function setCode(page, code) {
   await page.keyboard.insertText(code);
 }
 
-async function savedProgress(ready) {
+async function savedProgress(ready, file = PROGRESS) {
   // The app debounces saves by 600 ms.
   let p = null;
   for (let i = 0; i < 20; i++) {
     await new Promise((r) => setTimeout(r, 250));
-    if (fs.existsSync(PROGRESS)) {
-      p = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
+    if (fs.existsSync(file)) {
+      p = JSON.parse(fs.readFileSync(file, "utf8"));
       if (ready(p)) return p;
     }
   }
@@ -246,6 +246,27 @@ async function savedProgress(ready) {
       assert((await lp.textContent("[data-logout]")).includes("fafakaj"), "имя не в шапке");
     }
     await ctx2.close();
+  });
+
+  await check("Второй аккаунт: свой прогресс, отдельный от владельца (пароль из TEST_PASS_GUEST)", async () => {
+    if (!process.env.TEST_PASS_GUEST) return;
+    const ctx3 = await browser.newContext();
+    await ctx3.route("https://api.github.com/**", (r) => r.abort());
+    const gp = await ctx3.newPage();
+    await gp.goto(`${BASE}/?today=2026-10-26#/login`);
+    await gp.fill("[name=user]", "smetanka");
+    await gp.fill("[name=password]", process.env.TEST_PASS_GUEST);
+    await gp.click("[data-login] button");
+    await gp.waitForSelector(".stage-head h1", { timeout: 20000 });
+    assert(!(await gp.$(".panel .steps li.done")), "у нового аккаунта уже есть сданные шаги");
+    const id = await gp.$eval(".step-bar .sq.cur", (a) => a.getAttribute("href").split("/").pop());
+    await gp.click("[data-skip]");
+    const guestFile = PROGRESS.replace(/progress\.json$/, "progress-smetanka.json");
+    const guest = await savedProgress((p) => p.steps[id]?.skipped, guestFile);
+    assert(guest?.steps[id]?.skipped, "прогресс соседа не сохранился в его файл");
+    const owner = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
+    assert(!owner.steps[id]?.skipped, "пропуск соседа попал в прогресс владельца");
+    await ctx3.close();
   });
 
   for (const [w, h] of [[390, 844], [360, 740]]) {

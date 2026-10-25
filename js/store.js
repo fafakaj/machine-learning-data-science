@@ -1,7 +1,8 @@
 // Data and progress.
-// Progress is saved to every place that is available: the account gist (when logged in) and the
-// local server (logs/progress.json, when the app runs from server.py). localStorage keeps a copy
-// so an offline moment never loses work. On load the newest copy wins.
+// Progress is saved to every place that is available: the account gist (when the account has a
+// token) and the local server (logs/progress*.json, when the app runs from server.py). localStorage
+// keeps a copy so an offline moment never loses work. On load the newest copy wins. Each account has
+// its own copies; the owner and a session without login share the original ones.
 import { gistLoad, gistSave, session } from "./auth.js";
 
 const LS_KEY = "path-progress-backup";
@@ -15,6 +16,11 @@ let saveTimer = null;
 let saveState = "saved"; // saved | pending | error
 const saveListeners = new Set();
 export const backend = { server: false, gist: null, user: null };
+
+/** Sessions saved before accounts existed belong to the owner. */
+const isGuestAccount = () => backend.user && backend.user.owner === false;
+const lsKey = () => (isGuestAccount() ? `${LS_KEY}:${backend.user.user.toLowerCase()}` : LS_KEY);
+const serverURL = () => (backend.user ? `api/progress?user=${encodeURIComponent(backend.user.user)}` : "api/progress");
 
 function emptyProgress() {
   return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, review: {}, events: [] };
@@ -56,13 +62,13 @@ export async function loadData() {
 
 export async function loadProgress() {
   const copies = [];
+  backend.user = session();
   try {
-    copies.push(await getJSON("api/progress"));
+    copies.push(await getJSON(serverURL()));
     backend.server = true;
   } catch {
     backend.server = false;
   }
-  backend.user = session();
   backend.gist = backend.user?.token ? backend.user : null;
   if (backend.gist) {
     try {
@@ -73,7 +79,7 @@ export async function loadProgress() {
     }
   }
   try {
-    copies.push(JSON.parse(localStorage.getItem(LS_KEY) || "null"));
+    copies.push(JSON.parse(localStorage.getItem(lsKey()) || "null"));
   } catch {
     /* no local copy */
   }
@@ -121,7 +127,7 @@ function setSaveState(s) {
 export function scheduleSave(touch = true) {
   if (touch) progress.saved_at = new Date().toISOString();
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(progress));
+    localStorage.setItem(lsKey(), JSON.stringify(progress));
   } catch {
     /* private mode */
   }
@@ -134,7 +140,7 @@ async function saveNow() {
   try {
     const jobs = [];
     if (backend.server) {
-      jobs.push(fetch("api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(progress) })
+      jobs.push(fetch(serverURL(), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(progress) })
         .then((r) => { if (!r.ok) throw new Error(r.status); }));
     }
     if (backend.gist) jobs.push(gistSave(backend.gist, progress));

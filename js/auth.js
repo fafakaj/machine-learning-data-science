@@ -1,5 +1,6 @@
-// Account: a password unlocks a GitHub token (encrypted in data/auth.json) that reads and
-// writes the user's secret gist with progress.json. The password itself is never stored.
+// Accounts: each password unlocks that account's payload in data/auth.json. With a GitHub token the
+// payload reads and writes the account's secret gist with progress.json; without one, progress stays
+// in this browser. The password itself is never stored.
 
 const SESSION_KEY = "ml-session";
 const GIST_FILE = "progress.json";
@@ -33,9 +34,11 @@ export async function accountConfigured() {
 export async function login(user, password) {
   const r = await fetch("data/auth.json", { cache: "no-store" });
   if (!r.ok) throw new Error("Аккаунт ещё не настроен");
-  const cfg = await r.json();
+  const file = await r.json();
   const fail = new Error("Неверный логин или пароль");
-  if (user.trim().toLowerCase() !== cfg.user.toLowerCase()) throw fail;
+  const accounts = file.accounts || [file];
+  const cfg = accounts.find((a) => a.user.toLowerCase() === user.trim().toLowerCase());
+  if (!cfg) throw fail;
   const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]);
   const key = await crypto.subtle.deriveKey(
     { name: "PBKDF2", hash: "SHA-256", salt: b64(cfg.salt), iterations: cfg.iter },
@@ -50,7 +53,8 @@ export async function login(user, password) {
     throw fail;
   }
   // Without a token the account works on this device only; sync starts once auth.json carries one.
-  const s = { user: cfg.user, token: payload.token || null, gist: payload.gist };
+  // The first account is the owner: it keeps the progress this browser had before accounts existed.
+  const s = { user: cfg.user, owner: cfg === accounts[0], token: payload.token || null, gist: payload.gist || null };
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(s));
   } catch {

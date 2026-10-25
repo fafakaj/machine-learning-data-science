@@ -1,18 +1,22 @@
 """Local server for the study app.
 
 Serves app/ as static files and keeps progress in ~/ai_career/logs/progress.json.
+Other site accounts (api/progress?user=NAME) get their own progress-NAME.json next to it;
+the owner (the first account in data/auth.json) and a session without login share progress.json.
 Run: python3 app/server.py [--port 8765] [--open] [--progress FILE]  (tests pass their own FILE)
 """
 
 import argparse
 import json
 import os
+import re
 import tempfile
 import threading
 import webbrowser
 from datetime import UTC, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 APP = Path(__file__).resolve().parent
 PROGRESS = APP.parent / "logs" / "progress.json"
@@ -21,23 +25,41 @@ MAX_BODY = 5 * 1024 * 1024
 LOCK = threading.Lock()
 
 
-def read_progress():
-    if PROGRESS.exists():
-        return json.loads(PROGRESS.read_text())
+def owner():
+    try:
+        accounts = json.loads((APP / "data" / "auth.json").read_text())["accounts"]
+        return accounts[0]["user"].lower()
+    except (OSError, KeyError, IndexError, json.JSONDecodeError):
+        return ""
+
+
+def progress_file(user):
+    """None for a user name that is not a plain identifier."""
+    user = (user or "").lower()
+    if not user or user == owner():
+        return PROGRESS
+    if not re.fullmatch(r"[a-z0-9_-]{1,40}", user):
+        return None
+    return PROGRESS.with_name(f"{PROGRESS.stem}-{user}.json")
+
+
+def read_progress(path):
+    if path.exists():
+        return json.loads(path.read_text())
     return {"version": 1, "steps": {}, "code": {}, "events": []}
 
 
-def write_progress(data):
-    PROGRESS.parent.mkdir(parents=True, exist_ok=True)
+def write_progress(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
     # Atomic replace: a crash mid-write never leaves a broken file.
-    fd, tmp = tempfile.mkstemp(dir=PROGRESS.parent, prefix=".progress-", suffix=".json")
+    fd, tmp = tempfile.mkstemp(dir=path.parent, prefix=".progress-", suffix=".json")
     with os.fdopen(fd, "w") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
-    os.replace(tmp, PROGRESS)
+    os.replace(tmp, path)
     # One backup per day, so a bad save can be undone.
     BACKUPS.mkdir(exist_ok=True)
-    daily = BACKUPS / f"progress-{datetime.now():%Y-%m-%d}.json"
-    daily.write_text(PROGRESS.read_text())
+    daily = BACKUPS / f"{path.stem}-{datetime.now():%Y-%m-%d}.json"
+    daily.write_text(path.read_text())
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -70,17 +92,30 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _progress_path(self):
+        """The progress file for api/progress[?user=NAME]; False for another path, None for a bad name."""
+        url = urlsplit(self.path)
+        if url.path != "/api/progress":
+            return False
+        return progress_file(parse_qs(url.query).get("user", [""])[0])
+
     def do_GET(self):
-        if self.path == "/api/progress":
+        path = self._progress_path()
+        if path is None:
+            return self._json(400, {"error": "bad user"})
+        if path:
             with LOCK:
-                return self._json(200, read_progress())
+                return self._json(200, read_progress(path))
         if self.path.startswith("/api/"):
             return self._json(404, {"error": "unknown endpoint"})
         return super().do_GET()
 
     def do_POST(self):
-        if self.path != "/api/progress":
+        path = self._progress_path()
+        if path is False:
             return self._json(404, {"error": "unknown endpoint"})
+        if path is None:
+            return self._json(400, {"error": "bad user"})
         length = int(self.headers.get("Content-Length", 0))
         if length > MAX_BODY:
             return self._json(413, {"error": "too large"})
@@ -93,7 +128,7 @@ class Handler(SimpleHTTPRequestHandler):
         # Keep the client's stamp: the gist copy carries the same one, so "newest wins" compares like with like.
         data.setdefault("saved_at", datetime.now(UTC).isoformat(timespec="milliseconds").replace("+00:00", "Z"))
         with LOCK:
-            write_progress(data)
+            write_progress(path, data)
         return self._json(200, {"ok": True, "saved_at": data["saved_at"]})
 
 
