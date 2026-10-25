@@ -14,7 +14,7 @@ const stepIndex = new Map(); // id -> {step, block, week, order}
 let saveTimer = null;
 let saveState = "saved"; // saved | pending | error
 const saveListeners = new Set();
-export const backend = { server: false, gist: null };
+export const backend = { server: false, gist: null, user: null };
 
 function emptyProgress() {
   return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, hours: {}, review: {}, events: [] };
@@ -57,7 +57,8 @@ export async function loadProgress() {
   } catch {
     backend.server = false;
   }
-  backend.gist = session();
+  backend.user = session();
+  backend.gist = backend.user?.token ? backend.user : null;
   if (backend.gist) {
     try {
       copies.push(await gistLoad(backend.gist));

@@ -27,12 +27,12 @@ OUT = Path(__file__).resolve().parents[1] / "data" / "auth.json"
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--user", required=True)
-    ap.add_argument("--token-file", type=Path, required=True)
+    ap.add_argument("--token-file", type=Path, help="без токена вход работает, но прогресс не синхронизируется между устройствами")
     ap.add_argument("--gist", required=True)
     ap.add_argument("--password-env", help="read the password from this environment variable instead of a prompt")
     opts = ap.parse_args()
 
-    token = opts.token_file.expanduser().read_text().strip()
+    token = opts.token_file.expanduser().read_text().strip() if opts.token_file else None
     password = os.environ[opts.password_env] if opts.password_env else getpass.getpass("Пароль для сайта: ")
     salt, iv = os.urandom(16), os.urandom(12)
     key = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=ITER).derive(password.encode())

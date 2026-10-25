@@ -42,7 +42,7 @@ function header() {
   const cur = currentStep();
   const weekNo = cur ? getStep(cur.id).week.n : data.plan.weeks.length;
   const due = dueCount();
-  const s = backend.gist;
+  const s = backend.user;
   return `<header class="top">
       <a class="brand" href="#/">ML-дорожка</a>
       <div class="top-mid">
@@ -52,7 +52,7 @@ function header() {
       <nav class="top-right">
         <a class="nav-link" href="#/review">Повторение${due ? ` <span class="count">${due}</span>` : ""}</a>
         <a class="nav-link" href="#/map">Карта</a>
-        ${s ? `<button class="nav-link" data-logout title="Выйти">${esc(s.user)}</button>` : `<a class="nav-link" href="#/login">Войти</a>`}
+        ${s ? `<button class="nav-link" data-logout title="${s.token ? "Выйти" : "Выйти. Синхронизация между устройствами пока выключена"}">${esc(s.user)}</button>` : `<a class="nav-link" href="#/login">Войти</a>`}
         <span class="dot" data-py title="Python"></span><span class="dot" data-save title="Сохранение"></span>
       </nav>
     </header>`;
@@ -296,6 +296,7 @@ function bindChrome() {
     if (!confirm("Выйти из аккаунта на этом устройстве?")) return;
     logout();
     backend.gist = null;
+    backend.user = null;
     location.hash = "#/login";
   });
 }

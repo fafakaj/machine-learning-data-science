@@ -226,6 +226,25 @@ async function savedProgress(ready) {
     await page.click("[data-collapse]");
   });
 
+  await check("Вход: неверный пароль отклонён, верный пускает (пароль из TEST_PASS)", async () => {
+    const ctx2 = await browser.newContext();
+    const lp = await ctx2.newPage();
+    await lp.goto(`${BASE}/#/login`);
+    await lp.fill("[name=user]", "fafakaj");
+    await lp.fill("[name=password]", "wrong-password");
+    await lp.click("[data-login] button");
+    await lp.waitForSelector("[data-msg]:not(:empty)", { timeout: 20000 });
+    assert((await lp.textContent("[data-msg]")).includes("Неверный"), "нет сообщения об ошибке");
+    if (process.env.TEST_PASS) {
+      await lp.fill("[name=user]", "fafakaj");
+      await lp.fill("[name=password]", process.env.TEST_PASS);
+      await lp.click("[data-login] button");
+      await lp.waitForSelector("[data-logout]", { timeout: 20000 });
+      assert((await lp.textContent("[data-logout]")).includes("fafakaj"), "имя не в шапке");
+    }
+    await ctx2.close();
+  });
+
   for (const [w, h] of [[390, 844], [360, 740]]) {
     await check(`Ширина ${w} px: нет горизонтальной прокрутки (главный экран, задача, квиз, карта)`, async () => {
       const m = await browser.newPage({ viewport: { width: w, height: h } });

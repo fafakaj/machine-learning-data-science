@@ -49,7 +49,8 @@ export async function login(user, password) {
   } catch {
     throw fail;
   }
-  const s = { user: cfg.user, token: payload.token, gist: payload.gist };
+  // Without a token the account works on this device only; sync starts once auth.json carries one.
+  const s = { user: cfg.user, token: payload.token || null, gist: payload.gist };
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(s));
   } catch {
