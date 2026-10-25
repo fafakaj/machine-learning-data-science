@@ -1,0 +1,3959 @@
+{
+  "topics": [
+    {
+      "id": "w1-python-mutability",
+      "week": 1,
+      "topic_ru": "Объекты, ссылки, изменяемость, is и ==",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 3.3. Списочные выражения. Модель памяти",
+          "url": "https://contest.yandex.ru/tracks/python/collections-and-memory/list-comprehensions-and-python-memory-model#peremennye-eto-ssylki",
+          "section": "Разделы «Переменные — это ссылки», «Равны, но не одинаковы», «Изменяемые и неизменяемые типы», «Осторожно: ссылки на один и тот же объект»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Документация Python (рус.): 3.1. Объекты, значения и типы данных",
+          "url": "https://docs.python.org/ru/3/reference/datamodel.html#objects-values-and-types",
+          "section": "§3.1",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-copy",
+      "week": 1,
+      "topic_ru": "copy и deepcopy: поверхностная и глубокая копия",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 3.3",
+          "url": "https://contest.yandex.ru/tracks/python/collections-and-memory/list-comprehensions-and-python-memory-model#poverhnostnaya-i-glubokaya-kopiya",
+          "section": "Разделы «Поверхностная и глубокая копия», «Как создать настоящую копию вложенного списка»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Python docs: copy — Shallow and deep copy operations",
+          "url": "https://docs.python.org/3/library/copy.html",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 5,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-list-of-lists",
+      "week": 1,
+      "topic_ru": "Ловушка B2: список списков [[0]*n]*m",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 3.3",
+          "url": "https://contest.yandex.ru/tracks/python/collections-and-memory/list-comprehensions-and-python-memory-model#oshibka-kopirovanie-odnoj-i-toj-zhe-stroki",
+          "section": "Разделы «Ошибка: копирование одной и той же строки», «Правильный способ: новый список на каждой итерации»",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "wtfpython (рус. перевод): «Крестики-нолики, где X побеждает с первой попытки!»",
+          "url": "https://github.com/satwikkansal/wtfpython/tree/master/translations/ru-russian",
+          "section": "Раздел «▶ Крестики-нолики, где X побеждает с первой попытки!»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-default-args",
+      "week": 1,
+      "topic_ru": "Ловушка B1: изменяемые аргументы по умолчанию",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 4.2",
+          "url": "https://contest.yandex.ru/tracks/python/functions-in-python/positional-keyword-higher-order-and-lambda-functions#zachem-nuzhny-znacheniya-po-umolchaniyu-i-kakie-oshibki-mogut-vozniknut-pri-ih-ispolzovanii",
+          "section": "Раздел «Зачем нужны значения по умолчанию и какие ошибки могут возникнуть…»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Учебник Python (рус.): 4.9.1. Значения аргументов по умолчанию",
+          "url": "https://docs.python.org/ru/3/tutorial/controlflow.html#default-argument-values",
+          "section": "§4.9.1",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-scopes",
+      "week": 1,
+      "topic_ru": "Области видимости LEGB, global, nonlocal",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Учебник Python (рус.): 9.2. Области видимости и пространства имён",
+          "url": "https://docs.python.org/ru/3/tutorial/classes.html#python-scopes-and-namespaces",
+          "section": "§9.2 и пример §9.2.1 (global и nonlocal)",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Всё что нужно знать про области видимости в Python»",
+          "url": "https://habr.com/ru/articles/824554/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 4.1",
+          "url": "https://contest.yandex.ru/tracks/python/functions-in-python/functions-scopes-and-parameters#chto-takoe-oblast-vidimosti-chem-razlichayutsya-lokalnye-i-globalnye-peremennye",
+          "section": "Раздел «Что такое область видимости…»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-closures",
+      "week": 1,
+      "topic_ru": "Замыкания",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: «Замыкания и декораторы в Python: часть 1 — замыкания»",
+          "url": "https://habr.com/ru/articles/781866/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Глоссарий Python (рус.): closure variable",
+          "url": "https://docs.python.org/ru/3/glossary.html#term-closure-variable",
+          "section": "Термин «closure variable»",
+          "lang": "ru",
+          "minutes": 2,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-late-binding",
+      "week": 1,
+      "topic_ru": "Ловушка B3: позднее связывание lambda в цикле",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Python FAQ: Why do lambdas defined in a loop with different values all return the same result?",
+          "url": "https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
+          "section": "Этот вопрос FAQ",
+          "lang": "en",
+          "minutes": 4,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "The Hitchhiker’s Guide to Python: Late Binding Closures",
+          "url": "https://docs.python-guide.org/writing/gotchas/#late-binding-closures",
+          "section": "Раздел «Late Binding Closures»",
+          "lang": "en",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-args-kwargs",
+      "week": 1,
+      "topic_ru": "*args, **kwargs, keyword-only и positional-only",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 4.2",
+          "url": "https://contest.yandex.ru/tracks/python/functions-in-python/positional-keyword-higher-order-and-lambda-functions#kak-funkciya-mozhet-prinimat-proizvolnoe-kolichestvo-argumentov-s-pomoshyu-args-i-kwargs",
+          "section": "Раздел «Как функция может принимать произвольное количество аргументов с помощью *args и **kwargs»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Учебник Python (рус.): 4.9.3. Специальные параметры",
+          "url": "https://docs.python.org/ru/3/tutorial/controlflow.html#special-parameters",
+          "section": "§4.9.3–4.9.5",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-hashable",
+      "week": 1,
+      "topic_ru": "Хэшируемость (B4)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Глоссарий Python (рус.): hashable",
+          "url": "https://docs.python.org/ru/3/glossary.html#term-hashable",
+          "section": "Термин «hashable»",
+          "lang": "ru",
+          "minutes": 2,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Python. Внутреннее устройство множеств set и словарей dict. Часть 1»",
+          "url": "https://habr.com/ru/articles/830026/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-python-complexity",
+      "week": 1,
+      "topic_ru": "Сложность операций list / dict / set (B4)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: «Свой инструмент нужно знать в лицо: обзор наиболее часто используемых структур данных»",
+          "url": "https://habr.com/ru/articles/128457/",
+          "section": "Разделы list, dict, set и таблицы сложности",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Python Wiki: TimeComplexity (архивная копия)",
+          "url": "https://web.archive.org/web/20241231101827/https://wiki.python.org/moin/TimeComplexity",
+          "section": "Таблицы list, collections.deque, set, dict",
+          "lang": "en",
+          "minutes": 6,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 2.3. Словарь",
+          "url": "https://contest.yandex.ru/tracks/algorithms/fundamental-data-structures/dictionary",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 3,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-derivative",
+      "week": 1,
+      "topic_ru": "Производная и правила дифференцирования",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 3.3",
+          "url": "https://contest.yandex.ru/tracks/math/mathematical-analysis/single-variable-differentiation#proizvodnaya-i-pravila-differencirovaniya",
+          "section": "Раздел «Производная и правила дифференцирования» (до «Теоремы Ролля и Лагранжа»)",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-3b1b-calc-1",
+      "week": 1,
+      "topic_ru": "3Blue1Brown «Суть матанализа», гл. 1",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown: The essence of calculus (гл. 1), русские субтитры",
+          "url": "https://www.youtube.com/watch?v=WUvTyaaNkzM",
+          "section": "Всё видео; включите русские субтитры (ручные)",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown Русский (фан-озвучка): «Суть матанализа, Глава 1»",
+          "url": "https://www.youtube.com/watch?v=qd0rzmSGPWg",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 16,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-3b1b-calc-2",
+      "week": 1,
+      "topic_ru": "3Blue1Brown «Суть матанализа», гл. 2: парадокс производной",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown: The paradox of the derivative (гл. 2), русские субтитры",
+          "url": "https://www.youtube.com/watch?v=9vKqVkMQHKk",
+          "section": "Всё видео; включите русские субтитры",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown Русский: «Парадокс производной | Суть Матанализа, глава 2»",
+          "url": "https://www.youtube.com/watch?v=stnoEkxBxps",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-3b1b-calc-3",
+      "week": 1,
+      "topic_ru": "3Blue1Brown «Суть матанализа», гл. 3: формулы производных через геометрию",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown: Derivative formulas through geometry (гл. 3), русские субтитры",
+          "url": "https://www.youtube.com/watch?v=S0_qX4VJhMQ",
+          "section": "Всё видео; включите русские субтитры",
+          "lang": "ru",
+          "minutes": 18,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown Русский: «Формулы производных через геометрию»",
+          "url": "https://www.youtube.com/watch?v=JVS_ge7_nd4",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-3b1b-calc-4",
+      "week": 1,
+      "topic_ru": "3Blue1Brown «Суть матанализа», гл. 4: цепное правило и правило произведения",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown: Visualizing the chain rule and product rule (гл. 4), русские субтитры",
+          "url": "https://www.youtube.com/watch?v=YG15m2VwSjA",
+          "section": "Всё видео; включите русские субтитры",
+          "lang": "ru",
+          "minutes": 16,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown Русский: «Визуализация правила произведения и сложной функции»",
+          "url": "https://www.youtube.com/watch?v=HMKgoKZFqB0",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 16,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-chain-rule",
+      "week": 1,
+      "topic_ru": "Цепное правило",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 3.4",
+          "url": "https://contest.yandex.ru/tracks/math/mathematical-analysis/partial-derivatives-and-gradient#pravilo-cepochki",
+          "section": "Раздел «Правило цепочки»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по ML», 5.3. Метод обратного распространения ошибки",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-introduction/backpropagation#gradient-slozhnoj-funkcii",
+          "section": "Раздел «Градиент сложной функции»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-math-partial-gradient",
+      "week": 1,
+      "topic_ru": "Частная производная и градиент (D1)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 3.4",
+          "url": "https://contest.yandex.ru/tracks/math/mathematical-analysis/partial-derivatives-and-gradient#chastnye-proizvodnye",
+          "section": "Разделы «Частные производные» … «Градиент и его геометрический смысл»",
+          "lang": "ru",
+          "minutes": 18,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-tools-uv",
+      "week": 1,
+      "topic_ru": "uv: проект, зависимости, запуск",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "uv docs: Working on projects",
+          "url": "https://docs.astral.sh/uv/guides/projects/",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-tools-ruff",
+      "week": 1,
+      "topic_ru": "ruff: линтер и форматтер",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Ruff docs: Tutorial",
+          "url": "https://docs.astral.sh/ruff/tutorial/",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-tools-pytest",
+      "week": 1,
+      "topic_ru": "pytest: первые тесты",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "pytest docs: Get Started",
+          "url": "https://docs.pytest.org/en/stable/getting-started.html",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Что такое pytest и как его использовать?»",
+          "url": "https://habr.com/ru/articles/876570/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w1-tools-github-actions",
+      "week": 1,
+      "topic_ru": "GitHub Actions: CI для Python",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Документация GitHub (рус.): Создание и тестирование Python",
+          "url": "https://docs.github.com/ru/actions/tutorials/build-and-test-code/python",
+          "section": "Вся страница",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Документация GitHub (рус.): Быстрый старт для GitHub Actions",
+          "url": "https://docs.github.com/ru/actions/get-started/quickstart",
+          "section": "Вся страница",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-bigo",
+      "week": 1,
+      "topic_ru": "Big-O: оценка сложности",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 1.3. Алгоритмы и сложность",
+          "url": "https://contest.yandex.ru/tracks/algorithms/introduction/algorithms-and-complexity#bystrye-i-medlennye-algoritmy",
+          "section": "Разделы «Быстрые и медленные алгоритмы», «Как определить количество операций алгоритма»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Алгоритмика: Асимптотический анализ",
+          "url": "https://ru.algorithmica.org/cs/complexity/asymptotic/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 1: «Сложность, тестирование, особые случаи»",
+          "url": "https://www.youtube.com/watch?v=QLhqYNsPIVo",
+          "section": "Начало лекции (сложность)",
+          "lang": "ru",
+          "minutes": 67,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-hash-set",
+      "week": 1,
+      "topic_ru": "Паттерн hash set (Contains Duplicate)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 3: «Множества»",
+          "url": "https://www.youtube.com/watch?v=PUpmV2ieIHA",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 72,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 3.2. Множества, словари",
+          "url": "https://contest.yandex.ru/tracks/python/collections-and-memory/sets-and-dictionaries#mnozhestva-set",
+          "section": "Раздел «Множества (set)»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-hash-map",
+      "week": 1,
+      "topic_ru": "Паттерн hash map (Two Sum, Valid Anagram, Ransom Note)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 4: «Словари и сортировка подсчётом»",
+          "url": "https://www.youtube.com/watch?v=Nb5mW1yWVSs",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 62,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 3.2. Задача «Сумма двух чисел»",
+          "url": "https://contest.yandex.ru/tracks/algorithms/solving-practical-programming-problems/two-sum-problem",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Хеш-таблица",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%A5%D0%B5%D1%88-%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-iterators-generators",
+      "week": 2,
+      "topic_ru": "Итераторы и генераторы (B5)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Учебник Python (рус.): 9.8. Итераторы, 9.9. Генераторы, 9.10. Генераторные выражения",
+          "url": "https://docs.python.org/ru/3/tutorial/classes.html#iterators",
+          "section": "§9.8–9.10",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 4.3",
+          "url": "https://contest.yandex.ru/tracks/python/functions-in-python/recursion-decorators-generators#chto-takoe-generatory-i-chem-oni-polezny-pri-rabote-s-bolshimi-obuyomami-dannyh",
+          "section": "Раздел «Что такое генераторы…»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Итерируемый объект, итератор и генератор»",
+          "url": "https://habr.com/ru/articles/337314/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-decorators",
+      "week": 2,
+      "topic_ru": "Декораторы (B6)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr (OTUS): «Декораторы Python: пошаговое руководство»",
+          "url": "https://habr.com/ru/articles/727590/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 4.3",
+          "url": "https://contest.yandex.ru/tracks/python/functions-in-python/recursion-decorators-generators#chto-takoe-dekoratory-i-kak-oni-pomogayut-rasshiryat-povedenie-funkcij",
+          "section": "Раздел «Что такое декораторы…»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-context-managers",
+      "week": 2,
+      "topic_ru": "Контекстные менеджеры (with)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: «Менеджер контекста это просто»",
+          "url": "https://habr.com/ru/articles/739326/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Документация Python (рус.): 3.3.9. Менеджеры контекста инструкции with",
+          "url": "https://docs.python.org/ru/3/reference/datamodel.html#with-statement-context-managers",
+          "section": "§3.3.9",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-exceptions",
+      "week": 2,
+      "topic_ru": "Исключения: try / except / else / finally, raise",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Учебник Python (рус.): 8. Ошибки и исключения",
+          "url": "https://docs.python.org/ru/3/tutorial/errors.html#handling-exceptions",
+          "section": "§8.3–8.7",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 5.3",
+          "url": "https://contest.yandex.ru/tracks/python/object-oriented-programming/python-exceptions-and-modules#kak-rabotaet-konstrukciya-try-except-i-kogda-ispolzovat-else-i-finally",
+          "section": "Разделы про LBYL/EAFP и try–except–else–finally",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-classmethod-staticmethod",
+      "week": 2,
+      "topic_ru": "@staticmethod и @classmethod",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Документация Python (рус.): встроенные функции — classmethod",
+          "url": "https://docs.python.org/ru/3/library/functions.html#classmethod",
+          "section": "Статьи «classmethod» и «staticmethod» (соседние)",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Документация Python (рус.): встроенные функции — staticmethod",
+          "url": "https://docs.python.org/ru/3/library/functions.html#staticmethod",
+          "section": "Статья «staticmethod»",
+          "lang": "ru",
+          "minutes": 3,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-mro-super",
+      "week": 2,
+      "topic_ru": "Наследование, MRO, super()",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 5.2",
+          "url": "https://contest.yandex.ru/tracks/python/object-oriented-programming/magic-methods-overriding-and-inheritance#kak-rabotaet-mnozhestvennoe-nasledovanie-i-v-chyom-ego-osobennosti-v-python",
+          "section": "Разделы «Как работает множественное наследование…», «Почему нельзя использовать super()»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Порядок разрешения методов в Python»",
+          "url": "https://habr.com/ru/articles/62203/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Учебник Python (рус.): 9.5.1. Множественное наследование",
+          "url": "https://docs.python.org/ru/3/tutorial/classes.html#multiple-inheritance",
+          "section": "§9.5.1",
+          "lang": "ru",
+          "minutes": 3,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-dunder",
+      "week": 2,
+      "topic_ru": "Dunder-методы (B8)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 5.2",
+          "url": "https://contest.yandex.ru/tracks/python/object-oriented-programming/magic-methods-overriding-and-inheritance#chto-takoe-specialnye-magicheskie-metody-i-kak-oni-ispolzuyutsya",
+          "section": "Разделы «Что такое специальные (магические) методы…» … «Метод add…»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Документация Python (рус.): 3.3. Имена специальных методов",
+          "url": "https://docs.python.org/ru/3/reference/datamodel.html#special-method-names",
+          "section": "§3.3.1, §3.3.7, §3.3.8",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-dataclasses",
+      "week": 2,
+      "topic_ru": "dataclasses",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr (OTUS): «9 причин использовать dataclasses в Python»",
+          "url": "https://habr.com/ru/articles/650257/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 5.5. Проект",
+          "url": "https://contest.yandex.ru/tracks/python/object-oriented-programming/banking-application-backend#dekorator-dataclass-dlya-klassov-hranilish",
+          "section": "Раздел «Декоратор dataclass для классов-хранилищ»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-python-gil-concurrency",
+      "week": 2,
+      "topic_ru": "GIL, threading vs multiprocessing vs asyncio (B7)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr (Сбер): «Различные вычисления, многопоточность, асинхронность и мультипроцессность в Python»",
+          "url": "https://habr.com/ru/articles/829098/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 9,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: «Погружение в многозадачность Python: процессы, потоки, GIL и асинхронность»",
+          "url": "https://habr.com/ru/articles/1048886/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 39,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Глоссарий Python (рус.): GIL",
+          "url": "https://docs.python.org/ru/3/glossary.html#term-global-interpreter-lock",
+          "section": "Термин «global interpreter lock»",
+          "lang": "ru",
+          "minutes": 2,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch1",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Векторы (3B1B, гл. 1)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 1: Векторы (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=fNk_zzaMoSs",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/vectors",
+          "section": "Вся глава (определение, операции, базис)",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #1» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=cJslkj9_wyg",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch2",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Линейные комбинации, оболочка, базис (3B1B, гл. 2)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 2: Линейные комбинации, оболочка, базис (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=k7RM-ot2NWY",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #2» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=W8tQU4YhkQo",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch3",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Линейные преобразования и матрицы (3B1B, гл. 3)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 3: Линейные преобразования и матрицы (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=kYB8IZa5AuE",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/matrices#umnozhenie",
+          "section": "Раздел «Умножение» и «Интересные особенности матричного умножения»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #3» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=fXNPMs1ZgTI",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch4",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Умножение матриц как композиция (3B1B, гл. 4)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 4: Умножение матриц как композиция (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=XkY2DOUCWMU",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/matrices#interesnye-osobennosti-matrichnogo-umnozheniya",
+          "section": "Раздел «Интересные особенности матричного умножения»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #4» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=_I03qVUXyF4",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch5",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Линейные преобразования в 3D (3B1B, гл. 5)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 5: Линейные преобразования в 3D (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=rHLEWRxRGiM",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #5» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=J3XG-hzX2aA",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch6",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Определитель (3B1B, гл. 6)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 6: Определитель (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=Ip3X9LOh2dk",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/determinants#geometricheskij-smysl-opredelitelya",
+          "section": "Раздел «Геометрический смысл определителя»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #6» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=GTTIVtxQAXg",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch7",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Обратные матрицы, пространство столбцов, ядро (3B1B, гл. 7)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 7: Обратные матрицы, пространство столбцов, ядро (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=uQhTuRlWMxw",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/advanced-linear-systems#obratimye-matricy",
+          "section": "Раздел «Обратимые матрицы»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #7» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=PUgQQtd9AL8",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch8",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Неквадратные матрицы (3B1B, гл. 8)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 8: Неквадратные матрицы (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=v8VSDg_WQlA",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch9",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Скалярное произведение (3B1B, гл. 9)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 9: Скалярное произведение (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=LyGKycYT2v0",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 14,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/vectors#standartnoe-skalyarnoe-proizvedenie",
+          "section": "Раздел «Стандартное скалярное произведение»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #9» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=FpYyabnk0-E",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 14,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w2-math-la-ch14",
+      "week": 2,
+      "topic_ru": "Линейная алгебра: Собственные векторы и значения (3B1B, гл. 14)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "3Blue1Brown «Суть линейной алгебры», гл. 14: Собственные векторы и значения (русская звуковая дорожка)",
+          "url": "https://www.youtube.com/watch?v=PFDu9oVAE-g",
+          "section": "Всё видео; в плеере выберите звуковую дорожку «Русский»",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», гл. 4",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/spectral-methods-and-matrix-decompositions#sobstvennye-znacheniya-i-vektory,-diagonalizaciya,-spektralnyj-radius",
+          "section": "Раздел «Собственные значения и векторы, диагонализация…»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Vert Dider: «Суть линейной алгебры: #14» (озвучка)",
+          "url": "https://www.youtube.com/watch?v=khMBBxLJLcw",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-two-pointers",
+      "week": 2,
+      "topic_ru": "Паттерн «два указателя» (Valid Palindrome, Two Sum II, Merge Sorted Array, Move Zeroes, 3Sum)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 6.0, Лекция 2: «Префиксные суммы и два указателя»",
+          "url": "https://www.youtube.com/watch?v=B4uP6igiVNU&t=1949s",
+          "section": "С 32:29 «Введение в два указателя» до 51:03",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 5: «Префиксные суммы и два указателя»",
+          "url": "https://www.youtube.com/watch?v=de28y8Dcvkg",
+          "section": "Вторая половина лекции",
+          "lang": "ru",
+          "minutes": 65,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-majority",
+      "week": 2,
+      "topic_ru": "Majority Element: подсчёт и «разделяй и властвуй»",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 9.2. Поиск доминирующего элемента",
+          "url": "https://contest.yandex.ru/tracks/algorithms/divide-and-conquer/majority-element-search",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-probability",
+      "week": 3,
+      "topic_ru": "Вероятность и вероятностное пространство",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 6.2. Вероятностное пространство",
+          "url": "https://contest.yandex.ru/tracks/math/probability-theory/probability-space",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-conditional-bayes",
+      "week": 3,
+      "topic_ru": "Условная вероятность и формула Байеса (D3)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 6.3",
+          "url": "https://contest.yandex.ru/tracks/math/probability-theory/conditional-probability-and-independence#uslovnaya-veroyatnost",
+          "section": "Разделы «Условная вероятность», «Формула Байеса и формула полной вероятности», «Независимость событий»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-expectation-variance",
+      "week": 3,
+      "topic_ru": "Матожидание и дисперсия (D4)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 6.5",
+          "url": "https://contest.yandex.ru/tracks/math/probability-theory/continuous-random-variables#matematicheskoe-ozhidanie",
+          "section": "Разделы «Математическое ожидание», «Дисперсия и среднеквадратичное отклонение»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Stepik «Основы статистики» (Карпов), урок 1.5 «Меры изменчивости»",
+          "url": "https://stepik.org/lesson/8076/step/1",
+          "section": "Урок 1.5",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-distributions",
+      "week": 3,
+      "topic_ru": "Распределения: дискретные, нормальное",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 6.4",
+          "url": "https://contest.yandex.ru/tracks/math/probability-theory/discrete-random-variables#osnovnye-diskretnye-raspredeleniya",
+          "section": "Раздел «Основные дискретные распределения»; затем 6.5 «Нормальное распределение»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Stepik «Основы статистики», урок 1.7 «Нормальное распределение»",
+          "url": "https://stepik.org/lesson/9166/step/1",
+          "section": "Урок 1.7",
+          "lang": "ru",
+          "minutes": 19,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-clt",
+      "week": 3,
+      "topic_ru": "Центральная предельная теорема",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Stepik «Основы статистики» (Карпов), урок 1.8 «Центральная предельная теорема»",
+          "url": "https://stepik.org/lesson/8077/step/1",
+          "section": "Урок 1.8",
+          "lang": "ru",
+          "minutes": 16,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-math-hypotheses-pvalue",
+      "week": 3,
+      "topic_ru": "Проверка гипотез и p-value (D5)",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Stepik «Основы статистики», урок 1.10 «Идея статистического вывода, p-уровень значимости»",
+          "url": "https://stepik.org/lesson/8078/step/1",
+          "section": "Урок 1.10",
+          "lang": "ru",
+          "minutes": 26,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Stepik «Основы статистики», урок 2.2 «Сравнение двух средних; t-критерий Стьюдента»",
+          "url": "https://stepik.org/lesson/9249/step/1",
+          "section": "Урок 2.2",
+          "lang": "ru",
+          "minutes": 30,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-numpy",
+      "week": 3,
+      "topic_ru": "NumPy: векторизация и массивы",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы Python», 6.1. Модули math и numpy",
+          "url": "https://contest.yandex.ru/tracks/python/data-processing-libraries/math-and-numpy#kak-ustroeny-massivy-v-numpy-i-chem-oni-otlichayutsya-ot-obychnyh-spiskov",
+          "section": "Разделы с «Как устроены массивы в numpy…» до конца",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "rougier/numpy-100 (упражнения 1–40)",
+          "url": "https://github.com/rougier/numpy-100",
+          "section": "Упражнения 1–40",
+          "lang": "en",
+          "minutes": 60,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-numpy-broadcasting",
+      "week": 3,
+      "topic_ru": "NumPy broadcasting",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "NumPy docs: Broadcasting",
+          "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 12,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-pandas",
+      "week": 3,
+      "topic_ru": "pandas: groupby, merge, pivot",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "ODS, Открытый курс ML. Тема 1. Первичный анализ данных с Pandas",
+          "url": "https://habr.com/ru/companies/ods/articles/322626/",
+          "section": "Раздел «3. Демонстрация основных методов Pandas»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы Python», 6.2. Модуль pandas",
+          "url": "https://contest.yandex.ru/tracks/python/data-processing-libraries/pandas#gruppirovka-i-agregirovanie-dannyh",
+          "section": "Раздел «Группировка и агрегирование данных»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "pandas docs: Merge, join, concatenate and compare",
+          "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
+          "section": "Раздел merge",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-matplotlib-seaborn",
+      "week": 3,
+      "topic_ru": "matplotlib и seaborn",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "ODS, Открытый курс ML. Тема 2. Визуальный анализ данных с Python",
+          "url": "https://habr.com/ru/companies/ods/articles/323210/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-jupyter",
+      "week": 3,
+      "topic_ru": "Jupyter",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Project Jupyter docs: Get started",
+          "url": "https://docs.jupyter.org/en/latest/start/index.html",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 5,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w3-tools-bash",
+      "week": 3,
+      "topic_ru": "Bash: grep, find, пайпы (G4)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Linux», 3.7. Поиск файлов и текста (find, grep, wc)",
+          "url": "https://contest.yandex.ru/tracks/linux/terminal-basics/finding-files-and-text",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Linux», 3.9. Пайпы, логические операторы и принцип KISS",
+          "url": "https://contest.yandex.ru/tracks/linux/terminal-basics/pipes-logical-operators-and-kiss#pajpy-i-konvejery",
+          "section": "Раздел «Пайпы и конвейеры»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-stack",
+      "week": 3,
+      "topic_ru": "Паттерн «стек» (Valid Parentheses)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам (Яндекс, 2026): «1.1. Стек. Правильная скобочная последовательность»",
+          "url": "https://www.youtube.com/watch?v=-K0LaQsQius",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 22,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Стек",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D1%82%D0%B5%D0%BA",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам (Яндекс, 2026): «1.3. Монотонный стек»",
+          "url": "https://www.youtube.com/watch?v=WWFwpOlGSzc",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 16,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-binary-search",
+      "week": 3,
+      "topic_ru": "Паттерн «бинарный поиск»",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 9.1. Двоичный поиск",
+          "url": "https://contest.yandex.ru/tracks/algorithms/divide-and-conquer/binary-search#dvoichnyj-poisk",
+          "section": "Разделы «Двоичный поиск», «Двоичный поиск с дублированием»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 6: «Бинарный поиск»",
+          "url": "https://www.youtube.com/watch?v=YENpZexHfuk",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 65,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Алгоритмика: Бинарный поиск",
+          "url": "https://ru.algorithmica.org/cs/interactive/binary-search/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-dp-1d",
+      "week": 3,
+      "topic_ru": "Паттерн «одномерное ДП» (Climbing Stairs, House Robber)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 3.0. Лекция 3: «Динамическое программирование с одним параметром»",
+          "url": "https://www.youtube.com/watch?v=o7wbgAXUWzk",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 77,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 6.3. Динамическое программирование",
+          "url": "https://contest.yandex.ru/tracks/algorithms/algorithm-design-techniques/dynamic-programming",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Динамическое программирование",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-linked-list",
+      "week": 3,
+      "topic_ru": "Паттерн «связный список» (Reverse Linked List)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Викиконспекты ИТМО: Список",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA",
+          "section": "Разделы «Односвязный список», «Операции на списке»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов», 2.1. Односвязный список",
+          "url": "https://contest.yandex.ru/tracks/algorithms/fundamental-data-structures/singly-linked-list",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-sql-basics",
+      "week": 4,
+      "topic_ru": "SQL: SELECT, WHERE, ORDER BY",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "SQL Academy: Базовый синтаксис SQL-запроса",
+          "url": "https://sql-academy.org/ru/guide/basic-syntax-sql-query",
+          "section": "Вся глава и следующие главы раздела",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "SQLBolt: Interactive SQL lessons",
+          "url": "https://sqlbolt.com/",
+          "section": "Уроки 1–6",
+          "lang": "en",
+          "minutes": 60,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-intro",
+      "week": 4,
+      "topic_ru": "Что такое ML: постановка задачи",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Машинное обучение»",
+          "url": "https://contest.yandex.ru/tracks/ml/introduction/machine-learning#postanovka-zadachi",
+          "section": "Раздел «Постановка задачи»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-train-val-test-overfitting",
+      "week": 4,
+      "topic_ru": "Train/val/test и переобучение (E2)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Машинное обучение»",
+          "url": "https://contest.yandex.ru/tracks/ml/introduction/machine-learning#vybor-modeli,-pereobuchenie",
+          "section": "Раздел «Выбор модели, переобучение»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 3. Деревья решений и метод ближайших соседей",
+          "url": "https://habr.com/ru/companies/ods/articles/322534/",
+          "section": "Раздел «Выбор параметров модели и кросс-валидация»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-bias-variance",
+      "week": 4,
+      "topic_ru": "Bias–variance",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Ансамбли в машинном обучении»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/ensembles-in-machine-learning#smeshenie-i-razbros",
+          "section": "Раздел «Смещение и разброс»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Bias-variance decomposition»",
+          "url": "https://contest.yandex.ru/tracks/ml/machine-learning-theory/bias-variance-decomposition",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-linear-regression",
+      "week": 4,
+      "topic_ru": "Линейная регрессия и МНК",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Линейные модели»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/linear-models#linejnaya-regressiya-i-metod-naimenshih-kvadratov-mnk",
+          "section": "Раздел «Линейная регрессия и метод наименьших квадратов (МНК)»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 4. Линейные модели классификации и регрессии",
+          "url": "https://habr.com/ru/companies/ods/articles/323890/",
+          "section": "Раздел «Линейная регрессия»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-math-gradient-descent",
+      "week": 4,
+      "topic_ru": "Градиентный спуск",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 3.5. Градиентные методы",
+          "url": "https://contest.yandex.ru/tracks/math/mathematical-analysis/gradient-methods#gradientnyj-spusk",
+          "section": "Разделы «Градиентный спуск», «Стохастический градиентный спуск», «Mini-batch»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-logistic-regression",
+      "week": 4,
+      "topic_ru": "Логистическая регрессия",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Линейные модели»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/linear-models#logisticheskaya-regressiya",
+          "section": "Раздел «Логистическая регрессия»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 4. Линейные модели классификации и регрессии",
+          "url": "https://habr.com/ru/companies/ods/articles/323890/",
+          "section": "Раздел «Логистическая регрессия»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-regularization",
+      "week": 4,
+      "topic_ru": "Регуляризация L1/L2 (E6)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Линейные модели»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/linear-models#regulyarizaciya",
+          "section": "Разделы «Регуляризация», «Разреживание весов в регуляризации»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 4.11. Линейные модели и регуляризация",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/linear-models-and-regularization",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-metrics",
+      "week": 4,
+      "topic_ru": "Метрики классификации и регрессии (E3)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Метрики классификации и регрессии»",
+          "url": "https://contest.yandex.ru/tracks/ml/model-evaluation/classification-and-regression-metrics#precision",
+          "section": "Разделы Accuracy, Precision, Recall, F1, ROC-AUC, MSE/MAE",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-cross-validation",
+      "week": 4,
+      "topic_ru": "Кросс-валидация, StratifiedKFold (E4)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Кросс-валидация»",
+          "url": "https://contest.yandex.ru/tracks/ml/model-evaluation/cross-validation#k-fold",
+          "section": "Раздел «K-fold» и далее",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "scikit-learn: Cross-validation",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+          "section": "Разделы 3.1.2.1 K-fold, Stratified k-fold",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-leakage",
+      "week": 4,
+      "topic_ru": "Утечка данных (E7)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Кросс-валидация»",
+          "url": "https://contest.yandex.ru/tracks/ml/model-evaluation/cross-validation#kogda-stoit-zapodozrit,-chto-ocenka-kachestva-modeli-zavyshena",
+          "section": "Раздел «Когда стоит заподозрить, что оценка качества модели завышена»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "VK: Утечка данных в машинном обучении (Habr)",
+          "url": "https://habr.com/ru/articles/746360/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 13,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w4-ml-knn-vs-kmeans",
+      "week": 4,
+      "topic_ru": "kNN и k-means: разница (E8)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Метрические методы»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/metric-methods#metod-k-blizhajshih-sosedej-knn",
+          "section": "Раздел «Метод k ближайших соседей (KNN)»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Кластеризация»",
+          "url": "https://contest.yandex.ru/tracks/ml/practical-topics/clustering#metod-k-srednih",
+          "section": "Раздел «Метод K средних»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-sliding-window",
+      "week": 4,
+      "topic_ru": "Паттерн «скользящее окно» (Longest Substring, C2)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 6.0. Лекция 2: «Префиксные суммы и два указателя» — задача о подстроке",
+          "url": "https://www.youtube.com/watch?v=B4uP6igiVNU&t=3427s",
+          "section": "С 57:07: задача о подстроке; с 1:13:26 — окно и указатели",
+          "lang": "ru",
+          "minutes": 28,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам (Яндекс, 2026): «2.2. Дек. Минимум в окне»",
+          "url": "https://www.youtube.com/watch?v=szs0GafJbR0",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 19,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-sql-join-groupby",
+      "week": 5,
+      "topic_ru": "SQL: JOIN, GROUP BY, HAVING",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "SQL Academy: Многотабличные запросы, оператор JOIN",
+          "url": "https://sql-academy.org/ru/guide/multi-table-request-join",
+          "section": "Вся глава; затем «Группировка» и «HAVING»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "SQL Academy: Группировка",
+          "url": "https://sql-academy.org/ru/guide/groupping",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "SQL Academy: Оператор HAVING",
+          "url": "https://sql-academy.org/ru/guide/operator-having",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-decision-trees",
+      "week": 5,
+      "topic_ru": "Решающие деревья",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Решающие деревья»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/decision-trees",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 3. Деревья решений и kNN",
+          "url": "https://habr.com/ru/companies/ods/articles/322534/",
+          "section": "Раздел «Дерево решений»",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-bagging-rf",
+      "week": 5,
+      "topic_ru": "Бэггинг и случайный лес",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Ансамбли в машинном обучении»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/ensembles-in-machine-learning#begging",
+          "section": "Разделы «Бэггинг», «Случайный лес»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 5. Композиции: бэггинг, случайный лес",
+          "url": "https://habr.com/ru/companies/ods/articles/324402/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 30,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-bagging-vs-boosting",
+      "week": 5,
+      "topic_ru": "Бэггинг против бустинга (E5)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Ансамбли в машинном обучении»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/ensembles-in-machine-learning#busting",
+          "section": "Раздел «Бустинг»; сравните с «Бэггинг»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-gradient-boosting",
+      "week": 5,
+      "topic_ru": "Градиентный бустинг",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Градиентный бустинг»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/gradient-boosting",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 10. Градиентный бустинг",
+          "url": "https://habr.com/ru/companies/ods/articles/327250/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 40,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-boosting-libraries",
+      "week": 5,
+      "topic_ru": "CatBoost, LightGBM, XGBoost",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Градиентный бустинг»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/gradient-boosting#realizacii",
+          "section": "Раздел «Реализации»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Точка: CatBoost, XGBoost и LightGBM (Habr)",
+          "url": "https://habr.com/ru/articles/751012/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w5-ml-stacking",
+      "week": 5,
+      "topic_ru": "Стекинг",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Ансамбли в машинном обучении»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/ensembles-in-machine-learning#steking",
+          "section": "Раздел «Стекинг»",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-intervals",
+      "week": 5,
+      "topic_ru": "Паттерн «интервалы» (Merge Intervals)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 7: «Сортировка событий»",
+          "url": "https://www.youtube.com/watch?v=hGixDBO-p6Q",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 64,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-heap-top-k",
+      "week": 5,
+      "topic_ru": "Паттерн «куча / top-k» (Top K Frequent, Kth Largest)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Алгоритмика: Двоичная куча",
+          "url": "https://ru.algorithmica.org/cs/basic-structures/heap/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам (Яндекс, 2026): «2.3. Реализация кучи»",
+          "url": "https://www.youtube.com/watch?v=Z032PF_YmEg",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 28,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Двоичная куча",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%94%D0%B2%D0%BE%D0%B8%D1%87%D0%BD%D0%B0%D1%8F_%D0%BA%D1%83%D1%87%D0%B0",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-group-anagrams",
+      "week": 5,
+      "topic_ru": "Хеш-ключ из сортировки/счётчика (Group Anagrams)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 5.0. Лекция 3: «Множества и словари»",
+          "url": "https://www.youtube.com/watch?v=jQOnYzW8ZOE",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 81,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-sql-window",
+      "week": 6,
+      "topic_ru": "SQL: оконные функции",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "SQL Academy: Оконные функции",
+          "url": "https://sql-academy.org/ru/guide/windows-functions",
+          "section": "Вся глава; затем «Партиции»",
+          "lang": "ru",
+          "minutes": 12,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "SQL Academy: Партиции",
+          "url": "https://sql-academy.org/ru/guide/partitions",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-ml-optuna",
+      "week": 6,
+      "topic_ru": "Подбор гиперпараметров, Optuna",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Подбор гиперпараметров»",
+          "url": "https://contest.yandex.ru/tracks/ml/model-evaluation/hyperparameter-tuning#optuna",
+          "section": "Раздел «Optuna» и предыдущие (Grid, Random, байесовская оптимизация)",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Optuna — подбор гиперпараметров",
+          "url": "https://habr.com/ru/articles/801463/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-ml-feature-importance-shap",
+      "week": 6,
+      "topic_ru": "Важность признаков и SHAP",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "ODS: Интерпретация моделей — SHAP и LIME (Habr)",
+          "url": "https://habr.com/ru/articles/599573/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 37,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Градиентный бустинг»",
+          "url": "https://contest.yandex.ru/tracks/ml/supervised-learning/gradient-boosting#vazhnost-priznakov",
+          "section": "Раздел «Важность признаков»",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-ml-clustering",
+      "week": 6,
+      "topic_ru": "Кластеризация: k-means и DBSCAN",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Кластеризация»",
+          "url": "https://contest.yandex.ru/tracks/ml/practical-topics/clustering#metod-k-srednih",
+          "section": "Разделы «Метод K средних», «DBSCAN», «Оценка качества»",
+          "lang": "ru",
+          "minutes": 30,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-ml-pca",
+      "week": 6,
+      "topic_ru": "PCA",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 4.10. Снижение размерности",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/dimensionality-reduction-and-latent-factors#metod-glavnyh-komponent-i-svd",
+          "section": "Раздел «Метод главных компонент и SVD»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 7. Обучение без учителя: PCA и кластеризация",
+          "url": "https://habr.com/ru/companies/ods/articles/325654/",
+          "section": "Раздел о PCA",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-ab-tests",
+      "week": 6,
+      "topic_ru": "A/B-тесты: p-value, мощность",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "OTUS: Уровень значимости и мощность в A/B-тестах (Habr)",
+          "url": "https://habr.com/ru/articles/793474/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Ozon: A/B-тесты (Habr)",
+          "url": "https://habr.com/ru/articles/712306/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 18,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Stepik «Основы статистики», урок 2.7 «АБ тесты»",
+          "url": "https://stepik.org/lesson/411390/step/1",
+          "section": "Урок 2.7",
+          "lang": "ru",
+          "minutes": 2,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-product-metrics",
+      "week": 6,
+      "topic_ru": "Продуктовые метрики",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Яндекс Практикум: памятка по метрикам (Habr)",
+          "url": "https://habr.com/ru/articles/966658/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 4,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Продуктовые метрики",
+          "url": "https://habr.com/ru/articles/542848/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 7,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-pricing",
+      "week": 6,
+      "topic_ru": "Ценообразование (pricing)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Динамическое ценообразование",
+          "url": "https://habr.com/ru/articles/736270/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w6-tools-mlflow",
+      "week": 6,
+      "topic_ru": "MLflow Tracking",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "MLflow docs: Tracking",
+          "url": "https://mlflow.org/docs/latest/ml/tracking/",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-prefix-suffix",
+      "week": 6,
+      "topic_ru": "Паттерн «префиксы и суффиксы» (Product of Array Except Self)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 6.0. Лекция 2: «Префиксные суммы и два указателя»",
+          "url": "https://www.youtube.com/watch?v=B4uP6igiVNU&t=367s",
+          "section": "С 6:07 до 32:29",
+          "lang": "ru",
+          "minutes": 26,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Алгоритмика: Префиксные суммы",
+          "url": "https://ru.algorithmica.org/cs/range-queries/prefix-sum/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-fast-slow-pointers",
+      "week": 6,
+      "topic_ru": "Паттерн «быстрый и медленный указатели» (Linked List Cycle)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Викиконспекты ИТМО: Список — поиск цикла",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA#.D0.9F.D0.BE.D0.B8.D1.81.D0.BA_.D1.86.D0.B8.D0.BA.D0.BB.D0.B0_.D0.B2_.D1.81.D0.BF.D0.B8.D1.81.D0.BA.D0.B5",
+          "section": "Раздел «Поиск цикла в списке» (алгоритм Флойда)",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-3sum",
+      "week": 6,
+      "topic_ru": "Сортировка + два указателя (3Sum)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 6.0. Лекция 2: «Префиксные суммы и два указателя»",
+          "url": "https://www.youtube.com/watch?v=B4uP6igiVNU&t=1949s",
+          "section": "С 32:29",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-fastapi",
+      "week": 7,
+      "topic_ru": "FastAPI: первое приложение",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "FastAPI (документация на русском): Первые шаги",
+          "url": "https://fastapi.tiangolo.com/ru/tutorial/first-steps/",
+          "section": "Вся страница и следующие главы учебника",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-pydantic",
+      "week": 7,
+      "topic_ru": "Pydantic: тело запроса и валидация",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "FastAPI (документация на русском): Тело запроса",
+          "url": "https://fastapi.tiangolo.com/ru/tutorial/body/",
+          "section": "Вся страница",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-docker-image-container",
+      "week": 7,
+      "topic_ru": "Docker: образ и контейнер (G3)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Нетология: Docker для начинающих (Habr)",
+          "url": "https://habr.com/ru/companies/netologyru/articles/967546/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "FastAPI (документация на русском): FastAPI в контейнерах — Docker",
+          "url": "https://fastapi.tiangolo.com/ru/deployment/docker/",
+          "section": "Вся страница",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-docker-compose",
+      "week": 7,
+      "topic_ru": "docker-compose",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "RUVDS: compose.yaml (Habr)",
+          "url": "https://habr.com/ru/articles/1052844/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 31,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-github-actions-ci",
+      "week": 7,
+      "topic_ru": "GitHub Actions: CI для Python",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "GitHub Docs (рус.): Сборка и тестирование кода Python",
+          "url": "https://docs.github.com/ru/actions/tutorials/build-and-test-code/python",
+          "section": "Вся страница",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-git-rebase-reset",
+      "week": 7,
+      "topic_ru": "git rebase и git reset (G2)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Pro Git (рус.), 3.6. Ветвление в Git — Перебазирование",
+          "url": "https://git-scm.com/book/ru/v2/%D0%92%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-Git-%D0%9F%D0%B5%D1%80%D0%B5%D0%B1%D0%B0%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
+          "section": "Вся глава, особенно «Опасности перебазирования»",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Pro Git (рус.), 7.7. Инструменты Git — Раскрытие тайн reset",
+          "url": "https://git-scm.com/book/ru/v2/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B-Git-%D0%A0%D0%B0%D1%81%D0%BA%D1%80%D1%8B%D1%82%D0%B8%D0%B5-%D1%82%D0%B0%D0%B9%D0%BD-reset",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-linux-basics",
+      "week": 7,
+      "topic_ru": "Linux: навигация по файловой системе",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Linux»: Навигация по файловой системе",
+          "url": "https://contest.yandex.ru/tracks/linux/terminal-basics/filesystem-navigation",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Linux»: Управление файлами и каталогами",
+          "url": "https://contest.yandex.ru/tracks/linux/terminal-basics/managing-files-and-directories",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w7-career-resume",
+      "week": 7,
+      "topic_ru": "Резюме, hh.ru, LinkedIn",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Резюме для Data Science",
+          "url": "https://habr.com/ru/articles/724766/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 11,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-tree-dfs",
+      "week": 7,
+      "topic_ru": "Паттерн «дерево: DFS/рекурсия» (Invert Tree, Max Depth, Same Tree)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 6.0. Лекция 4: «Деревья»",
+          "url": "https://www.youtube.com/watch?v=O9ffppQ05-c",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 89,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Тренировки по алгоритмам от Яндекса. Лекция 8: «Деревья»",
+          "url": "https://www.youtube.com/watch?v=lEJzqHgyels",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 67,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-neuron-mlp-activations",
+      "week": 8,
+      "topic_ru": "Нейрон, MLP, функции активации",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Первое знакомство с полносвязными нейросетями»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-introduction/fully-connected-neural-networks#populyarnye-funkcii-aktivacii",
+          "section": "Вся глава; раздел «Популярные функции активации»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown, Глава 1: «Что такое нейронная сеть?» (русская аудиодорожка)",
+          "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 19,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-loss",
+      "week": 8,
+      "topic_ru": "Функция потерь",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "3Blue1Brown, Глава 2: «Градиентный спуск: как учатся нейронные сети» (русская аудиодорожка)",
+          "url": "https://www.youtube.com/watch?v=IHZwWFHWa-w",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 21,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-backprop",
+      "week": 8,
+      "topic_ru": "Обратное распространение ошибки (F1)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Метод обратного распространения ошибки»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-introduction/backpropagation",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown, Глава 3: «Обратное распространение ошибки» (русская аудиодорожка)",
+          "url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U",
+          "section": "Всё видео; затем глава 4 (tIeHLnjs5U8)",
+          "lang": "ru",
+          "minutes": 13,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Deep Learning School МФТИ: Backpropagation",
+          "url": "https://www.youtube.com/watch?v=-yiq1DRX9K0",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 26,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-karpathy-micrograd",
+      "week": 8,
+      "topic_ru": "Karpathy Zero to Hero 1: micrograd",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Карпати: micrograd — русский закадровый перевод (неофициальный)",
+          "url": "https://www.youtube.com/watch?v=uS-SSM-rI0I",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 146,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Andrej Karpathy: The spelled-out intro to neural networks and backpropagation: building micrograd",
+          "url": "https://www.youtube.com/watch?v=VMj-3S1tku0",
+          "section": "Всё видео",
+          "lang": "en",
+          "minutes": 145,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-karpathy-makemore",
+      "week": 8,
+      "topic_ru": "Karpathy Zero to Hero 2: makemore",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Карпати: makemore — русский закадровый перевод (неофициальный)",
+          "url": "https://www.youtube.com/watch?v=cMFFG_VNcXY",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 118,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Andrej Karpathy: The spelled-out intro to language modeling: building makemore",
+          "url": "https://www.youtube.com/watch?v=PaCmpygFfXo",
+          "section": "Всё видео",
+          "lang": "en",
+          "minutes": 118,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-pytorch-training-loop",
+      "week": 8,
+      "topic_ru": "PyTorch: backward, step, zero_grad (F2)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "PyTorch Tutorials: Optimizing Model Parameters",
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+          "section": "Раздел «Optimization Loop»",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-optimizers",
+      "week": 8,
+      "topic_ru": "SGD, Momentum, Adam, AdamW",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Методы оптимизации в Deep Learning»",
+          "url": "https://contest.yandex.ru/tracks/ml/online-learning-and-stochastic-optimization/optimization-methods-in-deep-learning#adam",
+          "section": "Разделы «Adam», «SGD vs Adam»",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 3.5. Градиентные методы",
+          "url": "https://contest.yandex.ru/tracks/math/mathematical-analysis/gradient-methods#modifikacii-gradientnogo-spuska",
+          "section": "Раздел «Модификации градиентного спуска»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-learning-rate",
+      "week": 8,
+      "topic_ru": "Learning rate и расписания",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Методы оптимизации в Deep Learning»",
+          "url": "https://contest.yandex.ru/tracks/ml/online-learning-and-stochastic-optimization/optimization-methods-in-deep-learning#learning-rate-scheduling",
+          "section": "Разделы «Learning rate scheduling», «Эффективный learning rate»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-normalization",
+      "week": 8,
+      "topic_ru": "BatchNorm и LayerNorm",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Свёрточные нейросети»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/convolutional-neural-networks#batch-normalization-2015",
+          "section": "Раздел «Batch Normalization (2015)»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#polnosvyaznyj-sloj-i-normalizaciya",
+          "section": "Раздел «Полносвязный слой и нормализация»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-dropout",
+      "week": 8,
+      "topic_ru": "Dropout и регуляризация нейросетей",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Тонкости обучения»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-introduction/training-techniques#regulyarizaciya-nejronnyh-setej",
+          "section": "Раздел «Регуляризация нейронных сетей»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w8-dl-rnn-lstm",
+      "week": 8,
+      "topic_ru": "RNN, LSTM и почему их заменили трансформеры",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Нейросети для работы с последовательностями»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/neural-networks-for-sequences#rekurrentnye-nejronnye-seti",
+          "section": "Разделы «Рекуррентные нейронные сети», «LSTM»",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#zachem-nam-vnimanie",
+          "section": "Раздел «Зачем нам внимание»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-tree-bfs",
+      "week": 8,
+      "topic_ru": "Паттерн «BFS по уровням» (Level Order)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 3.0. Лекция 6: «Поиск в ширину»",
+          "url": "https://www.youtube.com/watch?v=5QqVZJ8bA5o&t=337s",
+          "section": "С 5:37",
+          "lang": "ru",
+          "minutes": 88,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Обход в ширину",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D0%B1%D1%85%D0%BE%D0%B4_%D0%B2_%D1%88%D0%B8%D1%80%D0%B8%D0%BD%D1%83",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-bst",
+      "week": 8,
+      "topic_ru": "Паттерн «дерево поиска» (Validate BST, Kth Smallest)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Викиконспекты ИТМО: Дерево поиска, наивная реализация",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D0%BE_%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0,_%D0%BD%D0%B0%D0%B8%D0%B2%D0%BD%D0%B0%D1%8F_%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F",
+          "section": "Разделы «Свойство», «Проверка того, что заданное дерево является деревом поиска»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-dl-cnn",
+      "week": 9,
+      "topic_ru": "Свёрточные сети",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Свёрточные нейросети»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/convolutional-neural-networks#svyortki",
+          "section": "Разделы «Свёртки» — «Остальные важные блоки»",
+          "lang": "ru",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Deep Learning School МФТИ: Свёрточные нейронные сети",
+          "url": "https://www.youtube.com/watch?v=HpKGv-kYurk",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 50,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-dl-resnet",
+      "week": 9,
+      "topic_ru": "ResNet и residual connection",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Свёрточные нейросети»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/convolutional-neural-networks#residual-connection",
+          "section": "Разделы «Residual connection», «ResNet (2015)»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-dl-transfer-learning",
+      "week": 9,
+      "topic_ru": "Transfer learning и дообучение",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Обучение представлений»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-practice/representation-learning#doobuchenie",
+          "section": "Раздел «Дообучение»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Transfer learning",
+          "url": "https://habr.com/ru/articles/835020/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-embeddings-cosine",
+      "week": 9,
+      "topic_ru": "Эмбеддинги и косинусное сходство",
+      "kind": "math",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Математика для анализа данных», 4.8. Проекции, углы и ортогональность",
+          "url": "https://contest.yandex.ru/tracks/math/linear-algebra/projections-angles-and-orthogonality#kosinusnaya-mera",
+          "section": "Раздел «Косинусная мера»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Нейросети для работы с последовательностями»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/neural-networks-for-sequences#word-embeddings",
+          "section": "Раздел «Word embeddings»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-clip",
+      "week": 9,
+      "topic_ru": "CLIP",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Сбер: ruCLIP — мультимодальная модель (Habr)",
+          "url": "https://habr.com/ru/articles/564440/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: CLIP и SigLIP",
+          "url": "https://habr.com/ru/articles/908168/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-bpe-tokenization",
+      "week": 9,
+      "topic_ru": "Токенизация BPE (F4)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Hugging Face LLM Course (рус.), 6.5. Токенизация Byte-Pair Encoding",
+          "url": "https://huggingface.co/learn/llm-course/ru/chapter6/5",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Языковые модели»",
+          "url": "https://contest.yandex.ru/tracks/ml/generative-models/language-models#tokenizaciya",
+          "section": "Раздел «Токенизация»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Карпати: токенизатор GPT — русский закадровый перевод (неофициальный)",
+          "url": "https://www.youtube.com/watch?v=bjIHaZjpbIg",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 134,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w9-tools-timm",
+      "week": 9,
+      "topic_ru": "timm: готовые модели",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Hugging Face docs: timm Quickstart",
+          "url": "https://huggingface.co/docs/timm/quickstart",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-graph-bfs-dfs",
+      "week": 9,
+      "topic_ru": "Паттерн «граф: BFS/DFS по сетке» (Number of Islands, Flood Fill)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам 3.0. Лекция 5: «Поиск в глубину»",
+          "url": "https://www.youtube.com/watch?v=0YjdZlgf9Ig",
+          "section": "Вся лекция",
+          "lang": "ru",
+          "minutes": 90,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Алгоритмика: Обход в глубину",
+          "url": "https://ru.algorithmica.org/cs/graph-traversals/dfs/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов»: Алгоритм нахождения компонент связности",
+          "url": "https://contest.yandex.ru/tracks/algorithms/graphs/finding-connected-components",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-dp-coin-change",
+      "week": 9,
+      "topic_ru": "ДП «размен монет» (Coin Change)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Основы алгоритмов»: Задача «Размен 2»",
+          "url": "https://contest.yandex.ru/tracks/algorithms/dynamic-programming/change-making-2-problem",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-attention",
+      "week": 10,
+      "topic_ru": "Механизм внимания: Q, K, V, softmax (F3)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#sloj-vnimaniya",
+          "section": "Раздел «Слой внимания»",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Transformer в картинках",
+          "url": "https://habr.com/ru/articles/486358/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 14,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "3Blue1Brown, Глава 6: «Механизм внимания» (русская аудиодорожка)",
+          "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 26,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-attention-mask-multihead",
+      "week": 10,
+      "topic_ru": "Маска в декодере и multi-head attention",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#osobennosti-sloya-vnimaniya-v-dekodere",
+          "section": "Разделы «Особенности слоя внимания в декодере», «Multi-head attention»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Deep Learning School МФТИ: Декодер, QKV",
+          "url": "https://www.youtube.com/watch?v=tsee8mosj5U",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 23,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-positional-encoding",
+      "week": 10,
+      "topic_ru": "Позиционное кодирование",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#kodirovanie-pozicij",
+          "section": "Раздел «Кодирование позиций»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Позиционное кодирование в трансформерах",
+          "url": "https://habr.com/ru/articles/780116/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-bert-vs-gpt",
+      "week": 10,
+      "topic_ru": "BERT против GPT",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Трансформеры»",
+          "url": "https://contest.yandex.ru/tracks/ml/deep-learning-architectures/transformers#pro-bert-i-gpt",
+          "section": "Раздел «Про BERT и GPT»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Hugging Face LLM Course (рус.), 1.5. Модели энкодеров",
+          "url": "https://huggingface.co/learn/llm-course/ru/chapter1/5",
+          "section": "Вся глава; затем 1.6 «Модели декодеров»",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-kv-cache",
+      "week": 10,
+      "topic_ru": "KV-cache",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "hh.ru: Инференс LLM — от KV-кэша и дальше (Habr)",
+          "url": "https://habr.com/ru/articles/1062318/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 9,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-sampling",
+      "week": 10,
+      "topic_ru": "Temperature, top-k, top-p",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Путешествие промпта",
+          "url": "https://habr.com/ru/articles/931844/",
+          "section": "Раздел о параметрах генерации",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Hugging Face blog: How to generate text",
+          "url": "https://huggingface.co/blog/how-to-generate",
+          "section": "Разделы Sampling, Top-K, Top-p",
+          "lang": "en",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-karpathy-gpt",
+      "week": 10,
+      "topic_ru": "Karpathy: Let's build GPT",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Карпати: GPT с нуля — русский закадровый перевод (неофициальный)",
+          "url": "https://www.youtube.com/watch?v=PgnsKTUQ7Ns",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 116,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Andrej Karpathy: Let's build GPT: from scratch, in code, spelled out (есть русская аудиодорожка YouTube)",
+          "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 117,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-3b1b-transformers",
+      "week": 10,
+      "topic_ru": "3Blue1Brown: трансформеры",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "3Blue1Brown, Глава 5: «Как устроены трансформеры» (русская аудиодорожка)",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 27,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-baseline-tfidf",
+      "week": 10,
+      "topic_ru": "Бейзлайн TF-IDF + LogReg",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "OTUS: TF-IDF (Habr)",
+          "url": "https://habr.com/ru/articles/755772/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "ODS, Открытый курс ML. Тема 6. Построение и отбор признаков",
+          "url": "https://habr.com/ru/companies/ods/articles/325422/",
+          "section": "Раздел о тексте (bag of words, TF-IDF)",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w10-baseline-rubert-tiny2",
+      "week": 10,
+      "topic_ru": "Бейзлайн rubert-tiny2",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Маленький и быстрый BERT для русского языка (автор rubert-tiny)",
+          "url": "https://habr.com/ru/articles/562064/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 9,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "lc-topological-sort",
+      "week": 10,
+      "topic_ru": "Паттерн «топологическая сортировка» (Course Schedule)",
+      "kind": "leetcode-pattern",
+      "sources": [
+        {
+          "title": "Алгоритмика: Топологическая сортировка",
+          "url": "https://ru.algorithmica.org/cs/graph-traversals/topological-sorting/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Викиконспекты ИТМО: Использование обхода в глубину для топологической сортировки",
+          "url": "https://neerc.ifmo.ru/wiki/index.php?title=%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BE%D0%B1%D1%85%D0%BE%D0%B4%D0%B0_%D0%B2_%D0%B3%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D1%83_%D0%B4%D0%BB%D1%8F_%D1%82%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B9_%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-sft-fine-tuning",
+      "week": 11,
+      "topic_ru": "Fine-tuning и SFT",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Языковые модели»",
+          "url": "https://contest.yandex.ru/tracks/ml/generative-models/language-models#sft-supervised-finetuning",
+          "section": "Раздел «SFT (Supervised Finetuning)»",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Hugging Face LLM Course (рус.), 3.3. Fine-tuning модели с Trainer API",
+          "url": "https://huggingface.co/learn/llm-course/ru/chapter3/3",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Дообучение LLM в 2026",
+          "url": "https://habr.com/ru/articles/1026700/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 19,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-lora-qlora",
+      "week": 11,
+      "topic_ru": "LoRA и QLoRA (F5)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "OTUS: LoRA и QLoRA (Habr)",
+          "url": "https://habr.com/ru/articles/935286/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: LoRA",
+          "url": "https://habr.com/ru/articles/747534/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Hu et al.: LoRA (arXiv 2106.09685)",
+          "url": "https://arxiv.org/abs/2106.09685",
+          "section": "Abstract, раздел 4",
+          "lang": "en",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-training-memory",
+      "week": 11,
+      "topic_ru": "Память при обучении и gradient checkpointing",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Hugging Face docs: Model training anatomy",
+          "url": "https://huggingface.co/docs/transformers/model_memory_anatomy",
+          "section": "Раздел «Anatomy of Model's Memory»",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Hugging Face docs: Gradient checkpointing",
+          "url": "https://huggingface.co/docs/transformers/grad_checkpointing",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 8,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-mixed-precision",
+      "week": 11,
+      "topic_ru": "FP16, BF16 и смешанная точность",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: FP32, FP16, BF16, FP8",
+          "url": "https://habr.com/ru/articles/847068/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 6,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "PyTorch 2.14 docs: Automatic Mixed Precision (torch.amp)",
+          "url": "https://docs.pytorch.org/docs/2.14/amp.html",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-quantization",
+      "week": 11,
+      "topic_ru": "Квантизация INT8, NF4, GGUF",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Квантизация — FP32, BF16, INT8, NF4, QLoRA",
+          "url": "https://habr.com/ru/articles/1035626/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w11-inference-batching-vllm",
+      "week": 11,
+      "topic_ru": "Размер KV-cache, батчинг, vLLM",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "hh.ru: Инференс LLM — от KV-кэша (Habr)",
+          "url": "https://habr.com/ru/articles/1062318/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 9,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "OTUS: PagedAttention и vLLM (Habr)",
+          "url": "https://habr.com/ru/articles/984434/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "vLLM docs",
+          "url": "https://docs.vllm.ai/en/latest/",
+          "section": "Главная страница, Quickstart",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-rag-overview",
+      "week": 12,
+      "topic_ru": "RAG: общая схема (F6)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: RAG — глубокий обзор",
+          "url": "https://habr.com/ru/articles/931396/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 34,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Обзор техник RAG",
+          "url": "https://habr.com/ru/articles/904032/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-rag-chunking",
+      "week": 12,
+      "topic_ru": "Чанкинг",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Чанкинг в RAG",
+          "url": "https://habr.com/ru/articles/967102/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-semantic-search",
+      "week": 12,
+      "topic_ru": "Семантический поиск по эмбеддингам",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Hugging Face LLM Course (рус.), 5.6. Семантический поиск с помощью FAISS",
+          "url": "https://huggingface.co/learn/llm-course/ru/chapter5/6",
+          "section": "Вся глава",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "course",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-vector-db-hnsw",
+      "week": 12,
+      "topic_ru": "Векторные БД и HNSW",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Алгоритмы векторного поиска: IVF и HNSW",
+          "url": "https://habr.com/ru/articles/1046654/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 17,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: RAG — глубокий обзор",
+          "url": "https://habr.com/ru/articles/931396/",
+          "section": "Раздел о векторных БД и HNSW",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Яндекс: векторный поиск в YDB (Habr)",
+          "url": "https://habr.com/ru/articles/926724/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-hybrid-search",
+      "week": 12,
+      "topic_ru": "Гибридный поиск, BM25",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "МТС: гибридный поиск (Habr)",
+          "url": "https://habr.com/ru/articles/970044/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 13,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: BM25",
+          "url": "https://habr.com/ru/articles/860830/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 8,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-reranker",
+      "week": 12,
+      "topic_ru": "Реранкер (cross-encoder)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Cross-Encoder для RAG на русском",
+          "url": "https://habr.com/ru/articles/797657/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-tool-calling",
+      "week": 12,
+      "topic_ru": "Tool calling",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Вызов функций с помощью LLM",
+          "url": "https://habr.com/ru/articles/831220/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 14,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Claude Docs: Tool use overview",
+          "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-agents",
+      "week": 12,
+      "topic_ru": "Агенты",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Anthropic: Building effective agents",
+          "url": "https://www.anthropic.com/research/building-effective-agents",
+          "section": "Вся статья",
+          "lang": "en",
+          "minutes": 25,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: LLM-агенты",
+          "url": "https://habr.com/ru/articles/904880/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-mcp",
+      "week": 12,
+      "topic_ru": "MCP (Model Context Protocol)",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Model Context Protocol: Introduction",
+          "url": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
+          "section": "Вся страница",
+          "lang": "en",
+          "minutes": 10,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-rag-evaluation",
+      "week": 12,
+      "topic_ru": "Оценка RAG",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Оценка компонентов RAG",
+          "url": "https://habr.com/ru/articles/860390/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 10,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Ragas docs: Available metrics",
+          "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
+          "section": "Faithfulness, Context Recall",
+          "lang": "en",
+          "minutes": 15,
+          "type": "docs",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w12-ranking-metrics",
+      "week": 12,
+      "topic_ru": "NDCG, MRR, Recall@k",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Задача ранжирования»",
+          "url": "https://contest.yandex.ru/tracks/ml/practical-topics/ranking#metriki-kachestva-ranzhirovaniya",
+          "section": "Разделы «Метрики качества ранжирования», «NDCG», «Дополнительные метрики»",
+          "lang": "ru",
+          "minutes": 15,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Хендбук Яндекса «Учебник по машинному обучению», «Метрики классификации и регрессии»",
+          "url": "https://contest.yandex.ru/tracks/ml/model-evaluation/classification-and-regression-metrics#recallk,-precisionk",
+          "section": "Раздел «Recall@k, Precision@k»",
+          "lang": "ru",
+          "minutes": 5,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w13-star",
+      "week": 13,
+      "topic_ru": "STAR-истории",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Нетология: метод STAR (Habr)",
+          "url": "https://habr.com/ru/articles/691510/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 9,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w13-interview-prep",
+      "week": 13,
+      "topic_ru": "Подготовка к собеседованиям",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Тренировки по алгоритмам (Яндекс): «Путь к оферу»",
+          "url": "https://www.youtube.com/watch?v=T8QxfTBOo-s",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 95,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Яндекс: «Как задавать вопросы на собеседовании»",
+          "url": "https://www.youtube.com/watch?v=Y8OZ7IO0SgQ",
+          "section": "Всё видео",
+          "lang": "ru",
+          "minutes": 83,
+          "type": "video",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "w13-ml-interview-questions",
+      "week": 13,
+      "topic_ru": "Вопросы ML/NLP-собеседований",
+      "kind": "theory",
+      "sources": [
+        {
+          "title": "Habr: Топ вопросов NLP-собеседований",
+          "url": "https://habr.com/ru/articles/1068944/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 18,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        },
+        {
+          "title": "Habr: Вопросы на собеседовании по NLP",
+          "url": "https://habr.com/ru/articles/972178/",
+          "section": "Вся статья",
+          "lang": "ru",
+          "minutes": 20,
+          "type": "article",
+          "verified": "200 2026-10-25"
+        }
+      ]
+    }
+  ]
+}

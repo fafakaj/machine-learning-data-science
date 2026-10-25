@@ -1,0 +1,542 @@
+{
+ "ex-w1-tests": {
+  "title": "Пишем тесты на ловушки B1–B3 (как в pytest)",
+  "statement_ru": "Тест — это функция, которая падает (`assert`), если код неверный. Напишите четыре проверки.\nКаждая получает **реализацию** как аргумент и проверяет её через `assert`:\n\n- `check_add(add)` — `add(x, items=None)` из B1: два вызова без списка не делят список;\n- `check_grid(make_grid)` — `make_grid(rows, cols)` из B2: строки независимы;\n- `check_multipliers(make_multipliers)` — `make_multipliers()` из B3 возвращает список функций\n  `[×0, ×1, ×2, ×3]`, и `fs[i](2) == 2·i`;\n- `check_copy(clone)` — `clone(matrix)` делает глубокую копию: изменение вложенного списка копии не меняет оригинал.\n\nСайт запустит каждую проверку на **верной** реализации (проверка должна пройти) и на **реализации с ловушкой**\n(проверка должна упасть). Так работает любой хороший тест.\n\nНазовите функции `check_*`, а не `test_*`: на сайте `test_*` — это тесты самого сайта.\nВ репозитории с pytest это были бы обычные `test_*`.",
+  "starter_code": "def check_add(add):\n    pass\n\n\ndef check_grid(make_grid):\n    pass\n\n\ndef check_multipliers(make_multipliers):\n    pass\n\n\ndef check_copy(clone):\n    pass\n",
+  "tests": "import copy\n\ndef _passes(check, impl):\n    try:\n        check(impl)\n        return True\n    except AssertionError:\n        return False\n\ndef good_add(x, items=None):\n    if items is None:\n        items = []\n    items.append(x)\n    return items\n\ndef bad_add(x, items=[]):\n    items.append(x)\n    return items\n\ndef good_grid(rows, cols):\n    return [[0] * cols for _ in range(rows)]\n\ndef bad_grid(rows, cols):\n    return [[0] * cols] * rows\n\ndef good_mult():\n    return [lambda x, i=i: x * i for i in range(4)]\n\ndef bad_mult():\n    return [lambda x: x * i for i in range(4)]\n\ndef test_b1():\n    \"\"\"check_add: проходит на верной, падает на ловушке B1\"\"\"\n    assert _passes(check_add, good_add), \"проверка падает на верной реализации\"\n    assert not _passes(check_add, bad_add), \"проверка не ловит ловушку B1\"\n\ndef test_b2():\n    \"\"\"check_grid: проходит на верной, падает на ловушке B2\"\"\"\n    assert _passes(check_grid, good_grid), \"проверка падает на верной реализации\"\n    assert not _passes(check_grid, bad_grid), \"проверка не ловит ловушку B2\"\n\ndef test_b3():\n    \"\"\"check_multipliers: проходит на верной, падает на ловушке B3\"\"\"\n    assert _passes(check_multipliers, good_mult), \"проверка падает на верной реализации\"\n    assert not _passes(check_multipliers, bad_mult), \"проверка не ловит ловушку B3\"\n\ndef test_copy():\n    \"\"\"check_copy: deepcopy проходит, copy.copy и срез — нет\"\"\"\n    assert _passes(check_copy, copy.deepcopy), \"проверка падает на deepcopy\"\n    assert not _passes(check_copy, copy.copy), \"проверка не отличает поверхностную копию\"\n    assert not _passes(check_copy, lambda m: m[:]), \"проверка не отличает срез\"\n",
+  "hints_ru": [
+   "Каждая ловушка B1–B3 «молчит» при первом действии. Какое второе действие её показывает: второй вызов, изменение элемента, вызов другой функции?",
+   "Тест — это вызов реализации и `assert` на результат. Сделайте действие, которое показывает ловушку, и сравните результат с правильным. Для копии: меняйте вложенный объект копии, затем проверяйте оригинал.",
+   "1) `check_add`: `assert add(1) == [1]`, затем `assert add(2) == [2]`. 2) `check_grid`: `g = make_grid(3, 2)`, `g[0][0] = 1`, сравните всю сетку. 3) `check_multipliers`: `[f(2) for f in fs] == [0, 2, 4, 6]`. 4) `check_copy`: добавьте элемент во вложенный список копии и проверьте, что оригинал не изменился."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-deco10": {
+  "title": "Декоратор с нуля за 10 минут: count_calls",
+  "statement_ru": "Проверка недели 2: напишите декоратор с нуля. Засеките 10 минут.\n\n`@count_calls` считает вызовы функции: у обёрнутой функции есть атрибут `calls`.\nОбёртка передаёт любые аргументы и возвращает результат. Имя и docstring функции\nсохраняются (`functools.wraps`).",
+  "starter_code": "import functools\n\n\ndef count_calls(func):\n    pass\n",
+  "tests": "@count_calls\ndef add(a, b=0):\n    \"\"\"Сложить.\"\"\"\n    return a + b\n\ndef test_counts():\n    \"\"\"Считает вызовы\"\"\"\n    start = add.calls\n    add(1); add(1, b=2); add(a=3)\n    assert add.calls - start == 3\n\ndef test_result():\n    \"\"\"Аргументы и результат проходят насквозь\"\"\"\n    assert add(2, b=5) == 7\n\ndef test_wraps():\n    \"\"\"Имя и docstring сохранены\"\"\"\n    assert add.__name__ == \"add\" and add.__doc__ == \"Сложить.\"\n\ndef test_separate():\n    \"\"\"У каждой функции свой счётчик\"\"\"\n    @count_calls\n    def f():\n        return 1\n    f(); f()\n    assert f.calls == 2\n",
+  "hints_ru": [
+   "Счётчик должен жить между вызовами и быть виден снаружи как `f.calls`. Где его хранить, если глобальные переменные не подходят?",
+   "Функция — объект, у неё могут быть атрибуты. Храните счётчик атрибутом самой обёртки: `wrapper.calls`. `@functools.wraps(func)` копирует имя и docstring.",
+   "1) `def count_calls(func):`. 2) Внутри `@functools.wraps(func)` и `def wrapper(*args, **kwargs):` — `wrapper.calls += 1`, затем `return func(*args, **kwargs)`. 3) После `def wrapper`: `wrapper.calls = 0`. 4) Верните `wrapper`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w3-eda": {
+  "title": "EDA на pandas: датасет рака груди (sklearn)",
+  "statement_ru": "Датасет `load_breast_cancer` (569 опухолей, 30 признаков, `target`: 1 — доброкачественная).\nНапишите `eda(df)`, где `df` — таблица с признаками и столбцом `target`. Верните `dict`:\n- `\"shape\"` — `(строк, столбцов)`;\n- `\"missing\"` — общее число пропусков;\n- `\"balance\"` — доля класса 1, округлить до 3 знаков;\n- `\"top_corr\"` — 3 признака с наибольшей **по модулю** корреляцией с `target`, по убыванию;\n- `\"mean_radius_by_class\"` — `dict` класс → среднее `mean radius`, округлить до 2 знаков.\n\nПодсказка для запуска у себя: `df = load_breast_cancer(as_frame=True).frame`.",
+  "starter_code": "import pandas as pd\nfrom sklearn.datasets import load_breast_cancer\n\n\ndef eda(df):\n    pass\n",
+  "tests": "import pandas as pd\nfrom sklearn.datasets import load_breast_cancer\n\nDF = load_breast_cancer(as_frame=True).frame\n\ndef test_basic():\n    \"\"\"Размер, пропуски, баланс классов\"\"\"\n    r = eda(DF.copy())\n    assert tuple(r[\"shape\"]) == (569, 31)\n    assert r[\"missing\"] == 0\n    assert r[\"balance\"] == 0.627\n\ndef test_corr():\n    \"\"\"Топ-3 признака по |корреляции| с target\"\"\"\n    r = eda(DF.copy())\n    assert list(r[\"top_corr\"]) == [\"worst concave points\", \"worst perimeter\", \"mean concave points\"], r[\"top_corr\"]\n\ndef test_groupby():\n    \"\"\"Средний радиус по классам\"\"\"\n    r = eda(DF.copy())\n    assert r[\"mean_radius_by_class\"] == {0: 17.46, 1: 12.15}, r[\"mean_radius_by_class\"]\n\ndef test_missing_counted():\n    \"\"\"Пропуски считаются\"\"\"\n    df = DF.copy()\n    df.iloc[0, 0] = None\n    df.iloc[1, 2] = None\n    assert eda(df)[\"missing\"] == 2\n",
+  "hints_ru": [
+   "Какие из пяти полей считаются по всей таблице, а какие — по отдельным классам? Чему равно среднее столбца из нулей и единиц?",
+   "Пропуски — `isna()` и двойная сумма. Доля класса 1 — среднее `target`. `df.corr()[\"target\"]` даёт корреляцию каждого столбца с target; сортируйте по модулю (`.abs()`), а target уберите. Средние по классу — `groupby`.",
+   "1) `corr = df.corr()[\"target\"].drop(\"target\").abs().sort_values(ascending=False)`; `top_corr` — первые 3 имени. 2) `missing` — `int(...)`, `balance` — `round(float(...), 3)`. 3) `groupby(\"target\")[\"mean radius\"].mean().round(2)`. 4) Ключи приведите к `int`, значения к `float`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w4-sql-select": {
+  "title": "SQL 1: SELECT, WHERE, ORDER BY, LIMIT",
+  "statement_ru": "Таблица `employees(id, name, dept, salary, manager_id)`. Запишите в `QUERY` запрос:\nдва самых высокооплачиваемых сотрудника **не** из отдела ML: `name`, `salary`.\nПри равной зарплате — по имени.",
+  "starter_code": "QUERY = \"\"\"\nSELECT name, salary\nFROM employees\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    assert rows == [(\"Егор\", 180), (\"Глеб\", 150)], f\"получилось {rows}\"\n",
+  "hints_ru": [
+   "Нужны три действия: убрать отдел ML, упорядочить по зарплате, оставить двух лучших. В каком порядке SQL их выполняет?",
+   "`WHERE dept <> 'ML'` убирает строки. Строки в SQL — в одинарных кавычках. `ORDER BY salary DESC, name` сортирует по зарплате и при равенстве по имени. `LIMIT 2` оставляет первые две строки после сортировки.",
+   "1) `SELECT name, salary FROM employees`. 2) `WHERE dept <> 'ML'`. 3) `ORDER BY salary DESC, name`. 4) `LIMIT 2`."
+  ],
+  "n_tests": 1
+ },
+ "ex-w4-sql-null": {
+  "title": "SQL 2: NULL и руководители",
+  "statement_ru": "Выведите имена сотрудников **без** руководителя (`manager_id` пустой), по алфавиту.\nСтолбец: `name`.",
+  "starter_code": "QUERY = \"\"\"\nSELECT name\nFROM employees\nWHERE manager_id = NULL\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    assert rows == [(\"Анна\",), (\"Глеб\",), (\"Егор\",)], f\"получилось {rows}\"\n",
+  "hints_ru": [
+   "Запустите шаблон: результат пустой, хотя сотрудники без руководителя есть. Чему в SQL равно `NULL = NULL`?",
+   "Сравнение с `NULL` через `=` даёт `NULL` (неизвестно), а не `TRUE`, и строка не проходит фильтр. Для проверки на пустое значение есть отдельный оператор `IS NULL`.",
+   "1) `SELECT name FROM employees`. 2) `WHERE manager_id IS NULL`. 3) `ORDER BY name`."
+  ],
+  "n_tests": 1
+ },
+ "ex-w4-sql-join": {
+  "title": "SQL 3: сотрудник и его руководитель (self-join)",
+  "statement_ru": "Для **каждого** сотрудника выведите `name` и имя руководителя `manager` (NULL, если его нет).\nСортировка по `id` сотрудника.",
+  "starter_code": "QUERY = \"\"\"\nSELECT w.name\nFROM employees w\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    expected = [(\"Анна\", None), (\"Борис\", \"Анна\"), (\"Вера\", \"Анна\"), (\"Глеб\", None), (\"Дина\", \"Глеб\"), (\"Егор\", None)]\n    assert rows == expected, f\"получилось {rows}\"\n",
+  "hints_ru": [
+   "Имя сотрудника и имя руководителя лежат в одной таблице, но в разных строках. Как поставить эти две строки рядом?",
+   "Self-join: соедините таблицу саму с собой через два псевдонима — `w` (сотрудник) и `m` (руководитель), условие `w.manager_id = m.id`. Обычный `JOIN` выбросит сотрудников без пары; `LEFT JOIN` сохранит их с `NULL`.",
+   "1) `SELECT w.name, m.name AS manager`. 2) `FROM employees w LEFT JOIN employees m ON w.manager_id = m.id`. 3) `ORDER BY w.id`."
+  ],
+  "n_tests": 1
+ },
+ "ex-w4-sql-case": {
+  "title": "SQL 4: CASE и подсчёт по категориям",
+  "statement_ru": "Разбейте сотрудников на уровни зарплаты: `high` (≥ 200), `mid` (150–199), `low` (< 150).\nВыведите `level` и число сотрудников, сортировка по `level`.",
+  "starter_code": "QUERY = \"\"\"\nSELECT salary\nFROM employees\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    assert rows == [(\"high\", 3), (\"low\", 1), (\"mid\", 2)], f\"получилось {rows}\"\n",
+  "hints_ru": [
+   "Столбца «уровень» в таблице нет. Как получить его из `salary` прямо в запросе и потом посчитать сотрудников каждого уровня?",
+   "`CASE WHEN ... THEN ... ELSE ... END` — выражение, как тернарный оператор. Условия проверяются по порядку, поэтому сначала `>= 200`, потом `>= 150`, иначе `low`. По выражению с именем `AS level` можно группировать.",
+   "1) В `SELECT` напишите `CASE` с тремя ветками и дайте ему имя `AS level`; рядом — `COUNT(*)`. 2) `FROM employees GROUP BY level`. 3) `ORDER BY level`. Проверьте границы: 200 → high, 150 → mid, 149 → low."
+  ],
+  "n_tests": 1
+ },
+ "ex-w1-b1": {
+  "title": "B1: исправьте значение по умолчанию",
+  "statement_ru": "Функция `add(x, items=...)` добавляет `x` в список `items` и возвращает его.\nЕсли список не передан, функция должна начинать с **нового** пустого списка.\nСейчас в шаблоне ловушка B1. Исправьте её, не меняя поведение для переданного списка.",
+  "starter_code": "def add(x, items=[]):\n    items.append(x)\n    return items\n",
+  "tests": "def test_fresh_list():\n    \"\"\"Два вызова без items не делят список\"\"\"\n    assert add(1) == [1]\n    assert add(2) == [2], \"второй вызов видит список первого вызова\"\n\ndef test_given_list():\n    \"\"\"Переданный список меняется на месте\"\"\"\n    box = [0]\n    result = add(5, box)\n    assert result is box, \"нужно вернуть тот же список, а не копию\"\n    assert box == [0, 5]\n\ndef test_default_is_none():\n    \"\"\"Значение по умолчанию — неизменяемый маркер\"\"\"\n    import inspect\n    default = inspect.signature(add).parameters[\"items\"].default\n    assert default is None, f\"по умолчанию сейчас {default!r}; используйте None\"\n",
+  "hints_ru": [
+   "Вызовите `add(1)`, потом `add(2)`. Почему второй результат содержит `1`? В какой момент Python создаёт список `[]` из строки `def`?",
+   "Значение по умолчанию вычисляется один раз, при выполнении `def`. Поэтому изменяемый объект там общий для всех вызовов. Нужен неизменяемый маркер «аргумент не передан» — `None`.",
+   "1) В сигнатуре поставьте `items=None`. 2) В начале тела: если `items is None`, создайте новый пустой список. 3) Дальше код без изменений. Переданный список меняйте на месте и возвращайте его же."
+  ],
+  "n_tests": 3
+ },
+ "ex-w1-b2": {
+  "title": "B2: матрица без общих строк",
+  "statement_ru": "Напишите `make_grid(rows, cols, fill=0)`: вернуть список из `rows` строк, в каждой\n`cols` значений `fill`. Строки должны быть **независимыми**: изменение одной строки\nне меняет другие.",
+  "starter_code": "def make_grid(rows, cols, fill=0):\n    return [[fill] * cols] * rows\n",
+  "tests": "def test_shape():\n    \"\"\"Размер и значения\"\"\"\n    g = make_grid(2, 3, 7)\n    assert g == [[7, 7, 7], [7, 7, 7]]\n\ndef test_independent_rows():\n    \"\"\"Строки — разные объекты\"\"\"\n    g = make_grid(3, 3)\n    g[0][0] = 1\n    assert g == [[1, 0, 0], [0, 0, 0], [0, 0, 0]], f\"после g[0][0] = 1 получилось {g}\"\n    assert len({id(row) for row in g}) == 3, \"строки ссылаются на один и тот же список\"\n\ndef test_empty():\n    \"\"\"Ноль строк или столбцов\"\"\"\n    assert make_grid(0, 5) == []\n    assert make_grid(2, 0) == [[], []]\n",
+  "hints_ru": [
+   "Создайте сетку шаблоном и поменяйте один элемент первой строки. Почему поменялись все строки? Что именно копирует внешнее `* rows`?",
+   "`[row] * rows` повторяет ссылку на один и тот же список. Генератор списка выполняет выражение заново на каждой итерации. Так каждая строка — новый объект.",
+   "1) Строка — `[fill] * cols`. Внутреннее `*` здесь безопасно: числа неизменяемы. 2) Создайте строку внутри генератора списка по `range(rows)`. 3) Проверьте `rows = 0`: ответ `[]`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w1-b3": {
+  "title": "B3: фабрика множителей",
+  "statement_ru": "Напишите `make_multipliers(n)`: вернуть список из `n` функций. Функция с номером `i`\nумножает аргумент на `i`: `make_multipliers(3)[2](10) == 20`.\nШаблон показывает ловушку позднего связывания.",
+  "starter_code": "def make_multipliers(n):\n    return [lambda x: i * x for i in range(n)]\n",
+  "tests": "def test_each_function_keeps_its_i():\n    \"\"\"Каждая функция помнит своё i\"\"\"\n    fs = make_multipliers(4)\n    got = [f(10) for f in fs]\n    assert got == [0, 10, 20, 30], f\"получилось {got}: все функции видят последнее i?\"\n\ndef test_one_argument():\n    \"\"\"Функцию вызывают с одним аргументом\"\"\"\n    import inspect\n    f = make_multipliers(2)[1]\n    assert f(7) == 7\n    assert len([p for p in inspect.signature(f).parameters.values() if p.default is inspect.Parameter.empty]) == 1\n\ndef test_zero():\n    \"\"\"n = 0 — пустой список\"\"\"\n    assert make_multipliers(0) == []\n",
+  "hints_ru": [
+   "Запустите шаблон: все функции умножают на одно число. Когда лямбда читает `i`: при создании или при вызове? Чему равно `i` после цикла?",
+   "Позднее связывание: замыкание хранит имя `i`, а не его значение. Значение нужно «заморозить» в момент создания функции. Есть два способа: значение по умолчанию или отдельная функция-фабрика.",
+   "1) Напишите внутреннюю `make(i)`, которая возвращает `lambda x: i * x`. Каждый вызов `make` создаёт свою область видимости. 2) Верните `[make(i) for i in range(n)]`. Другой способ: `lambda x, i=i: i * x`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w1-counter": {
+  "title": "Замыкание со счётчиком (nonlocal)",
+  "statement_ru": "Напишите `make_counter(start=0, step=1)`. Она возвращает функцию без аргументов.\nКаждый вызов функции возвращает следующее значение: `start + step`, `start + 2·step`, …\nГлобальные переменные использовать нельзя: два счётчика не должны мешать друг другу.",
+  "starter_code": "def make_counter(start=0, step=1):\n    def tick():\n        start += step\n        return start\n    return tick\n",
+  "tests": "def test_counts():\n    \"\"\"Значения идут по шагу\"\"\"\n    c = make_counter()\n    assert [c(), c(), c()] == [1, 2, 3]\n\ndef test_start_step():\n    \"\"\"start и step\"\"\"\n    c = make_counter(10, 5)\n    assert [c(), c()] == [15, 20]\n\ndef test_independent():\n    \"\"\"Два счётчика независимы\"\"\"\n    a, b = make_counter(), make_counter(100)\n    a(); a()\n    assert b() == 101\n    assert a() == 3\n",
+  "hints_ru": [
+   "Запустите шаблон. Какую ошибку вы видите? Вспомните вопрос квиза вторника: что делает присваивание имени внутри функции?",
+   "Присваивание `value += step` внутри `tick` делает `value` локальным именем `tick`. Объявление `nonlocal value` говорит Python: это имя из внешней функции. Каждый вызов `make_counter` создаёт свою переменную, поэтому счётчики не мешают друг другу.",
+   "1) В `make_counter`: `value = start`. 2) Внутри `tick`: `nonlocal value`, затем `value += step`, затем верните `value`. 3) `make_counter` возвращает `tick` без скобок. Первый вызов даёт `start + step`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w1-freeze": {
+  "title": "B4: сделать значение hashable",
+  "statement_ru": "Напишите `freeze(obj)`: превратить вложенную структуру в hashable-значение, чтобы его\nможно было сделать ключом `dict`. Правила:\n- `list` и `tuple` → `tuple` (элементы тоже замораживаются);\n- `set` → `frozenset`;\n- `dict` → `frozenset` пар `(ключ, freeze(значение))`;\n- остальное (`int`, `str`, `None`, …) — как есть.",
+  "starter_code": "def freeze(obj):\n    pass\n",
+  "tests": "def test_list():\n    \"\"\"Список → кортеж\"\"\"\n    assert freeze([1, [2, 3]]) == (1, (2, 3))\n\ndef test_set_and_dict():\n    \"\"\"set → frozenset, dict → frozenset пар\"\"\"\n    assert freeze({1, 2}) == frozenset({1, 2})\n    assert freeze({\"a\": [1]}) == frozenset({(\"a\", (1,))})\n\ndef test_hashable():\n    \"\"\"Результат можно положить в dict\"\"\"\n    key = freeze({\"x\": [1, {2, 3}], \"y\": ({\"z\": None},)})\n    d = {key: \"ok\"}\n    assert d[freeze({\"y\": ({\"z\": None},), \"x\": [1, {3, 2}]})] == \"ok\"\n\ndef test_scalars():\n    \"\"\"Простые значения не меняются\"\"\"\n    assert freeze(5) == 5 and freeze(\"s\") == \"s\" and freeze(None) is None\n",
+  "hints_ru": [
+   "Внутри списка может лежать словарь, внутри словаря — множество. Сколько уровней вложенности нужно обработать? Можно ли решить задачу для внешнего уровня, если внутренние уже «заморожены»?",
+   "Рекурсия по типу объекта: `freeze` вызывает себя для каждого элемента. Тип проверяйте через `isinstance`. База рекурсии — неизменяемые значения (`int`, `str`, `None`): их верните как есть.",
+   "1) `list` или `tuple` → `tuple` из `freeze(x)` для каждого `x`. 2) `set` или `frozenset` → `frozenset` из замороженных элементов. 3) `dict` → `frozenset` пар `(k, freeze(v))`. 4) Иначе верните `obj`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w1-args": {
+  "title": "Аргументы: позиционные, именованные, *args, **kwargs",
+  "statement_ru": "Напишите `describe(name, /, *tags, sep=\", \", **attrs)` — функцию, которая возвращает строку.\n- `name` — только позиционный;\n- `tags` — любое число дополнительных позиционных аргументов;\n- `sep` — только именованный, по умолчанию `\", \"`;\n- `attrs` — любые другие именованные аргументы.\n\nФормат: `name`, затем `[tag1, tag2]` (через `sep`), если теги есть, затем `{k=v, …}`\n(через `sep`, ключи по алфавиту), если есть attrs. Части разделяются одним пробелом.\nПример: `describe(\"cat\", \"cute\", \"small\", age=3)` → `\"cat [cute, small] {age=3}\"`.",
+  "starter_code": "def describe(name, tags, sep, attrs):\n    pass\n",
+  "tests": "def test_plain():\n    \"\"\"Только имя\"\"\"\n    assert describe(\"cat\") == \"cat\"\n\ndef test_tags_and_attrs():\n    \"\"\"Теги и атрибуты\"\"\"\n    assert describe(\"cat\", \"cute\", \"small\", age=3) == \"cat [cute, small] {age=3}\"\n    assert describe(\"x\", b=2, a=1) == \"x {a=1, b=2}\"\n\ndef test_sep_keyword_only():\n    \"\"\"sep только именованный\"\"\"\n    assert describe(\"x\", \"a\", \"b\", sep=\"|\") == \"x [a|b]\"\n    assert describe(\"x\", \"|\") == \"x [|]\", \"второй позиционный аргумент — это тег, а не sep\"\n\ndef test_name_positional_only():\n    \"\"\"name нельзя передать по имени\"\"\"\n    try:\n        describe(name=\"cat\")\n    except TypeError:\n        return\n    raise AssertionError(\"describe(name=...) должен падать с TypeError\")\n",
+  "hints_ru": [
+   "Посмотрите Tutorial 4.9.3–4.9.5. Какие символы в сигнатуре делают аргумент «только позиционным» и «только именованным»?",
+   "`/` после `name` запрещает передать `name` по имени. Всё, что стоит после `*tags`, становится только именованным — поэтому `sep` после `*tags` уже только именованный. `**attrs` собирает остальные именованные аргументы в словарь.",
+   "1) Сигнатура: `name, /, *tags, sep=\", \", **attrs`. 2) `parts = [name]`. 3) Теги есть — добавьте `\"[\" + sep.join(tags) + \"]\"`. 4) attrs есть — пары `k=v` из `sorted(attrs.items())` через `sep` в фигурных скобках. 5) Верните `\" \".join(parts)`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w1-numgrad": {
+  "title": "Численный градиент (мост к backprop)",
+  "statement_ru": "Напишите `num_grad(f, point, h=1e-5)`. `f` принимает список чисел и возвращает число.\nВерните список частных производных в точке `point` по **центральной разности**:\n`(f(x + h·eᵢ) − f(x − h·eᵢ)) / (2h)` для каждой координаты `i`.\nНе меняйте переданный список `point`.",
+  "starter_code": "def num_grad(f, point, h=1e-5):\n    pass\n",
+  "tests": "import math\n\ndef close(a, b, tol=1e-4):\n    return len(a) == len(b) and all(abs(x - y) < tol for x, y in zip(a, b))\n\ndef test_d1():\n    \"\"\"D1: ∇(x²y + 3y) в (1, 2) ≈ (4, 4)\"\"\"\n    g = num_grad(lambda p: p[0] ** 2 * p[1] + 3 * p[1], [1.0, 2.0])\n    assert close(g, [4, 4]), f\"получилось {g}\"\n\ndef test_three_vars():\n    \"\"\"∇(x·e^(yz)) в (2, 0, 3) ≈ (1, 6, 0)\"\"\"\n    g = num_grad(lambda p: p[0] * math.exp(p[1] * p[2]), [2.0, 0.0, 3.0])\n    assert close(g, [1, 6, 0]), f\"получилось {g}\"\n\ndef test_point_unchanged():\n    \"\"\"Точка не меняется\"\"\"\n    p = [1.0, 2.0]\n    num_grad(lambda q: q[0] + q[1], p)\n    assert p == [1.0, 2.0], f\"point изменился: {p}\"\n\ndef test_central_not_forward():\n    \"\"\"Центральная разность точнее прямой\"\"\"\n    g = num_grad(lambda p: p[0] ** 3, [2.0], h=0.01)\n    assert abs(g[0] - 12.0001) < 1e-6, f\"для x³ в x=2 при h=0.01 ждём 12.0001, получилось {g[0]}\"\n",
+  "hints_ru": [
+   "Частная производная по координате `i` показывает, как меняется `f`, если двигать только эту координату. Что делать с остальными координатами?",
+   "Центральная разность: сдвиньте координату `i` на `+h` и на `−h`, остальные оставьте. Сдвиги делайте на копиях `list(point)`: список изменяемый, и сдвиг на месте испортит `point` (тема понедельника).",
+   "1) `grad = []`. 2) Для каждого `i`: `plus = list(point)`, `minus = list(point)`; `plus[i] += h`; `minus[i] -= h`. 3) `grad.append((f(plus) - f(minus)) / (2 * h))`. 4) Верните `grad`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-fib": {
+  "title": "B5: бесконечный генератор Фибоначчи",
+  "statement_ru": "Напишите генератор `fib()`, который бесконечно отдаёт числа Фибоначчи: 0, 1, 1, 2, 3, 5, …\nЗатем напишите `take(n, iterable)` — вернуть список из первых `n` элементов любого\nитерируемого объекта (без превращения всего объекта в список: он может быть бесконечным).",
+  "starter_code": "def fib():\n    pass\n\n\ndef take(n, iterable):\n    pass\n",
+  "tests": "import itertools, types\n\ndef test_is_generator():\n    \"\"\"fib() — генератор\"\"\"\n    assert isinstance(fib(), types.GeneratorType), \"используйте yield\"\n\ndef test_values():\n    \"\"\"Первые 10 чисел\"\"\"\n    assert take(10, fib()) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n\ndef test_lazy_and_infinite():\n    \"\"\"Генератор бесконечный и ленивый\"\"\"\n    g = fib()\n    for _ in range(1000):\n        next(g)\n    assert next(g) == 43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875\n\ndef test_take_any_iterable():\n    \"\"\"take работает с любым итерируемым и с n = 0\"\"\"\n    assert take(3, \"abcdef\") == [\"a\", \"b\", \"c\"]\n    assert take(0, fib()) == []\n    assert take(5, range(2)) == [0, 1]\n    assert take(2, itertools.count(7)) == [7, 8]\n",
+  "hints_ru": [
+   "Список всех чисел Фибоначчи построить нельзя: их бесконечно много. Как отдавать числа по одному, только когда их просят?",
+   "Генератор — функция с `yield`. Он замирает на `yield` и продолжает с того же места при следующем `next`. Бесконечный генератор — это `while True` с `yield` внутри. Для `take` нельзя вызывать `list(iterable)`: он не закончится.",
+   "1) `fib`: `a, b = 0, 1`; в цикле `yield a`, затем `a, b = b, a + b`. 2) `take`: идите `for x in iterable`, собирайте в список; набрали `n` — `break`. 3) Проверьте `take(0, fib())` — `[]`. Готовый вариант: `list(itertools.islice(iterable, n))`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-timer": {
+  "title": "B6: декоратор timer",
+  "statement_ru": "Напишите декоратор `timer`. Он:\n- вызывает функцию с теми же аргументами и возвращает её результат;\n- печатает строку `<имя функции>: <секунды> с` (например `slow: 0.1002 с`, 4 знака после точки);\n- сохраняет имя и docstring исходной функции;\n- записывает время последнего вызова в атрибут обёртки `last_time` (float, секунды).\n\nВремя меряйте `time.perf_counter()`.",
+  "starter_code": "import time\nimport functools\n\n\ndef timer(func):\n    pass\n",
+  "tests": "import time\n\ndef test_result_and_args():\n    \"\"\"Аргументы и результат проходят насквозь\"\"\"\n    @timer\n    def add(a, b=0, *, c=0):\n        return a + b + c\n    assert add(1, 2, c=3) == 6\n\ndef test_print_format():\n    \"\"\"Печатает имя и время\"\"\"\n    import io, contextlib, re\n    @timer\n    def nap():\n        time.sleep(0.02)\n    buf = io.StringIO()\n    with contextlib.redirect_stdout(buf):\n        nap()\n    line = buf.getvalue().strip()\n    assert re.fullmatch(r\"nap: \\d+\\.\\d{4} с\", line), f\"напечатано: {line!r}\"\n\ndef test_metadata():\n    \"\"\"functools.wraps сохраняет имя и docstring\"\"\"\n    @timer\n    def documented():\n        \"\"\"Документация.\"\"\"\n    assert documented.__name__ == \"documented\"\n    assert documented.__doc__ == \"Документация.\"\n\ndef test_last_time():\n    \"\"\"Атрибут last_time\"\"\"\n    @timer\n    def nap():\n        time.sleep(0.03)\n    nap()\n    assert 0.025 < nap.last_time < 1, f\"last_time = {getattr(nap, 'last_time', None)}\"\n",
+  "hints_ru": [
+   "Декоратор заменяет функцию на другую. Что должна делать новая функция до и после вызова старой, чтобы снаружи всё выглядело как раньше?",
+   "Обёртка `wrapper(*args, **kwargs)` принимает любые аргументы и передаёт их в `func`. `@functools.wraps(func)` копирует имя и docstring. Функция — объект, поэтому у обёртки может быть атрибут `last_time`.",
+   "1) `start = time.perf_counter()`. 2) `result = func(*args, **kwargs)`. 3) `wrapper.last_time = perf_counter() - start`. 4) Напечатайте `f\"{func.__name__}: {wrapper.last_time:.4f} с\"`. 5) Верните `result`. Начальное значение: `wrapper.last_time = None` до первого вызова."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-retry": {
+  "title": "Декоратор с параметрами: retry",
+  "statement_ru": "Напишите `retry(times, exceptions=(Exception,))` — декоратор с параметрами.\nОбёрнутая функция вызывается до `times` раз подряд, пока не завершится без исключения\nиз `exceptions`. Если все попытки упали — пробросьте **последнее** исключение.\nИсключения других типов пробрасывайте сразу, без повторов.",
+  "starter_code": "import functools\n\n\ndef retry(times, exceptions=(Exception,)):\n    pass\n",
+  "tests": "def test_succeeds_after_failures():\n    \"\"\"Успех с третьей попытки\"\"\"\n    calls = []\n    @retry(3)\n    def flaky():\n        calls.append(1)\n        if len(calls) < 3:\n            raise ConnectionError(\"нет сети\")\n        return \"ok\"\n    assert flaky() == \"ok\" and len(calls) == 3\n\ndef test_gives_up():\n    \"\"\"После times попыток — последнее исключение\"\"\"\n    calls = []\n    @retry(2, exceptions=(ValueError,))\n    def bad():\n        calls.append(1)\n        raise ValueError(f\"попытка {len(calls)}\")\n    try:\n        bad()\n    except ValueError as e:\n        assert str(e) == \"попытка 2\" and len(calls) == 2\n    else:\n        raise AssertionError(\"исключение не проброшено\")\n\ndef test_other_exceptions_not_retried():\n    \"\"\"Чужие исключения — сразу\"\"\"\n    calls = []\n    @retry(5, exceptions=(ValueError,))\n    def boom():\n        calls.append(1)\n        raise KeyError(\"x\")\n    try:\n        boom()\n    except KeyError:\n        pass\n    assert len(calls) == 1, f\"было {len(calls)} вызовов\"\n\ndef test_wraps():\n    \"\"\"Имя функции сохранено\"\"\"\n    @retry(1)\n    def named():\n        return 1\n    assert named.__name__ == \"named\"\n",
+  "hints_ru": [
+   "`@retry(times=3)` — сначала вызов `retry(3)`, и только его результат применяется к функции. Что тогда должна вернуть `retry`?",
+   "Декоратор с параметрами — три уровня: `retry(times, exceptions)` возвращает `deco(func)`, а `deco` возвращает `wrapper(*args, **kwargs)`. Параметры доступны в `wrapper` через замыкание. `except exceptions` ловит только нужные типы; остальные исключения пройдут сами.",
+   "1) В `wrapper`: `for attempt in range(times)`. 2) `try: return func(*args, **kwargs)`. 3) `except exceptions:` — если попытка последняя, голый `raise` пробрасывает текущее исключение; иначе цикл идёт дальше. 4) Не забудьте `@functools.wraps(func)`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-ctx": {
+  "title": "Контекстный менеджер двумя способами",
+  "statement_ru": "1. Класс `Timer`: `with Timer() as t: ...` — после блока в `t.elapsed` лежит время в секундах\n   (float). Исключения из блока **не подавлять**.\n2. Функция `suppress_log(*exc_types)` через `@contextlib.contextmanager`: подавляет\n   исключения указанных типов и добавляет их имена в список `suppress_log.log`\n   (атрибут функции, создайте его). Прочие исключения пробрасывает.",
+  "starter_code": "import time\nimport contextlib\n\n\nclass Timer:\n    pass\n\n\ndef suppress_log(*exc_types):\n    pass\n",
+  "tests": "import time\n\ndef test_timer_measures():\n    \"\"\"Timer меряет время\"\"\"\n    with Timer() as t:\n        time.sleep(0.02)\n    assert 0.015 < t.elapsed < 1\n\ndef test_timer_does_not_swallow():\n    \"\"\"Timer не подавляет исключения, но elapsed есть\"\"\"\n    t = Timer()\n    try:\n        with t:\n            raise RuntimeError(\"x\")\n    except RuntimeError:\n        pass\n    else:\n        raise AssertionError(\"исключение подавлено\")\n    assert t.elapsed is not None and t.elapsed >= 0\n\ndef test_suppress_log():\n    \"\"\"suppress_log подавляет и записывает\"\"\"\n    suppress_log.log.clear()\n    with suppress_log(KeyError, ZeroDivisionError):\n        1 / 0\n    with suppress_log(KeyError):\n        {}[\"k\"]\n    assert suppress_log.log == [\"ZeroDivisionError\", \"KeyError\"]\n\ndef test_suppress_other():\n    \"\"\"Чужие исключения проходят\"\"\"\n    try:\n        with suppress_log(KeyError):\n            raise ValueError(\"v\")\n    except ValueError:\n        return\n    raise AssertionError(\"ValueError подавлен\")\n",
+  "hints_ru": [
+   "Блок `with` вызывает код при входе и при выходе, даже если внутри было исключение. Какие два метода класса Python вызывает для этого?",
+   "Класс: `__enter__` возвращает объект для `as`, `__exit__(exc_type, exc, tb)` вызывается при выходе. Ложное значение из `__exit__` значит «не подавлять исключение». В `@contextlib.contextmanager` исключение из блока возникает в точке `yield`.",
+   "1) `Timer.__enter__`: запомните `perf_counter()`, верните `self`. 2) `__exit__`: запишите `elapsed`, верните `False`. 3) `suppress_log`: `try: yield` / `except exc_types as e:` — добавьте `type(e).__name__` в `suppress_log.log`. 4) После `def` создайте `suppress_log.log = []`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w2-vector": {
+  "title": "B8: класс Vector с dunder-методами",
+  "statement_ru": "Напишите класс `Vector(*coords)` — вектор любой длины:\n- `repr(Vector(1, 2))` → `\"Vector(1, 2)\"`;\n- `len(v)`, итерация `for x in v`, индекс `v[0]`;\n- `v + w` (одинаковой длины, иначе `ValueError`), `v * 3` и `3 * v`;\n- `abs(v)` — длина (евклидова норма);\n- `v == w` и `hash(v)` — равные векторы имеют равный хэш;\n- `@classmethod zeros(n)` — нулевой вектор длины n; у наследника возвращает наследника.",
+  "starter_code": "import math\n\n\nclass Vector:\n    def __init__(self, *coords):\n        self.coords = coords\n",
+  "tests": "def test_repr_len_iter():\n    \"\"\"repr, len, итерация, индекс\"\"\"\n    v = Vector(1, 2, 3)\n    assert repr(v) == \"Vector(1, 2, 3)\"\n    assert len(v) == 3 and list(v) == [1, 2, 3] and v[1] == 2\n\ndef test_arithmetic():\n    \"\"\"+, *, abs\"\"\"\n    assert Vector(1, 2) + Vector(3, 4) == Vector(4, 6)\n    assert Vector(1, 2) * 3 == Vector(3, 6) == 3 * Vector(1, 2)\n    assert abs(Vector(3, 4)) == 5\n\ndef test_length_mismatch():\n    \"\"\"Разная длина — ValueError\"\"\"\n    try:\n        Vector(1) + Vector(1, 2)\n    except ValueError:\n        return\n    raise AssertionError(\"нет ValueError\")\n\ndef test_hash():\n    \"\"\"Можно класть в set и dict\"\"\"\n    assert len({Vector(1, 2), Vector(1, 2), Vector(2, 1)}) == 2\n\ndef test_classmethod():\n    \"\"\"zeros у наследника\"\"\"\n    class Vec3(Vector):\n        pass\n    z = Vec3.zeros(3)\n    assert type(z) is Vec3 and list(z) == [0, 0, 0]\n",
+  "hints_ru": [
+   "Как Python понимает, что значит `len(v)`, `v + w` или `abs(v)` для вашего класса? Какие методы он ищет у объекта?",
+   "Каждой операции соответствует dunder-метод: `__repr__`, `__len__`, `__iter__`, `__getitem__`, `__add__`, `__mul__`, `__rmul__`, `__abs__`, `__eq__`, `__hash__`. Для `3 * v` `int` не умеет умножать на `Vector`, поэтому Python вызывает `v.__rmul__(3)`. Координаты храните в `tuple`: он неизменяемый и hashable.",
+   "1) `__init__(*coords)`: `self.coords = tuple(coords)`. 2) `__add__`: разная длина — `ValueError`; иначе `type(self)(*(a + b ...))`. 3) `__rmul__ = __mul__`. 4) `__hash__`: `hash(self.coords)`. 5) `zeros` — `@classmethod`, верните `cls(*[0] * n)`: так наследник получит наследника."
+  ],
+  "n_tests": 5
+ },
+ "ex-w2-dataclass": {
+  "title": "dataclasses: заказ и позиции",
+  "statement_ru": "Опишите через `@dataclass`:\n- `Item(name: str, price: float, qty: int = 1)` с свойством `total` = price · qty;\n- `Order(id: int, items: list[Item] = <пустой список>)` с методом `add(item)` и свойством `total`;\n  заказы сравниваются по `total` (`<`, `>`), поле `items` в `==` не участвует — два заказа равны,\n  если равны их `id`.\n\nЛовушка B1: у двух `Order` не должно быть общего списка `items`.",
+  "starter_code": "from dataclasses import dataclass, field\n\n\n@dataclass\nclass Item:\n    name: str\n    price: float\n    qty: int = 1\n",
+  "tests": "def test_item_total():\n    \"\"\"Item.total\"\"\"\n    assert Item(\"pen\", 10.0, 3).total == 30.0\n    assert Item(\"pen\", 10.0).qty == 1\n\ndef test_independent_items():\n    \"\"\"У разных заказов разные списки\"\"\"\n    a, b = Order(1), Order(2)\n    a.add(Item(\"x\", 1.0))\n    assert b.items == [], \"заказы делят список items\"\n\ndef test_order_total_and_compare():\n    \"\"\"total и сравнение по total\"\"\"\n    a, b = Order(1), Order(2)\n    a.add(Item(\"x\", 5.0, 2))\n    b.add(Item(\"y\", 3.0))\n    assert a.total == 10.0 and b.total == 3.0\n    assert b < a and a > b\n\ndef test_equality_by_id():\n    \"\"\"== по id\"\"\"\n    a, b = Order(7), Order(7)\n    a.add(Item(\"x\", 1.0))\n    assert a == b and Order(1) != Order(2)\n",
+  "hints_ru": [
+   "`@dataclass` пишет `__init__`, `__repr__` и `__eq__` сам. Какие требования задачи он не выполнит по умолчанию?",
+   "`field(default_factory=list)` создаёт новый список для каждого объекта — это защита от B1. `compare=False` убирает поле из `==`. `@property` даёт `total` без скобок. `order=True` сравнил бы по полям, а нужно по `total`, поэтому `__lt__` и `__gt__` пишите сами.",
+   "1) `Item`: три поля, `@property total` → `price * qty`. 2) `Order`: `id: int`, `items: list = field(default_factory=list, compare=False)`. 3) `add` — `append`. 4) `total` — сумма `i.total`. 5) `__lt__` и `__gt__` сравнивают `self.total` и `other.total`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w3-softmax": {
+  "title": "Устойчивый softmax на NumPy",
+  "statement_ru": "Напишите `softmax(x, axis=-1)` для массива любой формы: `exp(x) / sum(exp(x))` вдоль оси `axis`.\nТребования:\n- без циклов Python (векторизация);\n- численно устойчиво: `softmax([1000, 1001])` не должен дать `nan` (вычтите максимум вдоль оси);\n- сумма вдоль `axis` равна 1.",
+  "starter_code": "import numpy as np\n\n\ndef softmax(x, axis=-1):\n    x = np.asarray(x, dtype=float)\n    return np.exp(x) / np.exp(x).sum()\n",
+  "tests": "import numpy as np\n\ndef test_simple():\n    \"\"\"Известный ответ для [1, 2, 3]\"\"\"\n    assert np.allclose(softmax([1.0, 2.0, 3.0]), [0.09003057, 0.24472847, 0.66524096])\n\ndef test_stable():\n    \"\"\"Большие числа не дают nan\"\"\"\n    out = softmax([1000.0, 1001.0])\n    assert np.all(np.isfinite(out)), f\"получилось {out}\"\n    assert np.allclose(out, [0.26894142, 0.73105858])\n\ndef test_axis():\n    \"\"\"Работает по оси для матрицы\"\"\"\n    x = np.array([[1.0, 2.0, 3.0], [1.0, 1.0, 1.0]])\n    out = softmax(x, axis=1)\n    assert out.shape == (2, 3)\n    assert np.allclose(out.sum(axis=1), 1)\n    assert np.allclose(out[1], 1 / 3)\n    assert np.allclose(softmax(x, axis=0).sum(axis=0), 1)\n\ndef test_shift_invariant():\n    \"\"\"softmax(x + c) = softmax(x)\"\"\"\n    x = np.random.default_rng(0).normal(size=(4, 5))\n    assert np.allclose(softmax(x), softmax(x + 123.0))\n",
+  "hints_ru": [
+   "Посчитайте `np.exp(1000)`. Что получилось? Что будет с `softmax(x)`, если вычесть из всех элементов `x` одно и то же число?",
+   "softmax не меняется при сдвиге всех элементов на константу. Вычтите максимум вдоль оси: самый большой показатель станет 0, переполнения нет. `keepdims=True` сохраняет ось размера 1, и broadcasting вычитает правильно для массива любой формы.",
+   "1) `x = np.asarray(x, dtype=float)`. 2) `z = x - x.max(axis=axis, keepdims=True)`. 3) `e = np.exp(z)`. 4) Верните `e / e.sum(axis=axis, keepdims=True)`. Проверьте 2D-массив с `axis=0` и `axis=-1`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w3-pairwise": {
+  "title": "Попарные расстояния через broadcasting",
+  "statement_ru": "Даны точки `X` формы `(n, d)` и `Y` формы `(m, d)`. Верните матрицу `D` формы `(n, m)`:\n`D[i, j]` — евклидово расстояние между `X[i]` и `Y[j]`. Без циклов Python.\nЭто ядро kNN (неделя 4) и поиска ближайших эмбеддингов (неделя 9).",
+  "starter_code": "import numpy as np\n\n\ndef pairwise_dist(X, Y):\n    pass\n",
+  "tests": "import numpy as np\n\ndef brute(X, Y):\n    return np.array([[np.sqrt(((x - y) ** 2).sum()) for y in Y] for x in X])\n\ndef test_small():\n    \"\"\"Маленький пример\"\"\"\n    X = np.array([[0.0, 0.0], [3.0, 4.0]])\n    Y = np.array([[0.0, 0.0], [6.0, 8.0], [3.0, 0.0]])\n    assert np.allclose(pairwise_dist(X, Y), [[0, 10, 3], [5, 5, 4]])\n\ndef test_random_shape():\n    \"\"\"Случайные данные, разные n и m\"\"\"\n    rng = np.random.default_rng(1)\n    X, Y = rng.normal(size=(7, 3)), rng.normal(size=(5, 3))\n    D = pairwise_dist(X, Y)\n    assert D.shape == (7, 5)\n    assert np.allclose(D, brute(X, Y))\n\ndef test_no_python_loops_speed():\n    \"\"\"Векторизовано: 1000×1000 быстро\"\"\"\n    import time\n    rng = np.random.default_rng(2)\n    X, Y = rng.normal(size=(1000, 16)), rng.normal(size=(1000, 16))\n    t = time.perf_counter()\n    pairwise_dist(X, Y)\n    assert time.perf_counter() - t < 2.0, \"слишком медленно — есть цикл Python?\"\n",
+  "hints_ru": [
+   "Для `D[i, j]` нужна разность `X[i] − Y[j]` для каждой пары. Какой формы массив хранит все эти разности сразу?",
+   "Broadcasting: `X[:, None, :]` имеет форму (n, 1, d), `Y[None, :, :]` — (1, m, d). NumPy растягивает оси размера 1, и разность получает форму (n, m, d) без циклов.",
+   "1) Приведите `X`, `Y` к `float`. 2) `diff = X[:, None, :] - Y[None, :, :]`. 3) Возведите в квадрат, сложите по последней оси, возьмите корень. Бонус для экономии памяти: ‖x−y‖² = ‖x‖² + ‖y‖² − 2x·y."
+  ],
+  "n_tests": 3
+ },
+ "ex-w3-zscore": {
+  "title": "Стандартизация признаков (как StandardScaler)",
+  "statement_ru": "Напишите класс `Standardizer`:\n- `fit(X)` — запомнить среднее и стандартное отклонение **каждого столбца** (`ddof=0`), вернуть `self`;\n- `transform(X)` — `(X − mean) / std`; если std столбца равен 0, вместо деления на 0 оставить столбец нулевым;\n- `fit_transform(X)`.\n\nВажно для недели 4 (утечки E7): статистики считаются только на том, что передали в `fit`.",
+  "starter_code": "import numpy as np\n\n\nclass Standardizer:\n    def fit(self, X):\n        pass\n\n    def transform(self, X):\n        pass\n\n    def fit_transform(self, X):\n        pass\n",
+  "tests": "import numpy as np\n\ndef test_matches_sklearn():\n    \"\"\"Совпадает с sklearn StandardScaler\"\"\"\n    from sklearn.preprocessing import StandardScaler\n    X = np.random.default_rng(3).normal(5, 3, size=(50, 4))\n    assert np.allclose(Standardizer().fit_transform(X), StandardScaler().fit_transform(X))\n\ndef test_constant_column():\n    \"\"\"Константный столбец не даёт nan\"\"\"\n    X = np.array([[1.0, 7.0], [3.0, 7.0]])\n    out = Standardizer().fit_transform(X)\n    assert np.all(np.isfinite(out)) and np.allclose(out[:, 1], 0)\n\ndef test_train_stats_only():\n    \"\"\"transform использует статистики из fit\"\"\"\n    train = np.array([[0.0], [2.0]])\n    test = np.array([[4.0]])\n    s = Standardizer().fit(train)\n    assert np.allclose(s.transform(test), [[3.0]]), \"среднее 1, std 1 — из train\"\n",
+  "hints_ru": [
+   "Объект вызывает `fit` один раз, а `transform` — много раз и на других данных. Что тогда нужно запомнить в `fit`? Что делать со столбцом, где все значения одинаковые?",
+   "Статистики по столбцам — `axis=0`; сохраните их в атрибутах (`mean_`, `scale_`). Для std = 0 подставьте 1 через `np.where`: константный столбец после вычитания среднего и так нулевой, деление на 1 его не меняет.",
+   "1) `fit`: `mean_ = X.mean(axis=0)`; `std = X.std(axis=0)`; `scale_ = np.where(std == 0, 1.0, std)`; верните `self`. 2) `transform`: `(X - mean_) / scale_`. 3) `fit_transform`: `self.fit(X).transform(X)`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w3-bayes": {
+  "title": "D3 в коде: апостериорная вероятность",
+  "statement_ru": "Напишите `posterior(prior, sensitivity, specificity, positive=True)` — вероятность болезни\nпосле результата теста.\n- `prior` — доля больных;\n- `sensitivity` — P(тест + | болен);\n- `specificity` — P(тест − | здоров).\n\nДля `positive=False` верните P(болен | тест −). Затем напишите `tests_needed(prior, sensitivity, specificity, target)` —\nсколько **независимых положительных** тестов подряд нужно, чтобы вероятность болезни стала ≥ `target`\n(апостериорная после одного теста — априорная для следующего).",
+  "starter_code": "def posterior(prior, sensitivity, specificity, positive=True):\n    pass\n\n\ndef tests_needed(prior, sensitivity, specificity, target):\n    pass\n",
+  "tests": "def test_d3():\n    \"\"\"Пример D3: ≈ 0,1667\"\"\"\n    assert abs(posterior(0.01, 0.99, 0.95) - 0.16666) < 1e-3\n\ndef test_negative():\n    \"\"\"Отрицательный тест\"\"\"\n    p = posterior(0.01, 0.99, 0.95, positive=False)\n    assert abs(p - 0.0001063) < 1e-6, f\"получилось {p}\"\n\ndef test_edge():\n    \"\"\"Идеальный тест\"\"\"\n    assert posterior(0.3, 1.0, 1.0) == 1.0\n    assert posterior(0.3, 1.0, 1.0, positive=False) == 0.0\n\ndef test_repeat():\n    \"\"\"Повторные тесты\"\"\"\n    assert tests_needed(0.01, 0.99, 0.95, 0.9) == 3\n    assert tests_needed(0.5, 0.9, 0.9, 0.5) == 0\n",
+  "hints_ru": [
+   "Тест положительный. Из каких двух групп людей может прийти положительный результат? Какая доля всех положительных тестов приходится на больных?",
+   "Формула Байеса: P(болен | +) = P(+ | болен)·P(болен) / P(+). Знаменатель P(+) — сумма по двум группам: больные с верным тестом и здоровые с ложным, где P(+ | здоров) = 1 − specificity.",
+   "1) `positive=True`: числитель `sensitivity * prior`, знаменатель — числитель плюс `(1 - specificity) * (1 - prior)`. 2) `positive=False`: числитель `(1 - sensitivity) * prior`, плюс `specificity * (1 - prior)`. 3) `tests_needed`: `n, p = 0, prior`; пока `p < target`: `p = posterior(p, ...)`, `n += 1`. Если `prior >= target` — ответ 0."
+  ],
+  "n_tests": 4
+ },
+ "ex-w3-pandas": {
+  "title": "pandas: отчёт по продажам",
+  "statement_ru": "Напишите `report(sales, products)`. `sales` — DataFrame со столбцами `product_id, qty, day`;\n`products` — `product_id, category, price`. Верните DataFrame:\n- одна строка на категорию, индекс — `category`, отсортирован по алфавиту;\n- столбцы `revenue` (сумма qty·price), `orders` (число строк продаж), `top_product` (product_id с наибольшей выручкой в категории;\n  при равенстве — меньший id).\n\nКатегории без продаж в отчёт не попадают.",
+  "starter_code": "import pandas as pd\n\n\ndef report(sales, products):\n    pass\n",
+  "tests": "import pandas as pd\n\ndef data():\n    products = pd.DataFrame({\"product_id\": [1, 2, 3, 4], \"category\": [\"food\", \"food\", \"toys\", \"books\"], \"price\": [10.0, 5.0, 7.0, 3.0]})\n    sales = pd.DataFrame({\"product_id\": [1, 2, 2, 3, 2], \"qty\": [1, 2, 1, 4, 1], \"day\": [1, 1, 2, 2, 3]})\n    return sales, products\n\ndef test_shape_and_index():\n    \"\"\"Индекс и столбцы\"\"\"\n    r = report(*data())\n    assert list(r.index) == [\"food\", \"toys\"], f\"индекс: {list(r.index)}\"\n    assert set([\"revenue\", \"orders\", \"top_product\"]) <= set(r.columns)\n\ndef test_values():\n    \"\"\"Выручка, заказы, лучший товар\"\"\"\n    r = report(*data())\n    assert r.loc[\"food\", \"revenue\"] == 30.0 and r.loc[\"toys\", \"revenue\"] == 28.0\n    assert r.loc[\"food\", \"orders\"] == 4 and r.loc[\"toys\", \"orders\"] == 1\n\ndef test_top_product_tie():\n    \"\"\"При равной выручке — меньший id\"\"\"\n    r = report(*data())\n    assert r.loc[\"food\", \"top_product\"] == 2, \"у товаров 1 и 2 выручка 10 и 20 — лучший 2\"\n    products = pd.DataFrame({\"product_id\": [5, 6], \"category\": [\"x\", \"x\"], \"price\": [1.0, 1.0]})\n    sales = pd.DataFrame({\"product_id\": [6, 5], \"qty\": [2, 2], \"day\": [1, 1]})\n    assert report(sales, products).loc[\"x\", \"top_product\"] == 5\n",
+  "hints_ru": [
+   "Категория и цена лежат в `products`, а количество — в `sales`. Что нужно сделать с таблицами до того, как считать выручку по категориям?",
+   "`merge` по `product_id` соединяет таблицы. Потом `groupby('category').agg(...)` с именованной агрегацией даёт `revenue` и `orders` за один вызов. Для `top_product` нужна выручка на уровне пары (категория, товар).",
+   "1) `df = sales.merge(products, on=\"product_id\")`; `df[\"revenue\"] = qty * price`. 2) `agg(revenue=(\"revenue\", \"sum\"), orders=(\"revenue\", \"size\"))`. 3) Выручка по `[\"category\", \"product_id\"]`, сортировка: категория ↑, выручка ↓, id ↑; `drop_duplicates(\"category\")`. 4) Присоедините `top_product` и `sort_index()`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w4-linreg": {
+  "title": "Линейная регрессия на NumPy: градиентный спуск ≈ sklearn",
+  "statement_ru": "Напишите класс `LinReg(lr=0.1, n_iter=2000)`:\n- `fit(X, y)` — градиентный спуск по MSE для весов `coef_` (форма `(d,)`) и смещения `intercept_` (число);\n- `predict(X)` → `X @ coef_ + intercept_`.\n\nГрадиент: `∂L/∂w = (2/n)·Xᵀ(ŷ − y)`, `∂L/∂b = (2/n)·Σ(ŷ − y)`. Без циклов по объектам\n(цикл только по итерациям). Тест сравнивает ваши веса с `sklearn.linear_model.LinearRegression`.",
+  "starter_code": "import numpy as np\n\n\nclass LinReg:\n    def __init__(self, lr=0.1, n_iter=2000):\n        self.lr = lr\n        self.n_iter = n_iter\n\n    def fit(self, X, y):\n        pass\n\n    def predict(self, X):\n        pass\n",
+  "tests": "import numpy as np\nfrom sklearn.linear_model import LinearRegression\n\ndef data(seed=0, n=200, d=3):\n    rng = np.random.default_rng(seed)\n    X = rng.normal(size=(n, d))\n    y = X @ np.array([1.5, -2.0, 0.5])[:d] + 3.0 + rng.normal(scale=0.1, size=n)\n    return X, y\n\ndef test_matches_sklearn():\n    \"\"\"Веса ≈ LinearRegression\"\"\"\n    X, y = data()\n    mine = LinReg().fit(X, y)\n    ref = LinearRegression().fit(X, y)\n    assert np.allclose(mine.coef_, ref.coef_, atol=1e-3), f\"{mine.coef_} vs {ref.coef_}\"\n    assert abs(mine.intercept_ - ref.intercept_) < 1e-3\n\ndef test_predict_shape():\n    \"\"\"predict возвращает (n,)\"\"\"\n    X, y = data(1, n=50, d=2)\n    m = LinReg().fit(X, y)\n    assert m.predict(X).shape == (50,)\n\ndef test_fit_returns_self():\n    \"\"\"fit возвращает self\"\"\"\n    X, y = data(2, n=20, d=1)\n    m = LinReg(n_iter=10)\n    assert m.fit(X, y) is m\n",
+  "hints_ru": [
+   "Градиент показывает, куда растёт ошибка. Куда тогда нужно двигать веса на каждой итерации? Что нужно посчитать до градиента?",
+   "Градиентный спуск в матричной форме: `err = ŷ − y`, `grad_w = (2/n)·Xᵀ·err` — вектор формы (d,) для всех весов сразу. Цикл Python нужен только по итерациям, не по объектам.",
+   "1) `coef_ = np.zeros(d)`, `intercept_ = 0.0`. 2) `n_iter` раз: `err = X @ coef_ + intercept_ - y`; `coef_ -= lr * (2/n) * (X.T @ err)`; `intercept_ -= lr * (2/n) * err.sum()`. 3) `fit` возвращает `self`. 4) `predict`: `X @ coef_ + intercept_`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w4-logreg": {
+  "title": "Логистическая регрессия на NumPy ≈ sklearn",
+  "statement_ru": "Напишите `LogReg(lr=0.5, n_iter=3000)` для бинарной классификации (метки 0/1):\n- `fit(X, y)` — градиентный спуск по log loss (без регуляризации);\n- `predict_proba(X)` → вероятности класса 1, форма `(n,)`;\n- `predict(X)` → 0/1 с порогом 0,5.\n\nГрадиент log loss удивительно простой: `∂L/∂w = (1/n)·Xᵀ(p − y)`, где `p = σ(Xw + b)`.\nТест сравнивает вероятности с `LogisticRegression(penalty=None)`.",
+  "starter_code": "import numpy as np\n\n\nclass LogReg:\n    def __init__(self, lr=0.5, n_iter=3000):\n        self.lr = lr\n        self.n_iter = n_iter\n",
+  "tests": "import numpy as np\nfrom sklearn.linear_model import LogisticRegression\n\ndef data():\n    rng = np.random.default_rng(4)\n    X = rng.normal(size=(300, 2))\n    logits = 1.2 * X[:, 0] - 0.8 * X[:, 1] + 0.3\n    y = (rng.random(300) < 1 / (1 + np.exp(-logits))).astype(int)\n    return X, y\n\ndef test_proba_matches_sklearn():\n    \"\"\"Вероятности ≈ LogisticRegression(penalty=None)\"\"\"\n    X, y = data()\n    mine = LogReg().fit(X, y)\n    ref = LogisticRegression(penalty=None).fit(X, y)\n    diff = np.abs(mine.predict_proba(X) - ref.predict_proba(X)[:, 1]).max()\n    assert diff < 1e-3, f\"максимальная разница вероятностей {diff:.4f}\"\n\ndef test_predict_labels():\n    \"\"\"predict даёт 0/1\"\"\"\n    X, y = data()\n    pred = LogReg().fit(X, y).predict(X)\n    assert set(np.unique(pred)) <= {0, 1}\n    assert (pred == y).mean() > 0.7\n\ndef test_stable_sigmoid():\n    \"\"\"Нет overflow на больших логитах\"\"\"\n    import warnings\n    X = np.array([[1000.0], [-1000.0]])\n    m = LogReg(n_iter=1).fit(X, np.array([1, 0]))\n    with warnings.catch_warnings():\n        warnings.simplefilter(\"error\")\n        p = m.predict_proba(X * 10)\n    assert np.all(np.isfinite(p))\n",
+  "hints_ru": [
+   "Сравните с `LinReg`. Что меняется в прогнозе, если ответ — вероятность от 0 до 1? Посчитайте `np.exp(1000)`: где в сигмоиде это может случиться?",
+   "Прогноз — `σ(Xw + b)`, градиент log loss — `Xᵀ(p − y)/n`, без двойки. Устойчивая сигмоида: для z ≥ 0 — `1/(1 + e^(−z))`, для z < 0 — `e^z/(1 + e^z)`. В обоих случаях показатель экспоненты ≤ 0, переполнения нет.",
+   "1) `sigmoid(z)`: `out = np.empty_like(z, dtype=float)`; маска `pos = z >= 0`; заполните `out[pos]` и `out[~pos]` по двум формулам. 2) `fit`: как в `LinReg`, но `err = sigmoid(...) - y`, шаг `lr * X.T @ err / n` и `lr * err.mean()`. 3) `predict`: `(proba >= 0.5).astype(int)`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w4-metrics": {
+  "title": "Метрики классификации с нуля ≈ sklearn",
+  "statement_ru": "Напишите функции для бинарных меток 0/1 (списки или массивы):\n- `confusion(y_true, y_pred)` → `(tp, fp, fn, tn)`;\n- `precision_recall_f1(y_true, y_pred)` → кортеж из трёх float (если знаменатель 0 — значение 0.0);\n- `roc_auc(y_true, scores)` — вероятность, что случайный положительный объект получит скор выше\n  случайного отрицательного; ничьи считаются как 0,5.",
+  "starter_code": "import numpy as np\n\n\ndef confusion(y_true, y_pred):\n    pass\n\n\ndef precision_recall_f1(y_true, y_pred):\n    pass\n\n\ndef roc_auc(y_true, scores):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.metrics import f1_score, precision_score, recall_score, roc_auc_score\n\nrng = np.random.default_rng(5)\nY = rng.integers(0, 2, 200)\nP = np.where(rng.random(200) < 0.8, Y, 1 - Y)\nS = Y * 0.3 + rng.random(200)\n\ndef test_confusion():\n    \"\"\"Матрица ошибок\"\"\"\n    assert confusion([1, 1, 0, 0, 1], [1, 0, 1, 0, 1]) == (2, 1, 1, 1)\n\ndef test_prf_vs_sklearn():\n    \"\"\"precision, recall, f1 ≈ sklearn\"\"\"\n    p, r, f = precision_recall_f1(Y, P)\n    assert np.allclose([p, r, f], [precision_score(Y, P), recall_score(Y, P), f1_score(Y, P)])\n\ndef test_zero_division():\n    \"\"\"Нет положительных предсказаний — 0.0\"\"\"\n    assert precision_recall_f1([1, 0], [0, 0]) == (0.0, 0.0, 0.0)\n\ndef test_auc_vs_sklearn():\n    \"\"\"ROC-AUC ≈ sklearn, с ничьими\"\"\"\n    assert abs(roc_auc(Y, S) - roc_auc_score(Y, S)) < 1e-9\n    assert roc_auc([0, 1, 0, 1], [0.5, 0.5, 0.1, 0.9]) == roc_auc_score([0, 1, 0, 1], [0.5, 0.5, 0.1, 0.9])\n",
+  "hints_ru": [
+   "Каждый объект попадает ровно в одну из четырёх клеток: истина 0/1 и прогноз 0/1. Как посчитать объекты одной клетки без цикла? Что такое AUC, если смотреть на пары объектов?",
+   "Булевы маски NumPy: `((t == 1) & (p == 1)).sum()` даёт tp. Перед делением проверяйте знаменатель. AUC — доля пар (положительный, отрицательный), где у положительного скор выше; все пары даёт broadcasting.",
+   "1) `confusion`: четыре маски, верните `int`. 2) `precision = tp / (tp + fp) if tp + fp else 0.0`; так же recall и F1. 3) `roc_auc`: `pos = s[t == 1]`, `neg = s[t == 0]`; `cmp = pos[:, None] - neg[None, :]`; `(cmp > 0).sum() + 0.5 * (cmp == 0).sum()`, делённое на `len(pos) * len(neg)`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w4-kfold": {
+  "title": "Стратифицированный K-Fold своими руками",
+  "statement_ru": "Напишите `stratified_kfold(y, k, seed=0)` — список из `k` пар `(train_idx, val_idx)` (списки индексов):\n- каждый индекс ровно один раз попадает в валидацию;\n- train и val одной пары не пересекаются и вместе дают все индексы;\n- в каждом фолде доля каждого класса в val отличается от доли в `y` не больше чем на 1 объект\n  (раскладывайте индексы каждого класса по фолдам по кругу после перемешивания).",
+  "starter_code": "import random\n\n\ndef stratified_kfold(y, k, seed=0):\n    pass\n",
+  "tests": "from collections import Counter\n\nY = [0] * 90 + [1] * 10\n\ndef test_partition():\n    \"\"\"Валидационные части покрывают все индексы ровно один раз\"\"\"\n    folds = stratified_kfold(Y, 5)\n    assert len(folds) == 5\n    seen = sorted(i for _, val in folds for i in val)\n    assert seen == list(range(len(Y)))\n    for train, val in folds:\n        assert not set(train) & set(val)\n        assert sorted(list(train) + list(val)) == list(range(len(Y)))\n\ndef test_stratified():\n    \"\"\"В каждом фолде 2 объекта редкого класса\"\"\"\n    for _, val in stratified_kfold(Y, 5):\n        assert Counter(Y[i] for i in val)[1] == 2, \"редкий класс распределён неравномерно\"\n\ndef test_shuffled_and_seeded():\n    \"\"\"Перемешано, но воспроизводимо\"\"\"\n    a = stratified_kfold(Y, 5, seed=1)\n    b = stratified_kfold(Y, 5, seed=1)\n    assert a == b\n    assert sorted(a[0][1]) != list(range(18)), \"индексы не перемешаны\"\n",
+  "hints_ru": [
+   "Как разложить индексы по `k` фолдам, чтобы в каждом фолде было почти одинаково объектов класса 0 и класса 1? Можно ли раскладывать все индексы вместе?",
+   "Раскладывайте каждый класс отдельно: перемешайте индексы класса и раздавайте их по кругу `folds[pos % k]`. Раздача по кругу даёт разницу между фолдами не больше 1 объекта. Счётчик `pos` не сбрасывайте между классами.",
+   "1) `rng = random.Random(seed)`; словарь `label → [индексы]`. 2) Для `label` в `sorted(...)`: копия индексов, `rng.shuffle`, раздача по кругу. 3) Для каждого фолда: `train = sorted(set(range(n)) - set(val))`. 4) Верните список пар `(train, val)`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w4-sql": {
+  "title": "SQL: GROUP BY и HAVING (sqlite в браузере)",
+  "statement_ru": "Таблица `employees(id, name, dept, salary, manager_id)`. Запишите в переменную `QUERY` SQL-запрос:\nдля каждого отдела, где **больше одного** сотрудника, вывести `dept`, число сотрудников и\nсреднюю зарплату, отсортировать по средней зарплате по убыванию.\n\nДанные (те же, что в квизе):\n```\n1 Анна  ML   300 NULL\n2 Борис ML   200 1\n3 Вера  ML   200 1\n4 Глеб  Web  150 NULL\n5 Дина  Web  120 4\n6 Егор  Data 180 NULL\n```",
+  "starter_code": "QUERY = \"\"\"\nSELECT dept\nFROM employees\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    assert [(r[0], r[1]) for r in rows] == [(\"ML\", 3), (\"Web\", 2)], f\"получилось {rows}\"\n    assert abs(rows[0][2] - 233.33) < 0.01 and abs(rows[1][2] - 135) < 0.01\n\ndef test_uses_having():\n    \"\"\"Условие на группы — через HAVING\"\"\"\n    assert \"having\" in QUERY.lower(), \"фильтр по числу сотрудников делается в HAVING\"\n",
+  "hints_ru": [
+   "Нужна одна строка результата на отдел. Какая операция SQL собирает строки в группы? Где проверять условие «больше одного сотрудника»: до группировки или после?",
+   "`GROUP BY dept` даёт группы; `COUNT(*)` и `AVG(salary)` считаются по группе. `WHERE` фильтрует строки до группировки, `HAVING` — группы после. Число сотрудников известно только после группировки, поэтому условие в `HAVING`.",
+   "1) `SELECT dept, COUNT(*) AS n, AVG(salary) AS avg_salary FROM employees`. 2) `GROUP BY dept`. 3) `HAVING COUNT(*) > 1`. 4) `ORDER BY avg_salary DESC`."
+  ],
+  "n_tests": 2
+ },
+ "ex-w5-gini": {
+  "title": "Лучшее разбиение по Gini ≈ дерево sklearn глубины 1",
+  "statement_ru": "Напишите:\n- `gini(y)` — Gini-нечистота массива меток: `1 − Σ pₖ²` (для пустого массива — 0);\n- `best_split(x, y)` — лучший порог для одного числового признака `x`. Порог — середина между\n  соседними различными значениями `x`. Объект идёт влево, если `x <= порог`. Верните\n  `(threshold, weighted_gini)` с минимальным взвешенным Gini детей.\n\nТест сравнивает ответ с `DecisionTreeClassifier(max_depth=1)`.",
+  "starter_code": "import numpy as np\n\n\ndef gini(y):\n    pass\n\n\ndef best_split(x, y):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.tree import DecisionTreeClassifier\n\ndef test_gini():\n    \"\"\"Gini для простых случаев\"\"\"\n    assert gini([1, 1, 1]) == 0\n    assert abs(gini([0, 1]) - 0.5) < 1e-12\n    assert abs(gini([0, 0, 1, 2]) - (1 - 0.25 - 0.0625 - 0.0625)) < 1e-12\n\ndef test_vs_sklearn():\n    \"\"\"Порог совпадает с деревом sklearn\"\"\"\n    rng = np.random.default_rng(0)\n    for _ in range(5):\n        x = rng.normal(size=60)\n        y = (x + rng.normal(scale=0.7, size=60) > 0.3).astype(int)\n        t, g = best_split(x, y)\n        tree = DecisionTreeClassifier(max_depth=1).fit(x[:, None], y)\n        # sklearn stores X as float32, so thresholds agree up to ~1e-7.\n        assert abs(t - tree.tree_.threshold[0]) < 1e-6, (t, tree.tree_.threshold[0])\n        imp = tree.tree_.impurity\n        n = tree.tree_.n_node_samples\n        assert abs(g - (n[1] * imp[1] + n[2] * imp[2]) / n[0]) < 1e-9\n",
+  "hints_ru": [
+   "Порог между двумя соседними различными значениями `x` можно двигать — разбиение не меняется. Сколько тогда разных порогов стоит проверить?",
+   "Перебор порогов-кандидатов: середины между соседними значениями `np.unique(x)`. Для каждого порога — взвешенный Gini детей: `(nL·gini(yL) + nR·gini(yR)) / n`. Вес по размеру нужен: маленький чистый лист не должен «перевешивать» большой грязный.",
+   "1) `gini`: пустой массив — 0.0; иначе `p = counts / n`, верните `1 - (p ** 2).sum()`. 2) `best_split`: для пар соседних значений `t = (a + b) / 2`, `left = x <= t`. 3) Считайте взвешенный Gini; обновляйте лучший только при строго меньшем значении — так при равенстве остаётся первый порог, как в sklearn."
+  ],
+  "n_tests": 2
+ },
+ "ex-w5-boost": {
+  "title": "Градиентный бустинг для регрессии своими руками",
+  "statement_ru": "Реализуйте `boost_fit(X, y, n_estimators, lr, max_depth)` для MSE:\n1. `F₀` — среднее `y`.\n2. На каждом шаге обучите `DecisionTreeRegressor(max_depth=max_depth, random_state=0)` на остатках `y − F`\n   и прибавьте `lr · tree.predict(X)` к `F`.\n\nВерните `(f0, trees)`. Функция `boost_predict(model, X, lr)` даёт предсказания.\nТест сравнивает их с `GradientBoostingRegressor` из sklearn.",
+  "starter_code": "import numpy as np\nfrom sklearn.tree import DecisionTreeRegressor\n\n\ndef boost_fit(X, y, n_estimators=50, lr=0.1, max_depth=2):\n    pass\n\n\ndef boost_predict(model, X, lr=0.1):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.ensemble import GradientBoostingRegressor\n\nrng = np.random.default_rng(1)\nX = rng.uniform(-3, 3, size=(200, 2))\ny = np.sin(X[:, 0]) + 0.5 * X[:, 1] + rng.normal(scale=0.1, size=200)\n\ndef test_first_step_is_mean():\n    \"\"\"F₀ — среднее y\"\"\"\n    f0, trees = boost_fit(X, y, n_estimators=1)\n    assert abs(f0 - y.mean()) < 1e-12 and len(trees) == 1\n\ndef test_mse_decreases():\n    \"\"\"Ошибка на обучении падает с ростом числа деревьев\"\"\"\n    m5 = boost_fit(X, y, n_estimators=5)\n    m50 = boost_fit(X, y, n_estimators=50)\n    e5 = ((boost_predict(m5, X) - y) ** 2).mean()\n    e50 = ((boost_predict(m50, X) - y) ** 2).mean()\n    assert e50 < e5\n\ndef test_vs_sklearn():\n    \"\"\"Предсказания ≈ GradientBoostingRegressor\"\"\"\n    sk = GradientBoostingRegressor(n_estimators=50, learning_rate=0.1, max_depth=2, random_state=0).fit(X, y)\n    mine = boost_predict(boost_fit(X, y, 50, 0.1, 2), X, 0.1)\n    assert np.allclose(mine, sk.predict(X), atol=1e-6), np.abs(mine - sk.predict(X)).max()\n",
+  "hints_ru": [
+   "Первая модель предсказывает одно число для всех объектов. Какое число даёт наименьшую MSE? Что тогда должно исправлять следующее дерево?",
+   "Градиентный бустинг для MSE: начальное предсказание `F₀` — среднее `y`. Каждое дерево учится на остатках `y − F` — это антиградиент MSE. Шаг `lr` уменьшает вклад дерева, чтобы ансамбль не переобучался.",
+   "1) `f0 = y.mean()`, `F = np.full(len(y), f0)`. 2) `n_estimators` раз: дерево `fit(X, y - F)`, затем `F += lr * tree.predict(X)`, сохраните дерево. 3) Верните `(f0, trees)`. 4) `boost_predict`: `f0 + lr * сумма tree.predict(X)` по всем деревьям."
+  ],
+  "n_tests": 3
+ },
+ "ex-w5-sql": {
+  "title": "SQL: LEFT JOIN и агрегаты",
+  "statement_ru": "Таблицы `employees(id, name, dept, salary, manager_id)` и `projects(id, title, owner_id, budget)`.\nЗапишите в `QUERY` запрос: для **каждого** сотрудника — `name` и суммарный бюджет его проектов\n(0, если проектов нет). Сортировка: по бюджету по убыванию, затем по имени.\n\nПроекты: `RAG` (Анна, 50), `Ranker` (Борис, 30), `Site` (Глеб, 20), `ETL` (Борис, 10).",
+  "starter_code": "QUERY = \"\"\"\nSELECT e.name\nFROM employees e\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    expected = [(\"Анна\", 50), (\"Борис\", 40), (\"Глеб\", 20), (\"Вера\", 0), (\"Дина\", 0), (\"Егор\", 0)]\n    assert [tuple(r[:2]) for r in rows] == expected, f\"получилось {rows}\"\n\ndef test_left_join():\n    \"\"\"Сотрудники без проектов не потерялись — LEFT JOIN\"\"\"\n    assert \"left\" in QUERY.lower()\n",
+  "hints_ru": [
+   "Нужен каждый сотрудник, даже без проектов. Какой результат даст обычный `JOIN` для сотрудника, у которого нет ни одного проекта?",
+   "`LEFT JOIN projects` сохраняет сотрудников без пары: поля проекта будут `NULL`. `SUM` по группе из одних `NULL` даёт `NULL`, а не 0. `COALESCE(x, 0)` заменяет `NULL` на 0.",
+   "1) `SELECT e.name, COALESCE(SUM(p.budget), 0) AS total`. 2) `FROM employees e LEFT JOIN projects p ON p.owner_id = e.id`. 3) `GROUP BY e.id` — по id, а не по имени: имена могут совпасть. 4) `ORDER BY total DESC, e.name`."
+  ],
+  "n_tests": 2
+ },
+ "ex-w6-kmeans": {
+  "title": "k-means (алгоритм Ллойда) ≈ sklearn",
+  "statement_ru": "Реализуйте `kmeans(X, centers, n_iter=100)`: алгоритм Ллойда со стартовыми центрами `centers`.\nШаг: назначьте каждую точку ближайшему центру, затем пересчитайте центры как средние.\nОстановитесь, когда центры перестали меняться. Верните `(labels, centers, inertia)`.\n\nТест сравнивает с `KMeans(init=centers, n_init=1)`.",
+  "starter_code": "import numpy as np\n\n\ndef kmeans(X, centers, n_iter=100):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.cluster import KMeans\n\nrng = np.random.default_rng(3)\nX = np.vstack([rng.normal(c, 0.6, size=(50, 2)) for c in ([0, 0], [4, 4], [0, 5])])\ninit = X[[0, 60, 120]]\n\ndef test_vs_sklearn():\n    \"\"\"Метки, центры и inertia ≈ sklearn\"\"\"\n    labels, centers, inertia = kmeans(X, init.copy())\n    sk = KMeans(n_clusters=3, init=init, n_init=1, algorithm=\"lloyd\").fit(X)\n    assert np.array_equal(labels, sk.labels_)\n    assert np.allclose(centers, sk.cluster_centers_, atol=1e-6)\n    assert abs(inertia - sk.inertia_) < 1e-6 * sk.inertia_\n\ndef test_does_not_modify_input():\n    \"\"\"Стартовые центры не меняются на месте\"\"\"\n    c = init.copy()\n    kmeans(X, c)\n    assert np.array_equal(c, init)\n",
+  "hints_ru": [
+   "Алгоритм Ллойда повторяет два шага. Какой шаг зависит только от центров, а какой — только от назначений точек? Когда повторять больше не нужно?",
+   "Шаг назначения: расстояния до всех центров сразу через broadcasting, форма `(n, k)`; `argmin` по оси 1 даёт метки. Шаг обновления: центр кластера — среднее его точек. Остановка — центры не изменились (`np.allclose`).",
+   "1) Скопируйте центры: `np.array(centers, dtype=float)` — вход менять нельзя. 2) В цикле: `dist = ((X[:, None, :] - centers[None]) ** 2).sum(-1)`, `labels = dist.argmin(1)`, новые центры — средние. 3) Центры не изменились — `break`. 4) Пересчитайте `labels` по финальным центрам; `inertia = dist.min(1).sum()`."
+  ],
+  "n_tests": 2
+ },
+ "ex-w6-pca": {
+  "title": "PCA через SVD ≈ sklearn",
+  "statement_ru": "Реализуйте `pca(X, k)` через SVD центрированной матрицы. Верните `(Z, components, ratio)`:\n- `Z` — проекции, форма `(n, k)`;\n- `components` — `k` главных направлений, форма `(k, d)`;\n- `ratio` — доля объяснённой дисперсии каждой компоненты.\n\nЗнак компоненты произволен, поэтому тест сравнивает модули.",
+  "starter_code": "import numpy as np\n\n\ndef pca(X, k):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.decomposition import PCA\n\nrng = np.random.default_rng(4)\nX = rng.normal(size=(100, 4)) @ rng.normal(size=(4, 4)) + 5\n\ndef test_vs_sklearn():\n    \"\"\"Проекции и доли дисперсии ≈ sklearn\"\"\"\n    Z, comps, ratio = pca(X, 2)\n    sk = PCA(n_components=2).fit(X)\n    assert Z.shape == (100, 2) and comps.shape == (2, 4)\n    assert np.allclose(np.abs(Z), np.abs(sk.transform(X)), atol=1e-8)\n    assert np.allclose(ratio, sk.explained_variance_ratio_)\n\ndef test_orthonormal():\n    \"\"\"Компоненты ортонормированы\"\"\"\n    _, comps, _ = pca(X, 3)\n    assert np.allclose(comps @ comps.T, np.eye(3), atol=1e-10)\n",
+  "hints_ru": [
+   "Главные направления ищут разброс точек вокруг среднего. Что нужно сделать с данными до разложения, чтобы среднее не исказило направления?",
+   "Центрируйте `X` и сделайте SVD: `Xc = U·S·Vt`. Строки `Vt` — главные направления по убыванию важности. Дисперсия вдоль компоненты пропорциональна `S²`, поэтому доля объяснённой дисперсии — `S² / Σ S²`.",
+   "1) `Xc = X - X.mean(0)`. 2) `U, S, Vt = np.linalg.svd(Xc, full_matrices=False)`. 3) `components = Vt[:k]`; `Z = Xc @ components.T`. 4) `var = S ** 2`; `ratio = var[:k] / var.sum()`. Знак компонент произвольный — это нормально."
+  ],
+  "n_tests": 2
+ },
+ "ex-w6-ztest": {
+  "title": "A/B: z-тест для двух конверсий и размер выборки",
+  "statement_ru": "1. `ztest(conv_a, n_a, conv_b, n_b)` — z-тест для разницы двух долей с общей (pooled) долей.\n   Верните `(z, p_value)`, p-value двусторонний. `z > 0`, если B лучше.\n2. `sample_size(p, mde, alpha=0.05, power=0.8)` — сколько пользователей нужно **в каждую** группу,\n   чтобы поймать абсолютный рост конверсии `mde` от базы `p`:\n   `n = (z₁₋α/₂ + z_power)² · (p(1−p) + (p+mde)(1−p−mde)) / mde²`, округлить вверх.\n\nКвантили нормального распределения: `scipy.stats.norm.ppf`, хвост: `norm.sf`.",
+  "starter_code": "import math\nfrom scipy.stats import norm\n\n\ndef ztest(conv_a, n_a, conv_b, n_b):\n    pass\n\n\ndef sample_size(p, mde, alpha=0.05, power=0.8):\n    pass\n",
+  "tests": "import math\n\ndef test_known_values():\n    \"\"\"200/2000 против 250/2000\"\"\"\n    z, p = ztest(200, 2000, 250, 2000)\n    assert abs(z - 2.50196) < 1e-4, z\n    assert abs(p - 0.012351) < 1e-5, p\n\ndef test_symmetry():\n    \"\"\"Перестановка групп меняет знак z, но не p-value\"\"\"\n    z1, p1 = ztest(200, 2000, 250, 2000)\n    z2, p2 = ztest(250, 2000, 200, 2000)\n    assert abs(z1 + z2) < 1e-12 and abs(p1 - p2) < 1e-12\n\ndef test_no_difference():\n    \"\"\"Одинаковые конверсии — z = 0, p = 1\"\"\"\n    z, p = ztest(100, 1000, 100, 1000)\n    assert abs(z) < 1e-12 and abs(p - 1) < 1e-12\n\ndef test_sample_size():\n    \"\"\"Размер выборки: база 10%, MDE 1 п.п.\"\"\"\n    n = sample_size(0.10, 0.01)\n    assert n == 14749, n\n    assert sample_size(0.10, 0.005) > 3.5 * n\n",
+  "hints_ru": [
+   "Если A и B на самом деле не отличаются, какой одной долей лучше всего оценить конверсию? От чего зависит разброс разницы двух выборочных долей?",
+   "z-тест с общей (pooled) долей: при нулевой гипотезе обе группы имеют одну долю `p = (conv_a + conv_b) / (n_a + n_b)`. Стандартная ошибка разницы — `sqrt(p(1−p)(1/n_a + 1/n_b))`. Двусторонний p-value учитывает оба хвоста: `2·norm.sf(|z|)`.",
+   "1) `pa`, `pb`, общая `p`, `se`. 2) `z = (pb - pa) / se` — положительный, если B лучше. 3) Верните `(z, 2 * norm.sf(abs(z)))`. 4) `sample_size`: `z = norm.ppf(1 - alpha/2) + norm.ppf(power)`, подставьте в формулу, округлите вверх `math.ceil`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w6-sql": {
+  "title": "SQL: топ-1 по зарплате в каждом отделе (окна)",
+  "statement_ru": "Запишите в `QUERY` запрос: для каждого отдела — сотрудник с максимальной зарплатой\n(при равенстве — первый по имени). Столбцы: `dept`, `name`, `salary`, сортировка по `dept`.\nИспользуйте оконную функцию `ROW_NUMBER() OVER (PARTITION BY …)`.",
+  "starter_code": "QUERY = \"\"\"\nSELECT dept, name, salary\nFROM employees\n\"\"\"\n",
+  "tests": "import sqlite3\n\ndef make_db():\n    db = sqlite3.connect(\":memory:\")\n    db.executescript('''\n        CREATE TABLE employees (id INTEGER PRIMARY KEY, name TEXT, dept TEXT, salary INTEGER, manager_id INTEGER);\n        INSERT INTO employees VALUES\n            (1, 'Анна', 'ML', 300, NULL), (2, 'Борис', 'ML', 200, 1), (3, 'Вера', 'ML', 200, 1),\n            (4, 'Глеб', 'Web', 150, NULL), (5, 'Дина', 'Web', 120, 4), (6, 'Егор', 'Data', 180, NULL);\n        CREATE TABLE projects (id INTEGER PRIMARY KEY, title TEXT, owner_id INTEGER, budget INTEGER);\n        INSERT INTO projects VALUES (1, 'RAG', 1, 50), (2, 'Ranker', 2, 30), (3, 'Site', 4, 20), (4, 'ETL', 2, 10);\n    ''')\n    return db\n\ndef run(query):\n    return make_db().execute(query).fetchall()\n\ndef test_result():\n    \"\"\"Результат запроса\"\"\"\n    rows = run(QUERY)\n    assert rows == [(\"Data\", \"Егор\", 180), (\"ML\", \"Анна\", 300), (\"Web\", \"Глеб\", 150)], f\"получилось {rows}\"\n\ndef test_window():\n    \"\"\"Используется оконная функция\"\"\"\n    assert \"over\" in QUERY.lower() and \"partition\" in QUERY.lower()\n",
+  "hints_ru": [
+   "Нужен один лучший сотрудник в каждом отделе, но строки сотрудников не должны схлопываться в одну строку группы. Как пометить «первого» внутри отдела?",
+   "Оконная функция `ROW_NUMBER() OVER (PARTITION BY dept ORDER BY salary DESC, name)` нумерует сотрудников внутри каждого отдела, не схлопывая строки. Оконные функции считаются после `WHERE`, поэтому фильтр по номеру — только во внешнем запросе.",
+   "1) Внутренний запрос: `dept, name, salary` и номер `AS rn`. 2) Внешний: `SELECT dept, name, salary FROM (...) WHERE rn = 1`. 3) `ORDER BY dept`. `name` в `ORDER BY` окна решает ничьи по зарплате."
+  ],
+  "n_tests": 2
+ },
+ "ex-w7-validate": {
+  "title": "Валидация запроса /predict (как Pydantic)",
+  "statement_ru": "Без FastAPI потренируйте логику эндпоинта. Напишите `handle_predict(payload: dict) -> (status, body)`:\n- нужны поля `age` (int, 0–120) и `income` (int или float, ≥ 0), `city` — необязательная строка;\n- `bool` — не число (как в Pydantic strict-режиме);\n- ошибка → `(422, {\"detail\": [{\"loc\": [<поле>], \"msg\": <текст>}, ...]})` — **все** ошибки сразу, в порядке `age`, `income`, `city`;\n- успех → `(200, {\"score\": round(0.01 * age + 0.001 * income, 3)})`.",
+  "starter_code": "def handle_predict(payload):\n    pass\n",
+  "tests": "def locs(body):\n    return [e[\"loc\"][0] for e in body[\"detail\"]]\n\ndef test_ok():\n    \"\"\"Верный запрос — 200 и score\"\"\"\n    assert handle_predict({\"age\": 30, \"income\": 1000}) == (200, {\"score\": 1.3})\n    assert handle_predict({\"age\": 30, \"income\": 10.5, \"city\": \"Москва\"})[0] == 200\n\ndef test_missing():\n    \"\"\"Нет поля — 422\"\"\"\n    status, body = handle_predict({\"age\": 30})\n    assert status == 422 and locs(body) == [\"income\"]\n\ndef test_types_and_ranges():\n    \"\"\"Неверный тип и диапазон — все ошибки сразу\"\"\"\n    status, body = handle_predict({\"age\": \"30\", \"income\": -1, \"city\": 5})\n    assert status == 422 and locs(body) == [\"age\", \"income\", \"city\"]\n    assert all(isinstance(e[\"msg\"], str) and e[\"msg\"] for e in body[\"detail\"])\n\ndef test_bool_is_not_int():\n    \"\"\"True — не возраст\"\"\"\n    assert handle_predict({\"age\": True, \"income\": 1})[0] == 422\n    assert handle_predict({\"age\": 121, \"income\": 1})[0] == 422\n",
+  "hints_ru": [
+   "Клиент отправил запрос с тремя ошибками. Сколько раз ему придётся исправлять запрос, если вы вернёте только первую ошибку? Чему равно `isinstance(True, int)`?",
+   "Копите ошибки в списке и возвращайте 422 один раз в конце. `bool` — подкласс `int` в Python, поэтому `True` прошёл бы проверку на число; исключайте его явно: `isinstance(v, int) and not isinstance(v, bool)`.",
+   "1) `errors = []`. 2) `age`: нет поля — ошибка «обязательное поле»; не целое или вне 0–120 — другая ошибка. 3) `income`: так же, число `int`/`float`, ≥ 0. 4) `city`: есть, но не `str` — ошибка. 5) `errors` не пуст — `(422, {\"detail\": errors})`; иначе `(200, {\"score\": round(...)})`. Порядок проверок задаёт порядок ошибок."
+  ],
+  "n_tests": 4
+ },
+ "ex-w8-micrograd": {
+  "title": "micrograd: класс Value с обратным проходом",
+  "statement_ru": "Напишите класс `Value` (как micrograd Karpathy): скаляр `data`, градиент `grad`.\nНужны операции `+`, `*` (в том числе с обычными числами слева и справа), `**` (степень — число),\n`tanh()`, `relu()` и `backward()` (топологическая сортировка + цепное правило).\n\nТест сверяет градиенты с численными (конечные разности).",
+  "starter_code": "import math\n\n\nclass Value:\n    def __init__(self, data, _children=()):\n        self.data = data\n        self.grad = 0.0\n\n    def backward(self):\n        pass\n",
+  "tests": "import math\n\ndef f(a, b, c):\n    return ((a * b + c) ** 2 + (a + 1).tanh() * 3 - (b * c).relu() * 2 if hasattr(a, \"relu\") else\n            (a * b + c) ** 2 + math.tanh(a + 1) * 3 - max(0, b * c) * 2)\n\ndef test_simple():\n    \"\"\"d(a·b)/da = b\"\"\"\n    a, b = Value(2.0), Value(-3.0)\n    out = a * b\n    out.backward()\n    assert out.data == -6.0 and a.grad == -3.0 and b.grad == 2.0\n\ndef test_reuse():\n    \"\"\"Узел используется дважды — градиенты складываются\"\"\"\n    a = Value(3.0)\n    out = a * a + a\n    out.backward()\n    assert abs(a.grad - 7.0) < 1e-12\n\ndef test_numeric():\n    \"\"\"Сложное выражение: градиенты = конечные разности\"\"\"\n    x = dict(a=0.7, b=-1.3, c=0.4)\n    vs = {k: Value(v) for k, v in x.items()}\n    out = vs[\"a\"] * vs[\"b\"] + vs[\"c\"]\n    out = out ** 2 + (vs[\"a\"] + 1).tanh() * 3 + (vs[\"b\"] * vs[\"c\"]).relu() * (-2)\n    out.backward()\n    h = 1e-6\n    for k in x:\n        up = dict(x); up[k] += h\n        dn = dict(x); dn[k] -= h\n        g = (f(**up) - f(**dn)) / (2 * h)\n        assert abs(vs[k].grad - g) < 1e-5, (k, vs[k].grad, g)\n\ndef test_radd():\n    \"\"\"Число слева: 2 + v и 3 * v\"\"\"\n    v = Value(1.5)\n    out = 2 + v * 3\n    out.backward()\n    assert out.data == 6.5 and v.grad == 3.0\n",
+  "hints_ru": [
+   "Выражение `(a * b + c).tanh()` — цепочка простых операций. Что нужно запомнить в каждом промежуточном результате, чтобы потом пройти цепочку назад?",
+   "Каждая операция создаёт новый `Value` с детьми `_prev` и замыканием `_backward`. Замыкание добавляет (`+=`) вклад в `grad` детей по цепному правилу. `+=` нужен: одно значение может участвовать в выражении несколько раз. Для `2 + v` и `3 * v` нужны `__radd__` и `__rmul__`; число превращайте в `Value`.",
+   "1) `__add__`: `out.grad` идёт обоим детям. 2) `__mul__`: `self.grad += other.data * out.grad` и наоборот. 3) `__pow__`: `k * data**(k-1)`; `tanh`: `1 - t²`; `relu`: `data > 0`. 4) `backward`: DFS строит топологический порядок, `self.grad = 1`, затем `_backward()` в обратном порядке."
+  ],
+  "n_tests": 4
+ },
+ "ex-w8-adam": {
+  "title": "Шаг оптимизатора Adam на NumPy",
+  "statement_ru": "Напишите `adam_step(w, g, m, v, t, lr=1e-3, b1=0.9, b2=0.999, eps=1e-8)` → `(w_new, m_new, v_new)`.\n`t` — номер шага, начиная с 1. Формулы:\n`m = b1·m + (1−b1)·g`, `v = b2·v + (1−b2)·g²`, `m̂ = m/(1−b1ᵗ)`, `v̂ = v/(1−b2ᵗ)`,\n`w = w − lr·m̂/(√v̂ + eps)`. Не меняйте входные массивы на месте.",
+  "starter_code": "import numpy as np\n\n\ndef adam_step(w, g, m, v, t, lr=1e-3, b1=0.9, b2=0.999, eps=1e-8):\n    pass\n",
+  "tests": "import numpy as np\n\ndef test_first_step():\n    \"\"\"Первый шаг: размер ≈ lr для каждого параметра, против знака градиента\"\"\"\n    w = np.array([1.0, -2.0, 3.0]); g = np.array([0.5, -10.0, 1e-3])\n    w1, m1, v1 = adam_step(w, g, np.zeros(3), np.zeros(3), 1, lr=0.1)\n    assert np.allclose(w - w1, 0.1 * np.sign(g), atol=1e-4)\n    assert np.allclose(m1, 0.1 * g) and np.allclose(v1, 0.001 * g ** 2)\n\ndef test_converges():\n    \"\"\"200 шагов на f(w) = Σ(w − 3)² приводят к w ≈ 3\"\"\"\n    w = np.zeros(4); m = np.zeros(4); v = np.zeros(4)\n    for t in range(1, 1001):\n        w, m, v = adam_step(w, 2 * (w - 3), m, v, t, lr=0.05)\n    assert np.allclose(w, 3, atol=1e-2), w\n\ndef test_pure():\n    \"\"\"Входные массивы не меняются\"\"\"\n    w = np.ones(2); g = np.ones(2); m = np.zeros(2); v = np.zeros(2)\n    adam_step(w, g, m, v, 1)\n    assert np.array_equal(w, np.ones(2)) and np.array_equal(m, np.zeros(2))\n",
+  "hints_ru": [
+   "На первом шаге `m` и `v` начинаются с нулей. Насколько тогда `m = b1·m + (1−b1)·g` меньше реального градиента? Что нужно сделать с этим смещением?",
+   "Поправка смещения: делите `m` на `1 − b1ᵗ` и `v` на `1 − b2ᵗ`. На первом шаге это даёт `m̂ = g`, `v̂ = g²`, и шаг ≈ `lr` на каждый параметр. Новые массивы создавайте выражениями `m = b1 * m + ...`: `m *= b1` изменит вход на месте.",
+   "1) `m = b1 * m + (1 - b1) * g`. 2) `v = b2 * v + (1 - b2) * g ** 2`. 3) `m_hat = m / (1 - b1 ** t)`, `v_hat = v / (1 - b2 ** t)`. 4) `w_new = w - lr * m_hat / (np.sqrt(v_hat) + eps)`. 5) Верните `(w_new, m, v)`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w9-conv2d": {
+  "title": "Свёртка conv2d на NumPy ≈ scipy",
+  "statement_ru": "Напишите `conv2d(x, w, stride=1, padding=0)` для одного канала: `x` — `(H, W)`, `w` — `(K, K)`.\nКак в нейросетях, это **кросс-корреляция** (ядро не переворачивается). Padding — нулями.\nРазмер выхода: `(H − K + 2P)//S + 1`.\n\nТест сравнивает с `scipy.signal.correlate2d(..., mode=\"valid\")`.",
+  "starter_code": "import numpy as np\n\n\ndef conv2d(x, w, stride=1, padding=0):\n    pass\n",
+  "tests": "import numpy as np\nfrom scipy.signal import correlate2d\n\nrng = np.random.default_rng(9)\nx = rng.normal(size=(9, 11))\nw = rng.normal(size=(3, 3))\n\ndef test_valid():\n    \"\"\"stride 1, без padding ≈ scipy\"\"\"\n    assert np.allclose(conv2d(x, w), correlate2d(x, w, mode=\"valid\"))\n\ndef test_padding():\n    \"\"\"padding 1 сохраняет размер\"\"\"\n    y = conv2d(x, w, padding=1)\n    assert y.shape == x.shape\n    assert np.allclose(y, correlate2d(np.pad(x, 1), w, mode=\"valid\"))\n\ndef test_stride():\n    \"\"\"stride 2\"\"\"\n    y = conv2d(x, w, stride=2, padding=1)\n    assert y.shape == ((9 - 3 + 2) // 2 + 1, (11 - 3 + 2) // 2 + 1)\n    assert np.allclose(y, correlate2d(np.pad(x, 1), w, mode=\"valid\")[::2, ::2])\n",
+  "hints_ru": [
+   "Ядро `K × K` скользит по картинке с шагом `stride`. Сколько позиций у ядра по одной стороне? Как padding меняет это число?",
+   "Сначала добавьте нули по краям `np.pad(x, padding)`. Тогда размер выхода по стороне — `(H_pad − K) // stride + 1`. Каждый выходной элемент — поэлементное произведение окна и ядра, просуммированное. Ядро не переворачивайте: это кросс-корреляция.",
+   "1) `x = np.pad(x, padding)`. 2) `oh`, `ow` по формуле. 3) Для каждого `(i, j)`: окно `x[i*s : i*s+K, j*s : j*s+K]`; `out[i, j] = (окно * w).sum()`. 4) Верните `out`. Проверьте `stride = 2` и `padding = 1`."
+  ],
+  "n_tests": 3
+ },
+ "ex-w9-cosine": {
+  "title": "Поиск по эмбеддингам: косинусное сходство и top-k",
+  "statement_ru": "1. `cosine_matrix(A, B)` — матрица косинусных сходств строк `A` `(n, d)` и строк `B` `(m, d)` → `(n, m)`. Без циклов.\n2. `top_k(query, docs, k)` — индексы `k` документов с наибольшим сходством с вектором `query`,\n   по убыванию сходства.",
+  "starter_code": "import numpy as np\n\n\ndef cosine_matrix(A, B):\n    pass\n\n\ndef top_k(query, docs, k):\n    pass\n",
+  "tests": "import numpy as np\nfrom sklearn.metrics.pairwise import cosine_similarity\n\nrng = np.random.default_rng(2)\nA = rng.normal(size=(5, 8)); B = rng.normal(size=(7, 8))\n\ndef test_matrix():\n    \"\"\"Матрица ≈ sklearn cosine_similarity\"\"\"\n    assert np.allclose(cosine_matrix(A, B), cosine_similarity(A, B))\n\ndef test_scale_invariant():\n    \"\"\"Сходство не зависит от длины векторов\"\"\"\n    assert np.allclose(cosine_matrix(3 * A, B), cosine_matrix(A, B))\n\ndef test_top_k():\n    \"\"\"top-k по убыванию сходства\"\"\"\n    docs = np.array([[1, 0], [0, 1], [1, 1], [-1, 0]], dtype=float)\n    assert list(top_k(np.array([1.0, 0.2]), docs, 3)) == [0, 2, 1]\n",
+  "hints_ru": [
+   "Косинус угла — скалярное произведение, делённое на длины векторов. Что станет с формулой, если заранее сделать длину каждого вектора равной 1?",
+   "Нормируйте строки: `A / np.linalg.norm(A, axis=1, keepdims=True)`. После нормировки косинусное сходство — просто скалярное произведение, и вся матрица — одно умножение `An @ Bn.T` без циклов.",
+   "1) `cosine_matrix`: нормируйте `A` и `B`, верните `An @ Bn.T`. 2) `top_k`: сделайте из `query` матрицу `(1, d)` через `[None, :]`, возьмите строку 0 результата. 3) `np.argsort(-sims)[:k]` — индексы по убыванию сходства."
+  ],
+  "n_tests": 3
+ },
+ "ex-w9-bpe": {
+  "title": "BPE-токенизатор с нуля (как у Karpathy)",
+  "statement_ru": "Байтовый BPE. Текст → байты UTF-8 (числа 0–255).\n- `get_stats(ids)` → `dict` пара → сколько раз встречается подряд (пересечения считаются: в `aaa` пара `(a, a)` — 2 раза);\n- `merge(ids, pair, idx)` — заменить вхождения `pair` слева направо (без пересечений) на `idx`;\n- `train(text, n_merges)` → список слияний `[(pair, idx), ...]`, `idx` = 256, 257, …;\n  на каждом шаге берётся самая частая пара (при равенстве — та, что встретилась раньше);\n- `encode(text, merges)` и `decode(ids, merges)`.",
+  "starter_code": "def get_stats(ids):\n    pass\n\n\ndef merge(ids, pair, idx):\n    pass\n\n\ndef train(text, n_merges):\n    pass\n\n\ndef encode(text, merges):\n    pass\n\n\ndef decode(ids, merges):\n    pass\n",
+  "tests": "TEXT = \"aaabdaaabac aaabdaaabac — привет, привет!\"\n\ndef test_stats_and_merge():\n    \"\"\"get_stats и merge\"\"\"\n    assert get_stats([1, 1, 1, 2]) == {(1, 1): 2, (1, 2): 1}\n    assert merge([1, 1, 1, 2], (1, 1), 9) == [9, 1, 2]\n\ndef test_first_merge():\n    \"\"\"Первое слияние — пара «aa»\"\"\"\n    merges = train(\"aaabdaaabac\", 3)\n    assert merges[0] == ((97, 97), 256)\n    assert [m[1] for m in merges] == [256, 257, 258]\n\ndef test_roundtrip():\n    \"\"\"decode(encode(t)) == t, токенов меньше, чем байтов\"\"\"\n    merges = train(TEXT, 10)\n    ids = encode(TEXT, merges)\n    assert decode(ids, merges) == TEXT\n    assert len(ids) < len(TEXT.encode())\n\ndef test_new_text():\n    \"\"\"Новый текст с теми же слияниями\"\"\"\n    merges = train(TEXT, 10)\n    for t in [\"привет aaab\", \"\", \"zzz\"]:\n        assert decode(encode(t, merges), merges) == t\n",
+  "hints_ru": [
+   "BPE раз за разом склеивает самую частую соседнюю пару в новый токен. Какие три действия тогда нужны: что посчитать, что выбрать, что заменить?",
+   "Пары — `zip(ids, ids[1:])`, частоты — словарь. `max(stats, key=stats.get)` при равенстве даёт первую пару: словарь хранит порядок вставки. `merge` идёт слева направо без пересечений: совпала пара — пишем `idx` и прыгаем на 2, иначе на 1.",
+   "1) `train`: `ids = list(text.encode(\"utf-8\"))`; `n_merges` раз — статистика, самая частая пара, `idx = 256 + k`, `merge`, запишите `(pair, idx)`; пустая статистика — стоп. 2) `encode`: применяйте слияния в порядке обучения. 3) `decode`: словарь `idx → bytes` (от 0 до 255 — один байт, новые — склейка двух), `b\"\".join(...).decode(\"utf-8\")`."
+  ],
+  "n_tests": 4
+ },
+ "ex-w10-attention": {
+  "title": "Scaled dot-product attention с маской на NumPy",
+  "statement_ru": "Напишите `attention(Q, K, V, causal=False)` для форм `(T, d)`:\n`softmax(QKᵀ/√d)·V`, softmax по последней оси, численно устойчивый.\nПри `causal=True` позиция `i` не видит позиции `j > i`.\nВерните `(out, weights)`.",
+  "starter_code": "import numpy as np\n\n\ndef attention(Q, K, V, causal=False):\n    pass\n",
+  "tests": "import numpy as np\nfrom scipy.special import softmax\n\nrng = np.random.default_rng(10)\nT, dk = 6, 8\nQ, K, V = (rng.normal(size=(T, dk)) for _ in range(3))\n\ndef test_full():\n    \"\"\"Без маски ≈ формула\"\"\"\n    out, w = attention(Q, K, V)\n    ref = softmax(Q @ K.T / np.sqrt(dk), axis=-1)\n    assert np.allclose(w, ref) and np.allclose(out, ref @ V)\n\ndef test_causal():\n    \"\"\"Маска: будущие позиции имеют вес 0\"\"\"\n    out, w = attention(Q, K, V, causal=True)\n    assert np.allclose(np.triu(w, 1), 0)\n    assert np.allclose(w.sum(-1), 1)\n    assert np.allclose(out[0], V[0])\n\ndef test_stable():\n    \"\"\"Большие значения не дают nan\"\"\"\n    out, w = attention(Q * 1000, K * 1000, V)\n    assert np.isfinite(out).all()\n",
+  "hints_ru": [
+   "Вес `i → j` показывает, насколько позиция `i` смотрит на позицию `j`. Как посчитать все такие веса одним действием? Какое значение score сделает вес будущей позиции ровно нулём после softmax?",
+   "Scores — `Q @ K.T / √d`: деление на `√d` удерживает дисперсию scores около 1, и softmax не насыщается. Каузальная маска ставит `-inf` выше диагонали: `exp(-inf) = 0`, поэтому будущие позиции получают вес 0. Устойчивый softmax вычитает максимум строки.",
+   "1) `scores = Q @ K.T / np.sqrt(d)`. 2) Если `causal`: `np.where(np.triu(np.ones((T, T), bool), 1), -np.inf, scores)`. 3) Вычтите `scores.max(-1, keepdims=True)`, `exp`, разделите на сумму по строке. 4) Верните `(w @ V, w)`. Диагональ не маскируется, поэтому в строке всегда есть конечный score."
+  ],
+  "n_tests": 3
+ },
+ "ex-w10-sampling": {
+  "title": "Сэмплирование: temperature, top-k, top-p",
+  "statement_ru": "Напишите функции, которые из логитов (`np.ndarray` формы `(V,)`) делают распределение вероятностей:\n- `with_temperature(logits, t)` → softmax(logits / t);\n- `top_k_probs(logits, k)` → оставить `k` самых больших логитов, остальным вероятность 0, перенормировать;\n- `top_p_probs(logits, p)` → оставить минимальный набор самых вероятных токенов с суммой ≥ `p`, перенормировать.",
+  "starter_code": "import numpy as np\n\n\ndef with_temperature(logits, t):\n    pass\n\n\ndef top_k_probs(logits, k):\n    pass\n\n\ndef top_p_probs(logits, p):\n    pass\n",
+  "tests": "import numpy as np\n\nL = np.log(np.array([0.5, 0.3, 0.15, 0.05]))\n\ndef test_temperature():\n    \"\"\"t = 1 — исходные вероятности; t → 0 — почти one-hot; t большое — почти равномерно\"\"\"\n    assert np.allclose(with_temperature(L, 1), [0.5, 0.3, 0.15, 0.05])\n    assert with_temperature(L, 0.01)[0] > 0.999\n    assert np.allclose(with_temperature(L, 1000), 0.25, atol=1e-3)\n\ndef test_top_k():\n    \"\"\"top-2\"\"\"\n    assert np.allclose(top_k_probs(L, 2), [0.625, 0.375, 0, 0])\n\ndef test_top_p():\n    \"\"\"top-p: 0,7 → два токена; 0,8 → два (сумма ровно 0,8); 0,81 → три\"\"\"\n    assert np.allclose(top_p_probs(L, 0.7), [0.625, 0.375, 0, 0])\n    assert np.allclose(top_p_probs(L, 0.81), [0.5 / 0.95, 0.3 / 0.95, 0.15 / 0.95, 0])\n    assert np.allclose(top_p_probs(L, 1.0).sum(), 1)\n",
+  "hints_ru": [
+   "Все три функции в конце превращают числа в распределение. Какое общее действие у них есть? Как «выключить» токен, чтобы после этого действия его вероятность стала ровно 0?",
+   "Один устойчивый `softmax` для всех функций. Температура делит логиты: `t < 1` делает распределение острее, `t > 1` — ровнее. top-k: логиты вне топа замените на `-inf`. top-p: отсортируйте вероятности по убыванию, кумулятивная сумма `np.cumsum` показывает, где набралось `p`.",
+   "1) `_softmax(z)`: вычтите максимум, `exp`, нормировка. 2) `with_temperature`: `_softmax(logits / t)`. 3) `top_k_probs`: индексы `np.argsort(-logits)[:k]`, остальным `-inf`, softmax. 4) `top_p_probs`: `order = np.argsort(-probs)`; `n = searchsorted(cumsum, p) + 1`; оставьте `order[:n]`, перенормируйте. Небольшой допуск `p - 1e-12` защищает от ошибок округления."
+  ],
+  "n_tests": 3
+ }
+}
