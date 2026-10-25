@@ -1,4 +1,4 @@
-// Non-code steps: theory, anki, practice checklist, hours log, buffer day.
+// Non-code steps: theory, anki, practice checklist.
 import { esc, md } from "../md.js";
 import { data, isDone, logEvent, markDone, markUndone, progress, scheduleSave, stepState } from "../store.js";
 import { sourceCard } from "./common.js";
@@ -147,29 +147,6 @@ export function renderPractice(root, step, ctx) {
     }
     logEvent("autocheck", step.id, { i, ok: checks[i].ok });
     scheduleSave();
-    draw();
-  });
-  bindDone(root, step, ctx.onDone, draw);
-  draw();
-}
-
-export function renderHours(root, step, ctx) {
-  const week = ctx.week;
-  const key = `w${week.n}`;
-  const draw = () => {
-    const ids = week.blocks.flatMap((b) => b.steps);
-    const measured = ids.reduce((sum, id) => sum + (progress.steps[id]?.time_s || 0), 0) / 3600;
-    const val = progress.hours[key] ?? "";
-    root.innerHTML = `<div class="card hours">
-      <label>Сколько часов вы занимались на этой неделе?
-        <input class="answer mono short" inputmode="decimal" data-hours value="${esc(val)}"></label>
-      ${measured >= 0.1 ? `<div class="muted small">По таймеру задач: ${measured.toFixed(1)} ч</div>` : ""}
-      ${isDone(step.id) ? doneBar(step) : val !== "" ? doneBar(step, "Записать") : `<div class="done-bar"><button class="btn primary" disabled>Записать</button></div>`}</div>`;
-  };
-  root.addEventListener("change", (e) => {
-    if (!e.target.matches("[data-hours]")) return;
-    progress.hours[key] = e.target.value.trim();
-    logEvent("hours", step.id, { week: week.n, hours: progress.hours[key] });
     draw();
   });
   bindDone(root, step, ctx.onDone, draw);

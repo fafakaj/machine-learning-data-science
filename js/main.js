@@ -3,14 +3,14 @@ import { esc, md } from "./md.js";
 import { onStatus, warmUp } from "./py.js";
 import {
   backend, blockLate, blockProgress, calendarWeek, currentStep, data, fmtDate, getStep, isDone, loadData, loadProgress,
-  markDone, nextStepAfter, onSaveState, overallProgress, progress, pullRemote, rateStep, scheduleSave, weekProgress,
+  markDone, nextStepAfter, onSaveState, overallProgress, progress, pullRemote, rateStep, weekProgress,
 } from "./store.js";
 import { renderCode } from "./views/code.js";
 import { renderQuiz } from "./views/quiz.js";
 import { dueCount, renderReview } from "./views/review.js";
-import { renderAnki, renderHours, renderPractice, renderTheory } from "./views/steps.js";
+import { renderAnki, renderPractice, renderTheory } from "./views/steps.js";
 
-const TYPE_RU = { leetcode: "Задача", review: "Повтор задачи", exercise: "Упражнение", theory: "Теория", quiz: "Квиз", oral: "Вопросы вслух", anki: "Anki", practice: "Практика", hours: "Итог недели" };
+const TYPE_RU = { leetcode: "Задача", review: "Повтор задачи", exercise: "Упражнение", theory: "Теория", quiz: "Квиз", oral: "Вопросы вслух", anki: "Anki", practice: "Практика" };
 const PANEL_KEY = "ml-panel";
 const app = document.getElementById("app");
 let cleanup = null;
@@ -112,7 +112,7 @@ function stageHead(step, isNow) {
 }
 
 function stageFoot(step) {
-  if (isDone(step.id) || step.type === "hours") return "";
+  if (isDone(step.id)) return "";
   return `<div class="stage-foot"><button class="link-btn" data-skip title="Шаг засчитается, в журнале будет отметка «уже знаю»">Уже знаю, пропустить</button></div>`;
 }
 
@@ -130,28 +130,9 @@ function nextBanner(step) {
 
 // ---------------------------------------------------------------- pages
 
-// Time on each step, for the learning log. Only visible time counts; one visit counts at most 2 hours.
-let timing = null;
-function stopTiming() {
-  if (!timing) return;
-  if (timing.since) timing.ms += Date.now() - timing.since;
-  const s = Math.min(7200, Math.round(timing.ms / 1000));
-  if (s >= 5) {
-    const st = progress.steps[timing.id] || (progress.steps[timing.id] = { status: "todo" });
-    st.time_s = (st.time_s || 0) + s;
-    scheduleSave();
-  }
-  timing = null;
-}
-function startTiming(id) {
-  stopTiming();
-  timing = { id, ms: 0, since: document.visibilityState === "visible" ? Date.now() : 0 };
-}
-
 function render() {
   cleanup?.();
   cleanup = null;
-  stopTiming();
   const hash = location.hash || "#/";
   const [, route, arg] = hash.match(/^#\/(\w*)\/?(.*)$/) || [];
 
@@ -169,7 +150,6 @@ function render() {
   step ||= now;
   if (!step) return renderFinished();
   const entry = getStep(step.id);
-  startTiming(step.id);
 
   app.innerHTML = `${header()}${timeline(entry.week.n)}
     <main class="layout">${panel(entry.week, entry.block, step.id)}
@@ -193,7 +173,6 @@ function render() {
   else if (step.type === "theory") renderTheory(body, step, ctx);
   else if (step.type === "anki") renderAnki(body, step, ctx);
   else if (step.type === "practice") renderPractice(body, step, ctx);
-  else if (step.type === "hours") renderHours(body, step, ctx);
   if (isDone(step.id)) nextEl.innerHTML = nextBanner(step);
 
   app.querySelector(".stage").addEventListener("click", (e) => {
@@ -344,21 +323,7 @@ async function main() {
   warmUp();
   window.addEventListener("hashchange", render);
   document.addEventListener("visibilitychange", async () => {
-    if (timing) {
-      if (document.visibilityState === "visible") timing.since = Date.now();
-      else if (timing.since) {
-        timing.ms += Date.now() - timing.since;
-        timing.since = 0;
-      }
-    }
     if (document.visibilityState === "visible" && (await pullRemote())) render();
-    if (document.visibilityState === "hidden" && timing) {
-      // Save the time so far: a phone may close the tab without warning.
-      const id = timing.id;
-      stopTiming();
-      startTiming(id);
-      timing.since = 0;
-    }
   });
   render();
 }

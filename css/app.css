@@ -181,15 +181,12 @@ textarea.answer { resize: vertical; }
 .explain { background: var(--panel-2); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 14px; }
 .self { margin-top: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
-/* practice, hours */
+/* practice */
 .checklist { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
 .check-item label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; }
 .check-item label .md p { margin: 0; }
 .check-item.ok > label { color: var(--muted); }
 .auto { display: flex; gap: 10px; align-items: center; margin: 4px 0 0 24px; }
-table.hours { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
-table.hours th, table.hours td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
-table.hours .num { text-align: right; font-variant-numeric: tabular-nums; }
 .step-list { padding-left: 20px; }
 
 /* map */
@@ -264,7 +261,6 @@ ol.steps li.opt .st-title { color: var(--muted); font-style: italic; }
 details.test.ok .t-mark { background: var(--ok); }
 details.test.bad .t-mark { background: var(--bad); }
 details.test.warn .t-mark { background: var(--warn); }
-.hours label { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 
 .map-blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .map-block { position: relative; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 8px 10px 12px; color: var(--text); text-decoration: none !important; font-size: 13px; overflow-wrap: anywhere; }

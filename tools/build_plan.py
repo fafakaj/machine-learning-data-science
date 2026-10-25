@@ -124,8 +124,8 @@ def main():
                     for it in step.get("items", []):
                         if "topic" in it:
                             it["source"], _ = source_of(it["topic"], where)
-                elif t in ("anki", "hours"):
-                    step.setdefault("title", "Anki: повторение" if t == "anki" else "Лог часов за неделю")
+                elif t == "anki":
+                    step.setdefault("title", "Anki: повторение")
                     step.setdefault("minutes", 15)
                 else:
                     errors.append(f"{where}: неизвестный тип {t}")

@@ -17,7 +17,7 @@ const saveListeners = new Set();
 export const backend = { server: false, gist: null, user: null };
 
 function emptyProgress() {
-  return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, hours: {}, review: {}, events: [] };
+  return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, review: {}, events: [] };
 }
 
 /** Save time in ms. Old server copies have a zone-less local stamp; Date.parse reads it as local time. */
@@ -79,6 +79,7 @@ export async function loadProgress() {
   }
   const sorted = copies.filter(Boolean).sort((a, b) => stamp(b) - stamp(a));
   progress = Object.assign(emptyProgress(), sorted[0] || {});
+  dropTimes();
   // Push the newest copy to places that hold an older one.
   if (sorted.length > 1 && sorted.some((c) => c.saved_at !== sorted[0].saved_at)) scheduleSave(false);
 }
@@ -90,12 +91,20 @@ export async function pullRemote() {
     const remote = await gistLoad(backend.gist);
     if (remote && stamp(remote) > stamp(progress)) {
       progress = Object.assign(emptyProgress(), remote);
+      dropTimes();
       return true;
     }
   } catch (err) {
     console.warn("gist pull failed", err);
   }
   return false;
+}
+
+/** The site no longer tracks time: drop what older versions saved (step timers, weekly hours). */
+function dropTimes() {
+  for (const s of Object.values(progress.steps)) delete s.time_s;
+  delete progress.hours;
+  progress.events = progress.events.filter((e) => e.type !== "hours");
 }
 
 export function onSaveState(fn) {

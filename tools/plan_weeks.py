@@ -4,7 +4,7 @@ Day template (plan_3_months.md, section 1):
     mon, tue, thu, fri  2.5 h: LeetCode (new problem + review of an old one), theory, quiz, Anki
     wed                 buffer: catch up or rest
     sat                 5 h: practice / project, the 5th problem
-    sun                 5 h: review hour, project, questions aloud, hours log
+    sun                 5 h: review hour, project, questions aloud
 
 LeetCode: new problems p1..p5 go to mon, tue, thu, fri, sat. Reviews ("solve again from scratch after 3 days"):
 mon -> previous thu, tue -> previous fri, thu -> mon, fri -> tue, sun -> sat.
@@ -45,10 +45,6 @@ def EX(ex, minutes=20):
 
 def ANKI(deck="ML", intro=None):
     return {"type": "anki", "deck": deck, **({"intro": intro} if intro else {})}
-
-
-def HOURS(intro=None):
-    return {"type": "hours", "minutes": 15, **({"intro": intro} if intro else {})}
 
 
 def P(title, items, minutes, intro=None, goals=None):
@@ -210,7 +206,6 @@ WEEKS = [
                           I("B3: почему все lambda из цикла видят последнее значение?", write=True),
                       ]),
                     ORAL("q-w1-oral", "Отвечайте **вслух**, потом сверьте с образцом. Можно попросить Claude: «задай мне 5 вопросов по B1–B4 и D1»."),
-                    HOURS(),
                 ],
             },
         },
@@ -289,7 +284,6 @@ WEEKS = [
                     R(169),
                     EX("ex-w2-deco10", 10),
                     Q("q-w2-bench", "Проверка недели: объясните замер потоков и процессов (B7)."),
-                    HOURS(),
                 ],
             },
         },
@@ -374,7 +368,6 @@ WEEKS = [
                           I("Что бы вы сделали иначе сейчас?", write=True, rows=3),
                       ]),
                     ORAL("q-w3-oral"),
-                    HOURS(),
                 ],
             },
         },
@@ -450,7 +443,6 @@ WEEKS = [
                     R(205),
                     Q("q-w4-checkpoint", "Контрольная точка месяца 1. Цель — ≥ 70% верно с первой попытки."),
                     ORAL("q-w4-oral", "Мок №1 с другом: Python + основы ML. Друг задаёт вопросы, вы отвечаете вслух."),
-                    HOURS(),
                 ],
             },
         },
@@ -493,8 +485,7 @@ WEEKS = [
                       I("CatBoost с K-Fold. Запишите CV-скор."),
                       I("Первая отправка на Kaggle. Запишите место на лидерборде."),
                       I("CV-скор и лидерборд расходятся не сильно? Если сильно — ищите утечку."),
-                  ]),
-                HOURS()]},
+                  ])]},
         },
     },
     {
@@ -526,8 +517,7 @@ WEEKS = [
                 P("Проект №1: финал на Kaggle", minutes=180, items=[
                     I("SHAP: топ-10 признаков и вывод в README."),
                     I("Финальная отправка. **Топ-50%** лидерборда (стретч — топ-30%). Запишите место."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     {
@@ -559,8 +549,7 @@ WEEKS = [
                     I("Резюме v1: Проект №1 и разобранный хакатон, с цифрами."),
                     I("Профили hh.ru и LinkedIn."),
                     I("**Друг запускает проект по README** без ваших подсказок."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     {
@@ -594,8 +583,7 @@ WEEKS = [
                 P("Мок №2 и контрольная точка 20.12", minutes=120, items=[
                     I("Мок №2 с другом: классический ML + Проект №1."),
                     I("Объясните вслух без шпаргалки: бустинг, переобучение, backprop."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     # ------------------------------------------------------------------ month 3
@@ -623,8 +611,7 @@ WEEKS = [
                 ])]},
             "sun": {"title": "Отклики и повтор", "steps": [
                 R(994),
-                P("Карьера: отклики", minutes=60, items=[I("5 откликов на стажировки и Junior. Запишите, куда.")]),
-                HOURS()]},
+                P("Карьера: отклики", minutes=60, items=[I("5 откликов на стажировки и Junior. Запишите, куда.")])]},
         },
     },
     {
@@ -656,8 +643,7 @@ WEEKS = [
                     I("Датасет интентов (Bitext или русский). Репозиторий Проекта №2."),
                     I("TF-IDF + LogReg: F1 в таблицу."),
                     I("`rubert-tiny2` fine-tune: F1 в таблицу."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     {
@@ -683,8 +669,7 @@ WEEKS = [
                     I("Инференс FP16 vs NF4 vs llama.cpp (GGUF). Таблица: F1, память, задержка, токенов/с."),
                     I("README, релиз v1.0."),
                     I("Мок №3 с Claude: секция 2 из письма HR, упрощённо."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     {
@@ -712,8 +697,7 @@ WEEKS = [
                 P("Проект №3: реранкер и агент", minutes=200, items=[
                     I("Реранкер. Recall@5 после — выше, чем до."),
                     I("Claude API + tool calling. README с таблицей метрик."),
-                ]),
-                HOURS()]},
+                ])]},
         },
     },
     {
@@ -755,8 +739,7 @@ WEEKS = [
                       I("Мок с живым человеком: ≥ 4/5 по вопросам уровня Junior."),
                       I("Проекты: друг запускает по README; тесты «с нуля vs библиотека» проходят."),
                       I("Anki: ≥ 85% верных повторений."),
-                  ]),
-                HOURS("Последний лог часов. Итог: ≥ 85% от плана.")]},
+                  ])]},
         },
     },
 ]
