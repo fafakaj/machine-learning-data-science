@@ -12,8 +12,8 @@
   "n_tests": 4
  },
  "ex-w2-deco10": {
-  "title": "Декоратор с нуля за 10 минут: count_calls",
-  "statement_ru": "Проверка недели 2: напишите декоратор с нуля. Засеките 10 минут.\n\n`@count_calls` считает вызовы функции: у обёрнутой функции есть атрибут `calls`.\nОбёртка передаёт любые аргументы и возвращает результат. Имя и docstring функции\nсохраняются (`functools.wraps`).",
+  "title": "Декоратор с нуля: count_calls",
+  "statement_ru": "Проверка недели 2: напишите декоратор с нуля, без подсказок и без прошлых решений.\n\n`@count_calls` считает вызовы функции: у обёрнутой функции есть атрибут `calls`.\nОбёртка передаёт любые аргументы и возвращает результат. Имя и docstring функции\nсохраняются (`functools.wraps`).",
   "starter_code": "import functools\n\n\ndef count_calls(func):\n    pass\n",
   "tests": "@count_calls\ndef add(a, b=0):\n    \"\"\"Сложить.\"\"\"\n    return a + b\n\ndef test_counts():\n    \"\"\"Считает вызовы\"\"\"\n    start = add.calls\n    add(1); add(1, b=2); add(a=3)\n    assert add.calls - start == 3\n\ndef test_result():\n    \"\"\"Аргументы и результат проходят насквозь\"\"\"\n    assert add(2, b=5) == 7\n\ndef test_wraps():\n    \"\"\"Имя и docstring сохранены\"\"\"\n    assert add.__name__ == \"add\" and add.__doc__ == \"Сложить.\"\n\ndef test_separate():\n    \"\"\"У каждой функции свой счётчик\"\"\"\n    @count_calls\n    def f():\n        return 1\n    f(); f()\n    assert f.calls == 2\n",
   "hints_ru": [

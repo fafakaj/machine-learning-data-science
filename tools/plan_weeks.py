@@ -28,7 +28,7 @@ def LC(pid, why=None):
 
 
 def R(pid):
-    return {"type": "review", "problem": pid, "why": "Решите задачу заново с нуля, не открывая старое решение. Цель — 15 мин."}
+    return {"type": "review", "problem": pid, "why": "Решите задачу заново с нуля, не открывая старое решение."}
 
 
 def Q(quiz, why=None):
@@ -152,9 +152,9 @@ WEEKS = [
                 "intro": "Догоняйте или отдыхайте. Отдых — нормальный выбор. Если есть силы, выберите **одно** из списка по порядку.",
                 "optional": [
                     OPT("Доделайте теорию пн или вт (долг — в списке слева)."),
-                    OPT("wtfpython: «Beware of default mutable arguments!», «A tic-tac-toe where X wins», «Schrödinger's variable», «Hash brownies» (30–45 мин)."),
-                    OPT("Повтор на русском: модель памяти Python (1 ч).", "w1-python-mutability"),
-                    OPT("5-я задача недели #383 Ransom Note (25 мин) — шаг ниже."),
+                    OPT("wtfpython: «Beware of default mutable arguments!», «A tic-tac-toe where X wins», «Schrödinger's variable», «Hash brownies»."),
+                    OPT("Повтор на русском: модель памяти Python.", "w1-python-mutability"),
+                    OPT("5-я задача недели #383 Ransom Note — в списке шагов."),
                 ],
                 "steps": [dict(LC(383), optional=True)],
             },
@@ -219,7 +219,7 @@ WEEKS = [
         "title": "Python: функции и ООП. Линейная алгебра",
         "short": "ООП, линал",
         "goal": ("- Генераторы (B5), декораторы (B6), GIL (B7), dunder (B8) — объясняю без шпаргалки.\n"
-                 "- Декоратор с нуля за 10 мин.\n"
+                 "- Декоратор с нуля без подсказок.\n"
                  "- 3Blue1Brown «Essence of linear algebra», гл. 1–9.\n"
                  "- 5 задач: #125, #167, #88, #283, #169."),
         "days": {
@@ -449,7 +449,7 @@ WEEKS = [
                 "steps": [
                     R(205),
                     Q("q-w4-checkpoint", "Контрольная точка месяца 1. Цель — ≥ 70% верно с первой попытки."),
-                    ORAL("q-w4-oral", "Мок №1 с другом: Python + основы ML, 30 мин. Друг задаёт вопросы, вы отвечаете вслух."),
+                    ORAL("q-w4-oral", "Мок №1 с другом: Python + основы ML. Друг задаёт вопросы, вы отвечаете вслух."),
                     HOURS(),
                 ],
             },
