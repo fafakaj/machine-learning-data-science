@@ -10,7 +10,7 @@ import os
 import tempfile
 import threading
 import webbrowser
-from datetime import datetime
+from datetime import UTC, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -90,7 +90,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(400, {"error": "bad json"})
         if not isinstance(data, dict) or "steps" not in data:
             return self._json(400, {"error": "bad shape"})
-        data["saved_at"] = datetime.now().isoformat(timespec="seconds")
+        # Keep the client's stamp: the gist copy carries the same one, so "newest wins" compares like with like.
+        data.setdefault("saved_at", datetime.now(UTC).isoformat(timespec="milliseconds").replace("+00:00", "Z"))
         with LOCK:
             write_progress(data)
         return self._json(200, {"ok": True, "saved_at": data["saved_at"]})

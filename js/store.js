@@ -20,6 +20,11 @@ function emptyProgress() {
   return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, hours: {}, review: {}, events: [] };
 }
 
+/** Save time in ms. Old server copies have a zone-less local stamp; Date.parse reads it as local time. */
+function stamp(p) {
+  return Date.parse(p.saved_at || "") || 0;
+}
+
 async function getJSON(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`${url}: ${res.status}`);
@@ -72,7 +77,7 @@ export async function loadProgress() {
   } catch {
     /* no local copy */
   }
-  const sorted = copies.filter(Boolean).sort((a, b) => (b.saved_at || "").localeCompare(a.saved_at || ""));
+  const sorted = copies.filter(Boolean).sort((a, b) => stamp(b) - stamp(a));
   progress = Object.assign(emptyProgress(), sorted[0] || {});
   // Push the newest copy to places that hold an older one.
   if (sorted.length > 1 && sorted.some((c) => c.saved_at !== sorted[0].saved_at)) scheduleSave(false);
@@ -83,7 +88,7 @@ export async function pullRemote() {
   if (!backend.gist || saveState === "pending") return false;
   try {
     const remote = await gistLoad(backend.gist);
-    if (remote && (remote.saved_at || "") > (progress.saved_at || "")) {
+    if (remote && stamp(remote) > stamp(progress)) {
       progress = Object.assign(emptyProgress(), remote);
       return true;
     }
