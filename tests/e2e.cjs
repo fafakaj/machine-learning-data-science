@@ -219,11 +219,11 @@ async function savedProgress(ready, file = PROGRESS) {
     assert(cards.some((c) => c.wrong === 1 && c.box === 0), JSON.stringify(cards));
   });
 
-  await check("Anki на сайте: колода «1 Python» целиком, 15 новых в день, сессия сдаёт шаг", async () => {
+  await check("Anki на сайте: карточки по темам дня, 15 новых в день, сессия сдаёт шаг", async () => {
     await page.goto(`${BASE}/?today=2026-10-26#/step/w01-mon-10`);
     await page.waitForSelector("[data-anki-start]");
     const stats = await page.textContent(".anki-stats");
-    assert(stats.includes(`0 из ${REFS.ankiPython}`), `в колоде не ${REFS.ankiPython} карточек: ${stats}`);
+    assert(stats.includes(`0 из ${REFS.ankiDay1}`), `по темам 26.10 не ${REFS.ankiDay1} карточек: ${stats}`);
     assert((await page.textContent("[data-anki-start]")).includes("(15)"), "в сессии не 15 новых карточек");
     await page.click("[data-anki-start]");
     // The first card by keyboard (Space shows the answer, 2 = "Хорошо"), the second "again": it comes back at the end.
@@ -247,7 +247,38 @@ async function savedProgress(ready, file = PROGRESS) {
     const anki = Object.entries(p.review).filter(([k]) => k.startsWith("a:"));
     assert(anki.length === 15, `в коробках ${anki.length} карточек Anki, а не 15`);
     assert(anki.filter(([, c]) => c.wrong === 1).length === 1, "нет карточки с ответом «Снова»");
-    assert((await page.textContent(".anki-stats")).includes(`15 из ${REFS.ankiPython}`), "счётчик изученных не 15");
+    assert((await page.textContent(".anki-stats")).includes(`15 из ${REFS.ankiDay1}`), "счётчик изученных не 15");
+  });
+
+  await check("Anki: шаг недели 3 даёт новые карточки только по темам до своего дня", async () => {
+    const cards = (await (await fetch(`${BASE}/data/anki.json`)).json()).cards;
+    const byId = new Map(cards.map((c) => [c.id, c]));
+    // Everything up to Monday 09.11 is already learned: Tuesday's step (10.11) must bring only cards of 10.11.
+    const review = {};
+    for (const c of cards.filter((c) => c.day <= "2026-11-09")) {
+      review[`a:${c.id}`] = { box: 3, due: Date.now() + 10 * 86400000, seen: 1, wrong: 0, intro: "2026-11-01" };
+    }
+    const start = { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, review, events: [] };
+    const ctx5 = await browser.newContext();
+    await ctx5.route("**/api/progress*", (r) => r.request().method() === "POST" ? r.fulfill({ json: { ok: true } }) : r.fulfill({ json: start }));
+    const ap = await ctx5.newPage();
+    await ap.goto(`${BASE}/?today=2026-11-10#/step/w03-tue-08`);
+    await ap.waitForSelector("[data-anki-start]");
+    const want = cards.filter((c) => c.day === "2026-11-10").length;
+    const stats = await ap.textContent(".anki-stats");
+    assert(stats.includes(`из ${REFS.ankiWeek3Wed}`), `по темам до 10.11 не ${REFS.ankiWeek3Wed} карточек: ${stats}`);
+    // More than 15 cards that day: "Ещё 10 новых" takes them all.
+    await ap.click(want > 15 ? "[data-anki-more]" : "[data-anki-start]");
+    const seen = [];
+    while (!(await ap.$(".callout.ok"))) {
+      seen.push(await ap.getAttribute(".anki-face", "data-card-id"));
+      await ap.click("[data-reveal]");
+      await ap.click("[data-grade=good]");
+    }
+    const days = [...new Set(seen.map((id) => byId.get(id)?.day))];
+    assert(seen.length === want, `в сессии ${seen.length} карточек, а тем 10.11 — ${want}`);
+    assert(days.length === 1 && days[0] === "2026-11-10", `пришли карточки дней ${days}`);
+    await ctx5.close();
   });
 
   await check("Повторение задачи: условие без названия, похожие варианты, «Решить заново» с тестами", async () => {

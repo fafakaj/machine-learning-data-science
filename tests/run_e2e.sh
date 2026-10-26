@@ -16,10 +16,11 @@ app = sys.argv[1]
 sys.path.insert(0, f"{app}/tools")
 from content.w03 import EXERCISES
 from content.m1_site import EXERCISES as SITE
-from content.anki_w1 import CARDS, PY
+cards = json.load(open(f"{app}/data/anki.json"))["cards"]
 print(json.dumps({"lc217": open(f"{app}/data/refs/217.py").read(), "softmax": EXERCISES["ex-w3-softmax"]["ref"],
                   "eda": SITE["ex-w3-eda"]["ref"], "tests": SITE["ex-w1-tests"]["ref"],
-                  "ankiPython": sum(c[0] == PY for c in CARDS)}))
+                  "ankiDay1": sum(c["day"] <= "2026-10-26" for c in cards),
+                  "ankiWeek3Wed": sum(c["day"] <= "2026-11-11" for c in cards)}))
 EOF
 
 PW="$(dirname "$(find ~/.npm/_npx -maxdepth 3 -type d -path '*node_modules/playwright' | head -1)")"

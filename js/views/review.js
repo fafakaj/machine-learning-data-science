@@ -1,13 +1,13 @@
 // Review: one queue for everything already met. Questions of finished quizzes, solved problems
 // (recall the technique from the statement, then re-solve if it did not come back) and Anki cards
-// (the step "Anki" brings new ones in). Leitner boxes decide what comes back when.
+// (the step "Anki" brings new ones in once their topic is reached). Leitner boxes decide what comes back when.
 import { createEditor } from "../editor.js";
 import { grade, questionBody, readValue } from "../grade.js";
 import { icon } from "../icons.js";
 import { esc, md } from "../md.js";
 import { runProblem, TimeoutError } from "../py.js";
 import { openTutor } from "../tutor.js";
-import { allSteps, data, isDone, logEvent, progress, scheduleSave, todayISO } from "../store.js";
+import { allSteps, data, getStep, isDone, logEvent, progress, scheduleSave, todayISO } from "../store.js";
 import { resultsHTML } from "./code.js";
 
 const INTERVAL_DAYS = [0, 1, 2, 4, 8, 16, 32];
@@ -99,12 +99,12 @@ function record(c, gradeName) {
 // ---------------------------------------------------------------- Anki deck of a plan step
 
 /**
- * What the Anki step of `deck` offers today: every due Anki card (as Anki's parent deck "ML" would)
- * and new cards of this deck in plan order, up to NEW_PER_DAY a day. Deck "ML" means all decks.
+ * What the Anki step offers: every due Anki card, and new cards of the topics up to this step's plan day,
+ * in plan order, up to NEW_PER_DAY a day. So a card never comes before its theory.
  */
-export function ankiToday(deck) {
+export function ankiToday(stepId) {
   const all = data.anki.cards;
-  const own = all.filter((c) => deck === "ML" || c.deck === deck);
+  const own = all.filter((c) => c.day <= getStep(stepId).date);
   const now = Date.now();
   const today = todayISO();
   const rec = (c) => progress.review[`a:${c.id}`];
@@ -187,7 +187,7 @@ export function runSession(root, queue, { onFinish, again } = {}) {
     answered = false;
     const c = queue[idx];
     if (c.kind === "anki") {
-      root.innerHTML = shell(c, `<div class="anki-face md">${c.card.front}</div>`, `<button class="btn primary" data-reveal title="Пробел">Показать ответ</button>`);
+      root.innerHTML = shell(c, `<div class="anki-face md" data-card-id="${c.card.id}">${c.card.front}</div>`, `<button class="btn primary" data-reveal title="Пробел">Показать ответ</button>`);
     } else if (c.kind === "problem") {
       root.innerHTML = shell(c, `${problemFace(c.p)}
           <div class="q-text">Каким приёмом решить и за какую сложность? Вспомните сами, потом проверьте себя.</div>

@@ -57,7 +57,7 @@ export async function loadData() {
   for (const week of plan.weeks) {
     for (const block of week.blocks) {
       block.items = block.steps.map((id) => byId.get(id).step);
-      for (const step of block.items) stepIndex.set(step.id, { step, block, week, order: order++ });
+      for (const step of block.items) stepIndex.set(step.id, { step, block, week, date: byId.get(step.id).day.date, order: order++ });
     }
   }
 }

@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 RUN=(uv run --python 3.14 --no-project --with numpy==2.4.6 --with pandas==3.0.2 --with scikit-learn==1.8.0 --with scipy==1.18.0 python)
 "${RUN[@]}" tools/build_content.py
 "${RUN[@]}" tools/build_plan.py "$@"
-python3 tools/build_anki.py
+"${RUN[@]}" tools/build_anki.py
 python3 tools/check_coverage.py
 if [[ "${1:-}" == "--problems" ]]; then
   "${RUN[@]}" tools/build_problems.py

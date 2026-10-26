@@ -2,423 +2,2362 @@
  "cards": [
   {
    "id": "30da3fc427",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Назовите три свойства любого объекта в Python.",
    "back": "identity (<code>id</code>), тип, значение."
   },
   {
    "id": "22e9d1ad29",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Что делает присваивание <code>b = a</code>?",
    "back": "Даёт тому же объекту второе имя. Объект не копируется."
   },
   {
    "id": "95b1cc7fce",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Что выведет код?<pre><code>a = [1, 2]\nb = a\nb.append(3)\nprint(a)</code></pre>",
    "back": "<code>[1, 2, 3]</code>: <code>a</code> и <code>b</code> — один и тот же список."
   },
   {
    "id": "a33c0cc89f",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Чем <code>is</code> отличается от <code>==</code>?",
    "back": "<code>is</code> проверяет, что это тот же объект (identity). <code>==</code> проверяет равенство значений."
   },
   {
    "id": "aab96dcee0",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Чему равны <code>[1] == [1]</code> и <code>[1] is [1]</code>?",
    "back": "<code>True</code> и <code>False</code>: значения равны, но это два разных объекта."
   },
   {
    "id": "158cd6bcd4",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Можно ли проверять числа и строки через <code>is</code>?",
    "back": "Нет. Результат зависит от реализации (кэш малых чисел, интернирование строк). Значения сравнивайте через <code>==</code>."
   },
   {
    "id": "a9a49fb1d5",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Когда правильно писать <code>is</code>?",
    "back": "При сравнении с <code>None</code>: <code>x is None</code>."
   },
   {
    "id": "5380153a89",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Назовите изменяемые встроенные типы.",
    "back": "<code>list</code>, <code>dict</code>, <code>set</code>, <code>bytearray</code>."
   },
   {
    "id": "65083db33d",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Назовите неизменяемые встроенные типы.",
    "back": "<code>int</code>, <code>float</code>, <code>str</code>, <code>tuple</code>, <code>frozenset</code>, <code>bytes</code>."
   },
   {
    "id": "4f536db280",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "B2. Что выведет код? Почему?<pre><code>a = [[0] * 3] * 3\na[0][0] = 1\nprint(a)</code></pre>",
    "back": "<code>[[1, 0, 0], [1, 0, 0], [1, 0, 0]]</code>. <code>* 3</code> копирует ссылку на один и тот же внутренний список."
   },
   {
    "id": "79787085b5",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "cloze",
    "front": "<code>[[0] * 3] * 3</code> создаёт <span class=\"cloze\">[…]</span>.",
-   "back": "<code>[[0] * 3] * 3</code> создаёт <span class=\"cloze on\">3 ссылки на один внутренний список</span>."
+   "back": "<code>[[0] * 3] * 3</code> создаёт <span class=\"cloze on\">3 ссылки на один внутренний список</span>.",
+   "cloze": "<code>[[0] * 3] * 3</code> создаёт {{c1::3 ссылки на один внутренний список}}."
   },
   {
    "id": "4084fc362f",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Как правильно создать матрицу 3×3 из нулей?",
    "back": "<code>[[0] * 3 for _ in range(3)]</code>: каждая строка — новый список."
   },
   {
    "id": "00c508c7ec",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Что делает shallow copy (<code>copy.copy(a)</code>, <code>a[:]</code>, <code>list(a)</code>)?",
    "back": "Создаёт новый внешний объект. Элементы внутри — те же объекты, что в оригинале."
   },
   {
    "id": "f3c7e3965f",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Что делает <code>copy.deepcopy(a)</code>?",
    "back": "Копирует объект и рекурсивно все вложенные объекты."
   },
   {
    "id": "5803372736",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Что выведет код?<pre><code>import copy\nx = [[1], [2]]\ny = copy.copy(x)\nprint(y is x, y[0] is x[0])</code></pre>",
    "back": "<code>False True</code>: внешний список новый, вложенные списки общие."
   },
   {
    "id": "557e7bc8c6",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "B1. Что выведет код? Почему?<pre><code>def add(x, items=[]):\n    items.append(x)\n    return items\n\nprint(add(1))\nprint(add(2))</code></pre>",
    "back": "<code>[1]</code>, затем <code>[1, 2]</code>. Значение по умолчанию создаётся один раз при <code>def</code>. Список общий для всех вызовов."
   },
   {
    "id": "fbc661fed2",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Когда вычисляется значение аргумента по умолчанию?",
    "back": "Один раз — когда выполняется <code>def</code>, а не при каждом вызове."
   },
   {
    "id": "6a7466c5a4",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Где хранится значение аргумента по умолчанию?",
    "back": "На объекте функции: <code>f.__defaults__</code>."
   },
   {
    "id": "cc15e7fdc1",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Как исправить изменяемое значение по умолчанию?",
    "back": "<pre><code>def add(x, items=None):\n    if items is None:\n        items = []\n    items.append(x)\n    return items</code></pre>"
   },
   {
    "id": "5c1f4bf63d",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Для <code>add</code> из B1: что выведет <code>print(add(1), add(2))</code> в одной строке?",
    "back": "<code>[1, 2] [1, 2]</code>: оба вызова вернули один список, а <code>print</code> видит его после второго вызова."
   },
   {
    "id": "795dd0645f",
+   "day": "2026-10-26",
    "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
    "front": "Какое правило ruff находит изменяемый default (B1)?",
    "back": "<code>B006</code> — mutable-argument-default."
   },
   {
-   "id": "28ff371321",
-   "deck": "1 Python",
-   "front": "Назовите порядок поиска имени (LEGB).",
-   "back": "Local → Enclosing → Global → Built-in."
-  },
-  {
-   "id": "57628d06bc",
-   "deck": "1 Python",
-   "front": "Почему <code>x += 1</code> в функции даёт <code>UnboundLocalError</code>, если <code>x</code> — глобальная?",
-   "back": "Присваивание делает <code>x</code> локальной во всей функции. Прочитать её до присваивания нельзя."
-  },
-  {
-   "id": "285bbd728e",
-   "deck": "1 Python",
-   "front": "Чем <code>global</code> отличается от <code>nonlocal</code>?",
-   "back": "<code>global</code> — имя уровня модуля. <code>nonlocal</code> — имя из охватывающей функции."
-  },
-  {
-   "id": "9e3e37e071",
-   "deck": "1 Python",
-   "front": "Что такое замыкание (closure)?",
-   "back": "Внутренняя функция, которая помнит переменные внешней функции. Она хранит ссылку на переменную, а не её значение."
-  },
-  {
-   "id": "b5cbb17549",
-   "deck": "1 Python",
-   "front": "B3. Что выведет код? Почему?<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>",
-   "back": "<code>[2, 2, 2]</code>. Лямбда читает <code>i</code> в момент вызова. К этому моменту цикл закончился и <code>i == 2</code>."
-  },
-  {
-   "id": "19f4e48e0c",
-   "deck": "1 Python",
-   "front": "Что такое позднее связывание (late binding) в замыкании?",
-   "back": "Замыкание читает значение переменной при вызове, а не при создании функции."
-  },
-  {
-   "id": "28750579b5",
-   "deck": "1 Python",
-   "front": "Назовите два исправления B3.",
-   "back": "<code>lambda i=i: i</code> и <code>functools.partial</code>."
-  },
-  {
-   "id": "a75b67ab3c",
-   "deck": "1 Python",
-   "front": "Почему <code>lambda i=i: i</code> исправляет B3?",
-   "back": "Значение по умолчанию вычисляется при создании лямбды. Оно «замораживает» текущее i."
-  },
-  {
-   "id": "e8bfc08d28",
-   "deck": "1 Python",
-   "front": "Какое правило ruff находит B3?",
-   "back": "<code>B023</code> — function-uses-loop-variable."
-  },
-  {
-   "id": "7392affe11",
-   "deck": "1 Python",
-   "front": "Во что <code>*args</code> собирает аргументы?",
-   "back": "В <code>tuple</code> лишних позиционных аргументов."
-  },
-  {
-   "id": "74abbe523f",
-   "deck": "1 Python",
-   "front": "Во что <code>**kwargs</code> собирает аргументы?",
-   "back": "В <code>dict</code> лишних именованных аргументов."
-  },
-  {
-   "id": "59ce1f26f9",
-   "deck": "1 Python",
-   "front": "Что значат <code>/</code> и <code>*</code> в <code>def f(a, /, b, *, c)</code>?",
-   "back": "<code>a</code> — только позиционный. <code>b</code> — любой. <code>c</code> — только именованный."
-  },
-  {
-   "id": "98dcefa279",
-   "deck": "1 Python",
-   "front": "Что делают <code>f(*lst)</code> и <code>f(**d)</code> при вызове?",
-   "back": "Распаковывают список в позиционные аргументы, словарь — в именованные."
-  },
-  {
-   "id": "47476f4c8e",
-   "deck": "1 Python",
-   "front": "Что значит hashable?",
-   "back": "Хэш объекта не меняется за время его жизни (<code>__hash__</code>), и объект сравним через <code>__eq__</code>."
-  },
-  {
-   "id": "09951abd5d",
-   "deck": "1 Python",
-   "front": "B4. Почему <code>tuple</code> может быть ключом <code>dict</code>, а <code>list</code> — нет?",
-   "back": "<code>tuple</code> из hashable-элементов hashable: хэш не меняется. <code>list</code> изменяемый и не hashable."
-  },
-  {
-   "id": "66a81ddbf2",
-   "deck": "1 Python",
-   "front": "Почему ключ <code>dict</code> не может менять хэш?",
-   "back": "Словарь ищет ключ по хэшу. Если хэш изменится, словарь ключ не найдёт."
-  },
-  {
-   "id": "4624628475",
-   "deck": "1 Python",
-   "front": "Что даст <code>hash((1, [2]))</code>?",
-   "back": "<code>TypeError</code>: tuple hashable, только если все его элементы hashable."
-  },
-  {
-   "id": "cefebdee99",
-   "deck": "1 Python",
-   "front": "B4. Сложность поиска по ключу в <code>dict</code>?",
-   "back": "O(1) в среднем. O(n) в худшем случае — при коллизиях хэшей."
-  },
-  {
-   "id": "e2611a23e9",
-   "deck": "1 Python",
-   "front": "Сложность <code>x in some_list</code> и <code>x in some_set</code>?",
-   "back": "O(n) и O(1) в среднем."
-  },
-  {
-   "id": "f59abb8d65",
-   "deck": "1 Python",
-   "front": "Чему равен <code>{1: &quot;a&quot;, 1.0: &quot;b&quot;, True: &quot;c&quot;}</code>?",
-   "back": "<code>{1: &quot;c&quot;}</code>: <code>1 == 1.0 == True</code> и хэши равны — это один ключ."
-  },
-  {
-   "id": "17625fdcdc",
-   "deck": "1 Python",
-   "front": "Что выведет код?<pre><code>a = b = [1]\na += [2]\nprint(b)</code></pre>",
-   "back": "<code>[1, 2]</code>: <code>+=</code> меняет список на месте. С <code>a = a + [2]</code> список <code>b</code> не изменился бы."
-  },
-  {
-   "id": "55235a55aa",
-   "deck": "2 Математика",
-   "front": "Что такое производная (интуиция)?",
-   "back": "Отношение малого сдвига выхода к малому сдвигу входа: во сколько раз изменится f, если чуть сдвинуть x."
-  },
-  {
-   "id": "4f3dd0af07",
-   "deck": "2 Математика",
-   "front": "Определение производной f′(x₀)?",
-   "back": "lim<sub>h→0</sub> (f(x₀ + h) − f(x₀)) / h."
-  },
-  {
-   "id": "df8cc8ec71",
-   "deck": "2 Математика",
-   "front": "(xⁿ)′ = <span class=\"cloze\">[…]</span>",
-   "back": "(xⁿ)′ = <span class=\"cloze on\">n·xⁿ⁻¹</span>"
-  },
-  {
-   "id": "00c28a9130",
-   "deck": "2 Математика",
-   "front": "(eˣ)′ = <span class=\"cloze\">[…]</span>",
-   "back": "(eˣ)′ = <span class=\"cloze on\">eˣ</span>"
-  },
-  {
-   "id": "201b4b6a7c",
-   "deck": "2 Математика",
-   "front": "(ln x)′ = <span class=\"cloze\">[…]</span>",
-   "back": "(ln x)′ = <span class=\"cloze on\">1/x</span>"
-  },
-  {
-   "id": "0b4fdb04bf",
-   "deck": "2 Математика",
-   "front": "Найдите (3x⁴ − 5x² + 7x − 2)′.",
-   "back": "12x³ − 10x + 7."
-  },
-  {
-   "id": "2088beb243",
-   "deck": "2 Математика",
-   "front": "Правило произведения: (uv)′ = ?",
-   "back": "u′v + uv′."
-  },
-  {
-   "id": "2006fa6754",
-   "deck": "2 Математика",
-   "front": "Цепное правило: (f(g(x)))′ = ?",
-   "back": "f′(g(x)) · g′(x)."
-  },
-  {
-   "id": "40649aaa91",
-   "deck": "2 Математика",
-   "front": "Цепное правило — словами?",
-   "back": "Скорости перемножаются: производная внешней функции в точке g(x) умножается на производную внутренней."
-  },
-  {
-   "id": "8dc311b423",
-   "deck": "2 Математика",
-   "front": "Найдите ((3x + 1)⁵)′.",
-   "back": "15(3x + 1)⁴: внешняя даёт 5u⁴, внутренняя даёт 3."
-  },
-  {
-   "id": "b113980f5e",
-   "deck": "2 Математика",
-   "front": "Найдите (e<sup>−x²</sup>)′.",
-   "back": "−2x · e<sup>−x²</sup>."
-  },
-  {
-   "id": "886cbf64d7",
-   "deck": "2 Математика",
-   "front": "Сигмоида σ(x) и её производная?",
-   "back": "σ(x) = 1 / (1 + e<sup>−x</sup>). σ′ = σ(1 − σ)."
-  },
-  {
-   "id": "f7493cf385",
-   "deck": "2 Математика",
-   "front": "Чему равна σ′(0)?",
-   "back": "1/4: σ(0) = 1/2, значит 1/2 · 1/2."
-  },
-  {
-   "id": "590156303f",
-   "deck": "2 Математика",
-   "front": "Как взять частную производную ∂f/∂x?",
-   "back": "Считайте все остальные переменные константами и дифференцируйте по x."
-  },
-  {
-   "id": "b4c046afdc",
-   "deck": "2 Математика",
-   "front": "Что такое градиент ∇f?",
-   "back": "Вектор всех частных производных: (∂f/∂x, ∂f/∂y, …)."
-  },
-  {
-   "id": "d625b1e5fd",
-   "deck": "2 Математика",
-   "front": "Что показывает градиент?",
-   "back": "Направление быстрейшего роста функции."
-  },
-  {
-   "id": "b218940405",
-   "deck": "2 Математика",
-   "front": "D1. Найдите ∇f для f(x, y) = x²y + 3y.",
-   "back": "∇f = (2xy, x² + 3)."
-  },
-  {
-   "id": "7e9e135f81",
-   "deck": "2 Математика",
-   "front": "Чему равен ∇(x²y + 3y) в точке (1, 2)?",
-   "back": "(4, 4)."
-  },
-  {
-   "id": "ca4e4c57be",
-   "deck": "2 Математика",
-   "front": "Формула шага градиентного спуска?",
-   "back": "p ← p − lr · ∇f(p). Минус: идём против роста, к минимуму."
-  },
-  {
-   "id": "9e0b5c529a",
-   "deck": "2 Математика",
-   "front": "Градиент MSE для ŷ = wx + b по w и b?",
-   "back": "∂L/∂w = (2/n) Σ (ŷᵢ − yᵢ) · xᵢ<br>∂L/∂b = (2/n) Σ (ŷᵢ − yᵢ)"
-  },
-  {
-   "id": "3cb7926103",
-   "deck": "2 Математика",
-   "front": "Формула центральной разности для f′(x)? Почему она лучше прямой?",
-   "back": "(f(x + h) − f(x − h)) / (2h). Ошибка ~h², у прямой разности ~h."
-  },
-  {
-   "id": "1f4a9e5710",
-   "deck": "2 Математика",
-   "front": "Backprop — в одной фразе?",
-   "back": "Цепное правило на графе вычислений от выхода к входу: производные перемножаются по рёбрам и складываются по путям."
-  },
-  {
-   "id": "ae50cf3f2c",
-   "deck": "2 Математика",
-   "front": "e = (a + b)(b + 1), a = 2, b = 1. Найдите ∂e/∂a и ∂e/∂b.",
-   "back": "∂e/∂a = b + 1 = 2. ∂e/∂b = (b + 1) + (a + b) = 5: два пути от b к e."
-  },
-  {
    "id": "2f4040f46b",
+   "day": "2026-10-26",
    "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
    "front": "Что значит O(n)?",
    "back": "Время растёт пропорционально размеру входа n."
   },
   {
    "id": "dd64169451",
+   "day": "2026-10-26",
    "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
    "front": "Почему O(n²) плохо при n = 10⁵?",
    "back": "10¹⁰ операций — это слишком долго. O(n) — 10⁵ операций."
   },
   {
    "id": "3c903605ca",
+   "day": "2026-10-26",
    "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
    "front": "Сколько стоит сортировка?",
    "back": "O(n log n)."
   },
   {
    "id": "14335b4ef2",
+   "day": "2026-10-26",
    "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
    "front": "Сложность поиска, вставки и удаления в хэш-таблице?",
    "back": "O(1) в среднем."
   },
   {
    "id": "454a56f97d",
+   "day": "2026-10-26",
    "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
    "front": "Когда нужен паттерн hash set / hash map?",
    "back": "Решение много раз спрашивает «видел ли я X?». Храните виденное в <code>set</code> или <code>dict</code>: O(n²) → O(n)."
+  },
+  {
+   "id": "28ff371321",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Назовите порядок поиска имени (LEGB).",
+   "back": "Local → Enclosing → Global → Built-in."
+  },
+  {
+   "id": "57628d06bc",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Почему <code>x += 1</code> в функции даёт <code>UnboundLocalError</code>, если <code>x</code> — глобальная?",
+   "back": "Присваивание делает <code>x</code> локальной во всей функции. Прочитать её до присваивания нельзя."
+  },
+  {
+   "id": "285bbd728e",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Чем <code>global</code> отличается от <code>nonlocal</code>?",
+   "back": "<code>global</code> — имя уровня модуля. <code>nonlocal</code> — имя из охватывающей функции."
+  },
+  {
+   "id": "9e3e37e071",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что такое замыкание (closure)?",
+   "back": "Внутренняя функция, которая помнит переменные внешней функции. Она хранит ссылку на переменную, а не её значение."
+  },
+  {
+   "id": "b5cbb17549",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "B3. Что выведет код? Почему?<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>",
+   "back": "<code>[2, 2, 2]</code>. Лямбда читает <code>i</code> в момент вызова. К этому моменту цикл закончился и <code>i == 2</code>."
+  },
+  {
+   "id": "19f4e48e0c",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что такое позднее связывание (late binding) в замыкании?",
+   "back": "Замыкание читает значение переменной при вызове, а не при создании функции."
+  },
+  {
+   "id": "28750579b5",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Назовите два исправления B3.",
+   "back": "<code>lambda i=i: i</code> и <code>functools.partial</code>."
+  },
+  {
+   "id": "a75b67ab3c",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Почему <code>lambda i=i: i</code> исправляет B3?",
+   "back": "Значение по умолчанию вычисляется при создании лямбды. Оно «замораживает» текущее i."
+  },
+  {
+   "id": "e8bfc08d28",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Какое правило ruff находит B3?",
+   "back": "<code>B023</code> — function-uses-loop-variable."
+  },
+  {
+   "id": "7392affe11",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Во что <code>*args</code> собирает аргументы?",
+   "back": "В <code>tuple</code> лишних позиционных аргументов."
+  },
+  {
+   "id": "74abbe523f",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Во что <code>**kwargs</code> собирает аргументы?",
+   "back": "В <code>dict</code> лишних именованных аргументов."
+  },
+  {
+   "id": "59ce1f26f9",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что значат <code>/</code> и <code>*</code> в <code>def f(a, /, b, *, c)</code>?",
+   "back": "<code>a</code> — только позиционный. <code>b</code> — любой. <code>c</code> — только именованный."
+  },
+  {
+   "id": "98dcefa279",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что делают <code>f(*lst)</code> и <code>f(**d)</code> при вызове?",
+   "back": "Распаковывают список в позиционные аргументы, словарь — в именованные."
+  },
+  {
+   "id": "47476f4c8e",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что значит hashable?",
+   "back": "Хэш объекта не меняется за время его жизни (<code>__hash__</code>), и объект сравним через <code>__eq__</code>."
+  },
+  {
+   "id": "09951abd5d",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "B4. Почему <code>tuple</code> может быть ключом <code>dict</code>, а <code>list</code> — нет?",
+   "back": "<code>tuple</code> из hashable-элементов hashable: хэш не меняется. <code>list</code> изменяемый и не hashable."
+  },
+  {
+   "id": "66a81ddbf2",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Почему ключ <code>dict</code> не может менять хэш?",
+   "back": "Словарь ищет ключ по хэшу. Если хэш изменится, словарь ключ не найдёт."
+  },
+  {
+   "id": "4624628475",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что даст <code>hash((1, [2]))</code>?",
+   "back": "<code>TypeError</code>: tuple hashable, только если все его элементы hashable."
+  },
+  {
+   "id": "cefebdee99",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "B4. Сложность поиска по ключу в <code>dict</code>?",
+   "back": "O(1) в среднем. O(n) в худшем случае — при коллизиях хэшей."
+  },
+  {
+   "id": "e2611a23e9",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Сложность <code>x in some_list</code> и <code>x in some_set</code>?",
+   "back": "O(n) и O(1) в среднем."
+  },
+  {
+   "id": "f59abb8d65",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Чему равен <code>{1: &quot;a&quot;, 1.0: &quot;b&quot;, True: &quot;c&quot;}</code>?",
+   "back": "<code>{1: &quot;c&quot;}</code>: <code>1 == 1.0 == True</code> и хэши равны — это один ключ."
+  },
+  {
+   "id": "17625fdcdc",
+   "day": "2026-10-27",
+   "deck": "1 Python",
+   "deck_full": "ML::1 Python",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>a = b = [1]\na += [2]\nprint(b)</code></pre>",
+   "back": "<code>[1, 2]</code>: <code>+=</code> меняет список на месте. С <code>a = a + [2]</code> список <code>b</code> не изменился бы."
+  },
+  {
+   "id": "55235a55aa",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Что такое производная (интуиция)?",
+   "back": "Отношение малого сдвига выхода к малому сдвигу входа: во сколько раз изменится f, если чуть сдвинуть x."
+  },
+  {
+   "id": "4f3dd0af07",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Определение производной f′(x₀)?",
+   "back": "lim<sub>h→0</sub> (f(x₀ + h) − f(x₀)) / h."
+  },
+  {
+   "id": "df8cc8ec71",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "cloze",
+   "front": "(xⁿ)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(xⁿ)′ = <span class=\"cloze on\">n·xⁿ⁻¹</span>",
+   "cloze": "(xⁿ)′ = {{c1::n·xⁿ⁻¹}}"
+  },
+  {
+   "id": "00c28a9130",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "cloze",
+   "front": "(eˣ)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(eˣ)′ = <span class=\"cloze on\">eˣ</span>",
+   "cloze": "(eˣ)′ = {{c1::eˣ}}"
+  },
+  {
+   "id": "201b4b6a7c",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "cloze",
+   "front": "(ln x)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(ln x)′ = <span class=\"cloze on\">1/x</span>",
+   "cloze": "(ln x)′ = {{c1::1/x}}"
+  },
+  {
+   "id": "0b4fdb04bf",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Найдите (3x⁴ − 5x² + 7x − 2)′.",
+   "back": "12x³ − 10x + 7."
+  },
+  {
+   "id": "2088beb243",
+   "day": "2026-10-29",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Правило произведения: (uv)′ = ?",
+   "back": "u′v + uv′."
+  },
+  {
+   "id": "2006fa6754",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Цепное правило: (f(g(x)))′ = ?",
+   "back": "f′(g(x)) · g′(x)."
+  },
+  {
+   "id": "40649aaa91",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Цепное правило — словами?",
+   "back": "Скорости перемножаются: производная внешней функции в точке g(x) умножается на производную внутренней."
+  },
+  {
+   "id": "8dc311b423",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Найдите ((3x + 1)⁵)′.",
+   "back": "15(3x + 1)⁴: внешняя даёт 5u⁴, внутренняя даёт 3."
+  },
+  {
+   "id": "b113980f5e",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Найдите (e<sup>−x²</sup>)′.",
+   "back": "−2x · e<sup>−x²</sup>."
+  },
+  {
+   "id": "886cbf64d7",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Сигмоида σ(x) и её производная?",
+   "back": "σ(x) = 1 / (1 + e<sup>−x</sup>). σ′ = σ(1 − σ)."
+  },
+  {
+   "id": "f7493cf385",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Чему равна σ′(0)?",
+   "back": "1/4: σ(0) = 1/2, значит 1/2 · 1/2."
+  },
+  {
+   "id": "590156303f",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Как взять частную производную ∂f/∂x?",
+   "back": "Считайте все остальные переменные константами и дифференцируйте по x."
+  },
+  {
+   "id": "b4c046afdc",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Что такое градиент ∇f?",
+   "back": "Вектор всех частных производных: (∂f/∂x, ∂f/∂y, …)."
+  },
+  {
+   "id": "d625b1e5fd",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Что показывает градиент?",
+   "back": "Направление быстрейшего роста функции."
+  },
+  {
+   "id": "b218940405",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "D1. Найдите ∇f для f(x, y) = x²y + 3y.",
+   "back": "∇f = (2xy, x² + 3)."
+  },
+  {
+   "id": "7e9e135f81",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Чему равен ∇(x²y + 3y) в точке (1, 2)?",
+   "back": "(4, 4)."
+  },
+  {
+   "id": "ca4e4c57be",
+   "day": "2026-10-30",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Формула шага градиентного спуска?",
+   "back": "p ← p − lr · ∇f(p). Минус: идём против роста, к минимуму."
+  },
+  {
+   "id": "9e0b5c529a",
+   "day": "2026-11-01",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Градиент MSE для ŷ = wx + b по w и b?",
+   "back": "∂L/∂w = (2/n) Σ (ŷᵢ − yᵢ) · xᵢ<br>∂L/∂b = (2/n) Σ (ŷᵢ − yᵢ)"
+  },
+  {
+   "id": "3cb7926103",
+   "day": "2026-11-01",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Формула центральной разности для f′(x)? Почему она лучше прямой?",
+   "back": "(f(x + h) − f(x − h)) / (2h). Ошибка ~h², у прямой разности ~h."
+  },
+  {
+   "id": "1f4a9e5710",
+   "day": "2026-11-01",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "Backprop — в одной фразе?",
+   "back": "Цепное правило на графе вычислений от выхода к входу: производные перемножаются по рёбрам и складываются по путям."
+  },
+  {
+   "id": "ae50cf3f2c",
+   "day": "2026-11-01",
+   "deck": "2 Математика",
+   "deck_full": "ML::2 Математика",
+   "kind": "basic",
+   "front": "e = (a + b)(b + 1), a = 2, b = 1. Найдите ∂e/∂a и ∂e/∂b.",
+   "back": "∂e/∂a = b + 1 = 2. ∂e/∂b = (b + 1) + (a + b) = 5: два пути от b к e."
+  },
+  {
+   "id": "e6f4f79b60",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Чем генератор отличается от списка?",
+   "back": "Генератор выдаёт значения по одному, по запросу (лениво), и не хранит их все в памяти. Пройти его можно один раз."
+  },
+  {
+   "id": "6533ccbb83",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что делает <code>yield</code>?",
+   "back": "Отдаёт значение и замораживает функцию. Следующий <code>next()</code> продолжает работу сразу после <code>yield</code>."
+  },
+  {
+   "id": "f2481a627e",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что возвращает вызов функции, в теле которой есть <code>yield</code>?",
+   "back": "Объект-генератор. Тело функции при вызове ещё не выполняется."
+  },
+  {
+   "id": "9a3539b571",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>def count():\n    print(&quot;A&quot;)\n    yield 1\n    print(&quot;B&quot;)\n    yield 2\n\ng = count()\nprint(next(g))\nprint(sum(g))</code></pre>",
+   "back": "<pre><code>A\n1\nB\n2</code></pre> Код идёт до первого <code>yield</code>. <code>sum</code> забирает остаток генератора."
+  },
+  {
+   "id": "140e2718e4",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>squares = (x * x for x in range(3))\nprint(list(squares))\nprint(list(squares))</code></pre>",
+   "back": "<pre><code>[0, 1, 4]\n[]</code></pre> Генератор проходится один раз: второй проход пустой."
+  },
+  {
+   "id": "72729dd927",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что происходит, когда генератор закончился?",
+   "back": "<code>next()</code> бросает <code>StopIteration</code>. Цикл <code>for</code> ловит это исключение сам и выходит."
+  },
+  {
+   "id": "a425cc7b1e",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Чем итерируемый объект отличается от итератора?",
+   "back": "Итерируемый объект умеет <code>__iter__</code>: отдаёт новый итератор. Итератор умеет <code>__next__</code>, а его <code>__iter__</code> возвращает его самого. <code>list</code> — итерируемый, но не итератор."
+  },
+  {
+   "id": "d0f014e53e",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что делает <code>yield from it</code>?",
+   "back": "Отдаёт по очереди все значения из <code>it</code>, как цикл <code>for x in it: yield x</code>."
+  },
+  {
+   "id": "4e3ef90adb",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Когда генератор лучше списка?",
+   "back": "Данных много или поток бесконечен, и нужен один проход. Пример: чтение большого файла построчно."
+  },
+  {
+   "id": "5ec9f5cbec",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что такое декоратор?",
+   "back": "Функция, которая принимает функцию и возвращает новую. <code>@deco</code> над <code>def f</code> — это <code>f = deco(f)</code>."
+  },
+  {
+   "id": "307ddabf3f",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Напишите шаблон декоратора.",
+   "back": "<pre><code>import functools\n\ndef deco(f):\n    @functools.wraps(f)\n    def wrapper(*args, **kwargs):\n        # до вызова\n        result = f(*args, **kwargs)\n        # после вызова\n        return result\n    return wrapper</code></pre>"
+  },
+  {
+   "id": "3dd033aa76",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Зачем в декораторе <code>functools.wraps</code>?",
+   "back": "Копирует в wrapper имя, docstring и другие атрибуты исходной функции. Без него <code>f.__name__ == &quot;wrapper&quot;</code>."
+  },
+  {
+   "id": "b0c1a43d33",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Сколько вложенных функций у декоратора с параметрами, например @repeat(3)?",
+   "back": "Три: фабрика с параметрами → декоратор(f) → wrapper. <code>@repeat(3)</code> — это <code>f = repeat(3)(f)</code>."
+  },
+  {
+   "id": "ba1cf4cbe4",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>def a(f):\n    def w():\n        return &quot;a(&quot; + f() + &quot;)&quot;\n    return w\n\ndef b(f):\n    def w():\n        return &quot;b(&quot; + f() + &quot;)&quot;\n    return w\n\n@a\n@b\ndef x():\n    return &quot;x&quot;\n\nprint(x())</code></pre>",
+   "back": "<pre><code>a(b(x))</code></pre> Ближний к <code>def</code> декоратор применяется первым: <code>x = a(b(x))</code>."
+  },
+  {
+   "id": "c40813ad4d",
+   "day": "2026-11-02",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Когда выполняется тело самого декоратора, а когда — wrapper?",
+   "back": "Декоратор — один раз, когда определяется функция (обычно при импорте). wrapper — при каждом вызове."
+  },
+  {
+   "id": "18def6c9b2",
+   "day": "2026-11-02",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Когда подходит паттерн «два указателя навстречу»?",
+   "back": "Массив отсортирован или нужна симметрия (палиндром). Указатели идут с двух концов к центру: O(n) вместо O(n²) и O(1) памяти."
+  },
+  {
+   "id": "8c1412d5e7",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Какие методы нужны контекстному менеджеру?",
+   "back": "<code>__enter__</code> (его результат попадает в <code>as</code>) и <code>__exit__(exc_type, exc, tb)</code>."
+  },
+  {
+   "id": "304b656c4c",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Вызывается ли <code>__exit__</code>, если в блоке <code>with</code> было исключение?",
+   "back": "Да, всегда. Поэтому <code>with</code> надёжно закрывает файлы и соединения, как <code>try/finally</code>."
+  },
+  {
+   "id": "8323d007e9",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что значит <code>return True</code> в <code>__exit__</code>?",
+   "back": "Исключение подавляется: программа продолжает работу после блока <code>with</code>."
+  },
+  {
+   "id": "8898d45a72",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Как написать контекстный менеджер без класса?",
+   "back": "<code>@contextlib.contextmanager</code> над генератором: код до <code>yield</code> — вход, после — выход. <code>yield</code> оборачивают в <code>try/finally</code>."
+  },
+  {
+   "id": "cc758dac14",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>def f(x):\n    try:\n        r = 10 // x\n    except ZeroDivisionError:\n        print(&quot;except&quot;)\n        return None\n    else:\n        print(&quot;else&quot;)\n        return r\n    finally:\n        print(&quot;finally&quot;)\n\nprint(f(2))\nprint(f(0))</code></pre>",
+   "back": "<pre><code>else\nfinally\n5\nexcept\nfinally\nNone</code></pre> <code>else</code> — только без исключения. <code>finally</code> — всегда, даже после <code>return</code>."
+  },
+  {
+   "id": "2fa45b7356",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Когда выполняется ветка <code>else</code> у <code>try</code>?",
+   "back": "Когда в <code>try</code> не было исключения. Ошибки в <code>else</code> уже не ловятся этим <code>except</code>."
+  },
+  {
+   "id": "067c14c900",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>def f():\n    try:\n        return &quot;try&quot;\n    finally:\n        print(&quot;finally&quot;)\n\nprint(f())</code></pre>",
+   "back": "<pre><code>finally\ntry</code></pre> <code>finally</code> выполняется перед выходом из функции, даже после <code>return</code>."
+  },
+  {
+   "id": "8313f5de6f",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Как объявить своё исключение?",
+   "back": "<code>class MyError(Exception): pass</code>. Наследуйте от <code>Exception</code>, не от <code>BaseException</code>."
+  },
+  {
+   "id": "feca1e7af6",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Почему плохо писать голый <code>except:</code>?",
+   "back": "Он ловит всё, даже <code>KeyboardInterrupt</code> и <code>SystemExit</code>, и прячет ошибки. Ловите конкретные классы."
+  },
+  {
+   "id": "eb9c73f0bf",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что делает <code>raise NewError() from err</code>?",
+   "back": "Бросает новое исключение и сохраняет причину в <code>__cause__</code>. Traceback покажет обе ошибки."
+  },
+  {
+   "id": "e697ebb915",
+   "day": "2026-11-03",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что такое EAFP и LBYL?",
+   "back": "EAFP: сначала действие в <code>try</code>, ошибку обработать в <code>except</code> — обычный стиль Python. LBYL: проверка до действия (<code>if key in d</code>)."
+  },
+  {
+   "id": "af15146bcb",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Чем <code>@classmethod</code> отличается от <code>@staticmethod</code>?",
+   "back": "<code>classmethod</code> получает класс <code>cls</code> — так делают альтернативные конструкторы. <code>staticmethod</code> не получает ни <code>self</code>, ни <code>cls</code>: обычная функция внутри класса."
+  },
+  {
+   "id": "ee748b5d68",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Почему альтернативный конструктор пишут через <code>cls(...)</code>, а не через имя класса?",
+   "back": "<code>cls</code> — класс, у которого вызвали метод. Для подкласса метод создаст объект подкласса. Пример: <code>dict.fromkeys</code>."
+  },
+  {
+   "id": "2d3afd73cb",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что такое MRO?",
+   "back": "Порядок поиска методов и атрибутов при наследовании (C3-линеаризация). Посмотреть: <code>Class.__mro__</code>."
+  },
+  {
+   "id": "027623263f",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>class A:\n    def hi(self): return &quot;A&quot;\nclass B(A):\n    def hi(self): return &quot;B&quot; + super().hi()\nclass C(A):\n    def hi(self): return &quot;C&quot; + super().hi()\nclass D(C, B):\n    def hi(self): return &quot;D&quot; + super().hi()\n\nprint(D().hi())</code></pre>",
+   "back": "<pre><code>DCBA</code></pre> MRO у D: D, C, B, A. <code>super()</code> идёт к следующему классу в MRO объекта, а не к родителю."
+  },
+  {
+   "id": "2ed8854f79",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что вызывает <code>super().method()</code>?",
+   "back": "Метод следующего класса в MRO объекта. При множественном наследовании это не всегда родитель текущего класса."
+  },
+  {
+   "id": "c6584713c4",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Чем <code>__repr__</code> отличается от <code>__str__</code>?",
+   "back": "<code>__repr__</code> — для отладки, <code>repr()</code> и вывода в консоли. <code>__str__</code> — для <code>print</code> и <code>str()</code>. Без <code>__str__</code> используется <code>__repr__</code>."
+  },
+  {
+   "id": "89542b0e17",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что будет, если определить <code>__eq__</code>, но не <code>__hash__</code>?",
+   "back": "Python ставит <code>__hash__ = None</code>: объект нельзя положить в <code>set</code> и сделать ключом <code>dict</code>."
+  },
+  {
+   "id": "7f97c84506",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "cloze",
+   "front": "<code>a + b</code> вызывает <span class=\"cloze\">[…]</span>, <code>len(x)</code> — <span class=\"cloze\">[…]</span>, <code>x[i]</code> — <span class=\"cloze\">[…]</span>.",
+   "back": "<code>a + b</code> вызывает <span class=\"cloze on\">a.__add__(b)</span>, <code>len(x)</code> — <span class=\"cloze on\">x.__len__()</span>, <code>x[i]</code> — <span class=\"cloze on\">x.__getitem__(i)</span>.",
+   "cloze": "<code>a + b</code> вызывает {{c1::a.__add__(b)}}, <code>len(x)</code> — {{c1::x.__len__()}}, <code>x[i]</code> — {{c1::x.__getitem__(i)}}."
+  },
+  {
+   "id": "c1177ce55d",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что создаёт <code>@dataclass</code>?",
+   "back": "<code>__init__</code>, <code>__repr__</code> и <code>__eq__</code> по полям. <code>order=True</code> добавляет сравнение, <code>frozen=True</code> делает объект неизменяемым и хэшируемым."
+  },
+  {
+   "id": "b5acee5ab6",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Как задать список по умолчанию в поле dataclass?",
+   "back": "<code>items: list = field(default_factory=list)</code>. Просто <code>= []</code> даёт <code>ValueError</code>: защита от ловушки B1."
+  },
+  {
+   "id": "696a21e0a2",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>from dataclasses import dataclass\n\n@dataclass\nclass P:\n    x: int\n    y: int = 0\n\nprint(P(1))\nprint(P(1) == P(1, 0))</code></pre>",
+   "back": "<pre><code>P(x=1, y=0)\nTrue</code></pre> <code>@dataclass</code> сам пишет <code>__repr__</code> и <code>__eq__</code> по полям."
+  },
+  {
+   "id": "a795aa1f33",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Что такое GIL?",
+   "back": "Global Interpreter Lock в CPython: в каждый момент байт-код Python выполняет только один поток процесса. (В 3.13+ есть отдельная экспериментальная сборка без GIL.)"
+  },
+  {
+   "id": "f8c7b2ec8d",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Ускорят ли потоки счёт на чистом Python (CPU-задача)?",
+   "back": "Нет: из-за GIL потоки работают по очереди. Для CPU нужен <code>multiprocessing</code> — отдельные процессы."
+  },
+  {
+   "id": "1f54e58322",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Когда <code>threading</code> всё же полезен?",
+   "back": "Задачи ввода-вывода: сеть, диск. Пока поток ждёт I/O, он отпускает GIL, и работают другие."
+  },
+  {
+   "id": "8614e3255c",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Когда выбрать <code>asyncio</code>?",
+   "back": "Очень много одновременных I/O-операций (тысячи соединений) в одном потоке. Корутины переключаются на <code>await</code>."
+  },
+  {
+   "id": "9bda5c81d5",
+   "day": "2026-11-05",
+   "deck": "4 Python: функции и ООП",
+   "deck_full": "ML::4 Python: функции и ООП",
+   "kind": "basic",
+   "front": "Почему NumPy считает быстро, несмотря на GIL?",
+   "back": "Тяжёлые операции идут в коде на C. Он работает с массивом целиком и может отпускать GIL."
+  },
+  {
+   "id": "c744d1e11d",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое линейная комбинация векторов v и w?",
+   "back": "av + bw для любых чисел a и b."
+  },
+  {
+   "id": "3f3519cbc1",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое span (линейная оболочка) векторов?",
+   "back": "Множество всех их линейных комбинаций."
+  },
+  {
+   "id": "049eebf3dc",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Когда векторы линейно зависимы?",
+   "back": "Когда один из них — линейная комбинация остальных. Такой вектор не расширяет span."
+  },
+  {
+   "id": "289d1514a3",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое базис пространства?",
+   "back": "Линейно независимый набор векторов, span которого — всё пространство."
+  },
+  {
+   "id": "5caf03ff73",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Какие свойства у линейного преобразования?",
+   "back": "Прямые остаются прямыми, начало координат остаётся на месте. Формально: T(u + v) = T(u) + T(v), T(cv) = c·T(v)."
+  },
+  {
+   "id": "fc9d66cb40",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что записано в столбцах матрицы преобразования 2×2?",
+   "back": "Куда преобразование переводит базисные векторы î и ĵ."
+  },
+  {
+   "id": "36cc531a9c",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Вычислите [[1, 2], [3, 4]] · (1, 1).",
+   "back": "(3, 7): 1·1 + 2·1 = 3, 3·1 + 4·1 = 7."
+  },
+  {
+   "id": "ce5b332b35",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что значит произведение матриц AB геометрически?",
+   "back": "Композиция преобразований: сначала B, потом A. Читаем справа налево."
+  },
+  {
+   "id": "73a7f6975f",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Верно ли, что AB = BA?",
+   "back": "В общем случае нет: порядок преобразований важен."
+  },
+  {
+   "id": "d1aff30464",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Матрица поворота на 90° против часовой стрелки?",
+   "back": "[[0, −1], [1, 0]]: î → (0, 1), ĵ → (−1, 0)."
+  },
+  {
+   "id": "03e4a046ef",
+   "day": "2026-11-06",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Какой размер у произведения матриц (m×n)·(n×k)?",
+   "back": "m×k. Внутренние размеры n должны совпадать."
+  },
+  {
+   "id": "e2cc38314f",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Геометрический смысл определителя?",
+   "back": "Во сколько раз преобразование меняет площади (в 3D — объёмы). Минус — ориентация переворачивается."
+  },
+  {
+   "id": "0c4afc08d9",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что значит det A = 0?",
+   "back": "Пространство сплющивается в меньшую размерность. A необратима, её столбцы линейно зависимы."
+  },
+  {
+   "id": "e69b8c5eb9",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "cloze",
+   "front": "det [[a, b], [c, d]] = <span class=\"cloze\">[…]</span>",
+   "back": "det [[a, b], [c, d]] = <span class=\"cloze on\">ad − bc</span>",
+   "cloze": "det [[a, b], [c, d]] = {{c1::ad − bc}}"
+  },
+  {
+   "id": "5ac26b5708",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "cloze",
+   "front": "det(AB) = <span class=\"cloze\">[…]</span>",
+   "back": "det(AB) = <span class=\"cloze on\">det(A) · det(B)</span>",
+   "cloze": "det(AB) = {{c1::det(A) · det(B)}}"
+  },
+  {
+   "id": "1746c0663f",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое ранг матрицы?",
+   "back": "Размерность пространства столбцов: сколько измерений у результата преобразования."
+  },
+  {
+   "id": "5f6ed29a7a",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое ядро (null space) матрицы A?",
+   "back": "Все векторы x, для которых Ax = 0. Если det A ≠ 0, ядро — только нулевой вектор."
+  },
+  {
+   "id": "330118b195",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Когда у Ax = b ровно одно решение для любого b?",
+   "back": "Когда A квадратная и det A ≠ 0. Тогда x = A⁻¹b."
+  },
+  {
+   "id": "9271f644f8",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Скалярное произведение: формула и знак?",
+   "back": "u · v = Σ uᵢvᵢ = |u|·|v|·cos θ. Больше 0 — острый угол, 0 — векторы перпендикулярны, меньше 0 — тупой."
+  },
+  {
+   "id": "ce77be6aaf",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Что такое собственный вектор матрицы A?",
+   "back": "Ненулевой вектор v, который A только растягивает: Av = λv. Число λ — собственное значение."
+  },
+  {
+   "id": "a038cd3570",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Как найти собственные значения матрицы A?",
+   "back": "Решить уравнение det(A − λI) = 0."
+  },
+  {
+   "id": "2001152da4",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Собственные значения и векторы матрицы [[2, 0], [0, 3]]?",
+   "back": "λ = 2 и λ = 3. Собственные векторы — оси координат."
+  },
+  {
+   "id": "1267b39db3",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Есть ли у поворота плоскости на 90° вещественные собственные векторы?",
+   "back": "Нет: поворот меняет направление каждого ненулевого вектора. Собственные значения комплексные: ±i."
+  },
+  {
+   "id": "035e2e3834",
+   "day": "2026-11-07",
+   "deck": "5 Линейная алгебра",
+   "deck_full": "ML::5 Линейная алгебра",
+   "kind": "basic",
+   "front": "Где в ML нужны собственные векторы?",
+   "back": "PCA: главные компоненты — собственные векторы ковариационной матрицы."
+  },
+  {
+   "id": "dfafd16067",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "cloze",
+   "front": "P(A ∪ B) = <span class=\"cloze\">[…]</span>",
+   "back": "P(A ∪ B) = <span class=\"cloze on\">P(A) + P(B) − P(A ∩ B)</span>",
+   "cloze": "P(A ∪ B) = {{c1::P(A) + P(B) − P(A ∩ B)}}"
+  },
+  {
+   "id": "121aeda227",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "cloze",
+   "front": "P(A | B) = <span class=\"cloze\">[…]</span>",
+   "back": "P(A | B) = <span class=\"cloze on\">P(A ∩ B) / P(B)</span>",
+   "cloze": "P(A | B) = {{c1::P(A ∩ B) / P(B)}}"
+  },
+  {
+   "id": "29cb163578",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Когда события A и B независимы?",
+   "back": "P(A ∩ B) = P(A) · P(B). То же самое: P(A | B) = P(A)."
+  },
+  {
+   "id": "9ab7a92ae4",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Формула Байеса?",
+   "back": "P(A | B) = P(B | A) · P(A) / P(B)."
+  },
+  {
+   "id": "05d97b7ef7",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Формула полной вероятности?",
+   "back": "P(B) = Σ P(B | Aᵢ) · P(Aᵢ), где Aᵢ — разбиение всех исходов."
+  },
+  {
+   "id": "23a6d141a9",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Болеет 1%. Тест находит 99% больных и даёт 5% ложных «+» у здоровых. P(болен | +)?",
+   "back": "0.99·0.01 / (0.99·0.01 + 0.05·0.99) = 1/6 ≈ 17%. Болезнь редкая: большинство «+» — ложные."
+  },
+  {
+   "id": "ee5bc55eb8",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Что такое априорная и апостериорная вероятность?",
+   "back": "Априорная P(A) — до наблюдения. Апостериорная P(A | B) — после учёта данных B."
+  },
+  {
+   "id": "b5a2523be3",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "cloze",
+   "front": "E[X] для дискретной величины = <span class=\"cloze\">[…]</span>",
+   "back": "E[X] для дискретной величины = <span class=\"cloze on\">Σ xᵢ · P(X = xᵢ)</span>",
+   "cloze": "E[X] для дискретной величины = {{c1::Σ xᵢ · P(X = xᵢ)}}"
+  },
+  {
+   "id": "4e4d455fb8",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Чему равны E[aX + b] и E[X + Y]?",
+   "back": "a·E[X] + b и E[X] + E[Y]. Второе верно всегда, даже для зависимых X и Y."
+  },
+  {
+   "id": "70f12b829e",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "cloze",
+   "front": "Var(X) = E[(X − EX)²] = <span class=\"cloze\">[…]</span>",
+   "back": "Var(X) = E[(X − EX)²] = <span class=\"cloze on\">E[X²] − (E[X])²</span>",
+   "cloze": "Var(X) = E[(X − EX)²] = {{c1::E[X²] − (E[X])²}}"
+  },
+  {
+   "id": "0850a53585",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Чему равна Var(aX + b)?",
+   "back": "a² · Var(X). Сдвиг b не меняет разброс."
+  },
+  {
+   "id": "ff1a39412c",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Чему равна Var(X + Y)?",
+   "back": "Var X + Var Y + 2·Cov(X, Y). Для независимых X и Y — просто сумма дисперсий."
+  },
+  {
+   "id": "72c7d696eb",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Матожидание и дисперсия броска кубика?",
+   "back": "E = 3.5. Var = 91/6 − 3.5² = 35/12 ≈ 2.92."
+  },
+  {
+   "id": "8f6294b739",
+   "day": "2026-11-09",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Зачем стандартное отклонение, если есть дисперсия?",
+   "back": "σ = √Var измеряется в тех же единицах, что и сама величина."
+  },
+  {
+   "id": "e424cb1974",
+   "day": "2026-11-09",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Стек: принцип и операции в Python?",
+   "back": "LIFO: последним пришёл — первым ушёл. <code>append</code> и <code>pop()</code> с конца <code>list</code> — O(1)."
+  },
+  {
+   "id": "d1d873a5d0",
+   "day": "2026-11-09",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Почему для очереди не берут <code>list.pop(0)</code>?",
+   "back": "<code>pop(0)</code> сдвигает все элементы: O(n). Для очереди есть <code>collections.deque</code>: <code>popleft()</code> за O(1)."
+  },
+  {
+   "id": "fce0f9bac3",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Бернулли(p): матожидание и дисперсия?",
+   "back": "E = p, Var = p(1 − p)."
+  },
+  {
+   "id": "f5addd1202",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Биномиальное Bin(n, p): что описывает? E и Var?",
+   "back": "Число успехов в n независимых испытаниях. E = np, Var = np(1 − p)."
+  },
+  {
+   "id": "5947d69da9",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Пуассон(λ): что описывает? E и Var?",
+   "back": "Число редких независимых событий за интервал. E = Var = λ."
+  },
+  {
+   "id": "238724bb26",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Что описывает экспоненциальное распределение?",
+   "back": "Время до следующего события в пуассоновском потоке. Оно «без памяти»."
+  },
+  {
+   "id": "d968f50b0d",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Равномерное U(a, b): E и Var?",
+   "back": "E = (a + b)/2, Var = (b − a)²/12."
+  },
+  {
+   "id": "64486c6a01",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Правило 68–95–99.7?",
+   "back": "Для нормального распределения в пределах 1σ, 2σ и 3σ от среднего лежат ≈ 68%, 95% и 99.7% значений."
+  },
+  {
+   "id": "c663fb9f28",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Центральная предельная теорема?",
+   "back": "Среднее n независимых одинаково распределённых величин с конечной дисперсией при большом n распределено примерно как N(μ, σ²/n)."
+  },
+  {
+   "id": "f875f363cd",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Стандартная ошибка среднего?",
+   "back": "σ/√n. Чтобы уменьшить её вдвое, нужно в 4 раза больше данных."
+  },
+  {
+   "id": "d096d6a128",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Чем закон больших чисел отличается от ЦПТ?",
+   "back": "ЗБЧ: выборочное среднее сходится к μ. ЦПТ: отклонение среднего от μ распределено нормально с масштабом σ/√n."
+  },
+  {
+   "id": "bbd349c8c8",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Что такое нулевая гипотеза H₀?",
+   "back": "Предположение «эффекта нет». Тест проверяет, насколько данные с ним несовместимы."
+  },
+  {
+   "id": "070bbb0ad0",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "p-value одной фразой?",
+   "back": "Вероятность получить такой же или более экстремальный результат, если H₀ верна."
+  },
+  {
+   "id": "85067cf0c5",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Чем p-value НЕ является?",
+   "back": "Это не вероятность, что H₀ верна, и не вероятность, что результат случаен."
+  },
+  {
+   "id": "eaa9906f38",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Ошибки I и II рода?",
+   "back": "I рода: отвергли верную H₀ (ложная тревога), вероятность α. II рода: не отвергли ложную H₀ (пропуск), вероятность β."
+  },
+  {
+   "id": "abb6b9c0cf",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Что такое мощность теста и от чего она растёт?",
+   "back": "1 − β: вероятность найти эффект, если он есть. Растёт с размером выборки и размером эффекта."
+  },
+  {
+   "id": "4e632d1910",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Что значит уровень значимости α = 0.05?",
+   "back": "Отвергаем H₀, если p < 0.05. Если H₀ верна, ложная тревога будет в 5% экспериментов."
+  },
+  {
+   "id": "9abdf24c48",
+   "day": "2026-11-10",
+   "deck": "6 Теорвер и статистика",
+   "deck_full": "ML::6 Теорвер и статистика",
+   "kind": "basic",
+   "front": "Как правильно понимать 95% доверительный интервал?",
+   "back": "Процедура в 95% повторений эксперимента накрывает истинный параметр. Это не «μ лежит в этом интервале с вероятностью 95%»."
+  },
+  {
+   "id": "48a7119df6",
+   "day": "2026-11-10",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Что нужно для бинарного поиска?",
+   "back": "Монотонность: массив отсортирован или условие сначала ложно, потом истинно. Каждый шаг делит отрезок пополам: O(log n)."
+  },
+  {
+   "id": "4af1d3fe0d",
+   "day": "2026-11-10",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Сколько шагов бинарного поиска нужно для n = 10⁶?",
+   "back": "Около 20: 2²⁰ ≈ 10⁶."
+  },
+  {
+   "id": "e0b5cdfbaf",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Почему операции NumPy быстрее цикла на Python?",
+   "back": "Цикл по массиву идёт в C (векторизация): нет интерпретатора на каждом элементе, данные одного типа лежат подряд."
+  },
+  {
+   "id": "c1827df712",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import numpy as np\na = np.arange(6).reshape(2, 3)\nprint(a.shape)\nprint(a.sum(axis=0))\nprint(a.sum(axis=1))</code></pre>",
+   "back": "<pre><code>(2, 3)\n[3 5 7]\n[ 3 12]</code></pre> <code>axis=0</code> сворачивает строки: одно число на столбец. <code>axis=1</code> — одно число на строку."
+  },
+  {
+   "id": "6ee14b30b1",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Правило broadcasting?",
+   "back": "Формы сравниваются с конца. Размеры совместимы, если равны или один из них 1. Недостающие оси слева считаются 1."
+  },
+  {
+   "id": "f49b32b1ec",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Какая форма у (3, 1) + (1, 4)?",
+   "back": "(3, 4)."
+  },
+  {
+   "id": "6a785ca502",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Сработает ли (2, 3) + (2,)?",
+   "back": "Нет: с конца сравниваются 3 и 2. Нужна форма (2, 1): b[:, None]."
+  },
+  {
+   "id": "ed51e0396f",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import numpy as np\na = np.arange(5)\nb = a[1:3]\nb[0] = 100\nprint(a)</code></pre>",
+   "back": "<pre><code>[  0 100   2   3   4]</code></pre> Срез — view: общий буфер с <code>a</code>. Независимая копия — <code>.copy()</code>."
+  },
+  {
+   "id": "6d3f465a67",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "<code>a[[0, 2]]</code> и <code>a[a &gt; 0]</code> — view или копия?",
+   "back": "Копия. View дают только обычные срезы."
+  },
+  {
+   "id": "11d8d3784d",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Чем <code>a * b</code> отличается от <code>a @ b</code>?",
+   "back": "<code>*</code> — поэлементно. <code>@</code> — матричное умножение."
+  },
+  {
+   "id": "c4be5cdcc6",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Как разделить каждую строку X на её сумму?",
+   "back": "<code>X / X.sum(axis=1, keepdims=True)</code>. <code>keepdims</code> оставляет форму (n, 1) для broadcasting."
+  },
+  {
+   "id": "3b21180e13",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import numpy as np\nx = np.array([3, 1, 2])\nprint(np.argsort(x), np.argmax(x))</code></pre>",
+   "back": "<pre><code>[1 2 0] 0</code></pre> <code>argsort</code> — индексы по возрастанию значений, <code>argmax</code> — индекс максимума."
+  },
+  {
+   "id": "05ff4fef9b",
+   "day": "2026-11-12",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Зачем в softmax вычитают максимум?",
+   "back": "exp от больших чисел переполняется. softmax(x − max x) = softmax(x), но вычисление устойчиво."
+  },
+  {
+   "id": "676295754e",
+   "day": "2026-11-12",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Из чего состоит решение динамическим программированием?",
+   "back": "Состояние (что значит dp[i]), переход (как dp[i] выражается через прошлые), база (начальные значения), порядок вычисления."
+  },
+  {
+   "id": "ec3270d959",
+   "day": "2026-11-12",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Чем DP лучше простой рекурсии?",
+   "back": "Каждая подзадача считается один раз. Сверху вниз — мемоизация (<code>@cache</code>), снизу вверх — таблица."
+  },
+  {
+   "id": "25a3dc33f7",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что такое Series и DataFrame?",
+   "back": "Series — столбец значений с индексом. DataFrame — таблица из Series с общим индексом."
+  },
+  {
+   "id": "1c51fa1097",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Чем <code>loc</code> отличается от <code>iloc</code>?",
+   "back": "<code>loc</code> — по меткам индекса, конец среза включён. <code>iloc</code> — по позициям, конец не включён."
+  },
+  {
+   "id": "85facd9720",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Как выбрать строки по двум условиям?",
+   "back": "<code>df[(df.a &gt; 0) &amp; (df.b == &quot;x&quot;)]</code>: <code>&amp;</code> и <code>|</code>, каждое условие в скобках. <code>and</code> не работает."
+  },
+  {
+   "id": "36609828ae",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import pandas as pd\ndf = pd.DataFrame({&quot;city&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;A&quot;, &quot;B&quot;, &quot;A&quot;], &quot;sales&quot;: [1, 2, 3, 4, 5]})\nprint(df.groupby(&quot;city&quot;)[&quot;sales&quot;].sum())</code></pre>",
+   "back": "<pre><code>city\nA    9\nB    6\nName: sales, dtype: int64</code></pre> groupby: разбить по ключу → посчитать в каждой группе → собрать (split-apply-combine)."
+  },
+  {
+   "id": "bb73ece5bc",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Чем <code>transform</code> отличается от <code>agg</code> в groupby?",
+   "back": "<code>agg</code> — одна строка на группу. <code>transform</code> — результат той же длины, что df: например, доля строки от суммы её группы."
+  },
+  {
+   "id": "eaa199a77b",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Какие бывают <code>how</code> в <code>merge</code>?",
+   "back": "inner — только совпавшие ключи; left — все строки левой таблицы; right — правой; outer — всех. Как JOIN в SQL."
+  },
+  {
+   "id": "e5d8fad3bb",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что делает <code>pivot_table</code>?",
+   "back": "Сводная таблица: <code>index</code> — строки, <code>columns</code> — столбцы, <code>values</code> и <code>aggfunc</code> — что и как агрегировать."
+  },
+  {
+   "id": "2f2da20cfe",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Как найти и обработать пропуски?",
+   "back": "<code>df.isna().sum()</code> — число пропусков по столбцам. <code>fillna</code> — заполнить, <code>dropna</code> — удалить."
+  },
+  {
+   "id": "59675a48d9",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Почему не стоит обходить DataFrame через <code>iterrows</code>?",
+   "back": "Это медленный цикл Python по строкам. Пишите векторные операции над столбцами."
+  },
+  {
+   "id": "0763eb37f7",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Почему <code>df[mask][&quot;col&quot;] = 0</code> не меняет df?",
+   "back": "Цепочка индексаций меняет промежуточную копию (в pandas 3 — всегда). Пишите <code>df.loc[mask, &quot;col&quot;] = 0</code>."
+  },
+  {
+   "id": "2b3f977cfb",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Какой график для распределения одной величины? Для связи двух числовых?",
+   "back": "Гистограмма или boxplot. Диаграмма рассеяния (scatter)."
+  },
+  {
+   "id": "c7bda48420",
+   "day": "2026-11-13",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "В чём опасность ноутбука Jupyter?",
+   "back": "Скрытое состояние: ячейки выполнялись не по порядку, переменные остались от старых запусков. Перед сдачей — Restart & Run All."
+  },
+  {
+   "id": "587f111a34",
+   "day": "2026-11-13",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Связный список против массива: доступ по индексу и вставка в начало?",
+   "back": "Список: доступ O(n), вставка в начало O(1). Массив: доступ O(1), вставка в начало O(n)."
+  },
+  {
+   "id": "52c069a726",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что делают <code>|</code>, <code>&gt;</code> и <code>&gt;&gt;</code> в Bash?",
+   "back": "<code>|</code> передаёт вывод команды на вход следующей. <code>&gt;</code> пишет вывод в файл (перезаписывает), <code>&gt;&gt;</code> дописывает."
+  },
+  {
+   "id": "ff4499bac4",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что делает <code>grep -rn &quot;TODO&quot; src/</code>?",
+   "back": "Ищет TODO во всех файлах папки src рекурсивно и показывает номера строк."
+  },
+  {
+   "id": "042c98f2fc",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Как посмотреть первые 5 строк CSV и число строк в нём?",
+   "back": "<code>head -n 5 data.csv</code> и <code>wc -l data.csv</code>."
+  },
+  {
+   "id": "2c9b1dd42c",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Что делает <code>sort f | uniq -c | sort -nr</code>?",
+   "back": "Считает, сколько раз встречается каждая строка, и сортирует по убыванию частоты."
+  },
+  {
+   "id": "945548817e",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Зачем <code>chmod +x run.sh</code>?",
+   "back": "Даёт право на выполнение: теперь скрипт запускается как <code>./run.sh</code>."
+  },
+  {
+   "id": "29e841d4b5",
+   "day": "2026-11-14",
+   "deck": "7 NumPy, pandas, Bash",
+   "deck_full": "ML::7 NumPy, pandas, Bash",
+   "kind": "basic",
+   "front": "Как узнать код завершения последней команды?",
+   "back": "<code>echo $?</code>. 0 — успех, другое число — ошибка."
+  },
+  {
+   "id": "ecd94d6260",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Обучение с учителем и без учителя — разница?",
+   "back": "С учителем есть целевая переменная y: классификация, регрессия. Без учителя — только X: кластеризация, понижение размерности."
+  },
+  {
+   "id": "62b2943212",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Регрессия или классификация: что предсказывает каждая?",
+   "back": "Регрессия — число. Классификация — класс (метку)."
+  },
+  {
+   "id": "13708ea80c",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Зачем делить данные на train, validation и test?",
+   "back": "train — учим веса. validation — выбираем модель и гиперпараметры. test — один раз в конце, честная оценка."
+  },
+  {
+   "id": "02157df91e",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как по ошибкам узнать переобучение?",
+   "back": "На train ошибка низкая, на validation — высокая и растёт."
+  },
+  {
+   "id": "bc3a27299f",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как по ошибкам узнать недообучение?",
+   "back": "Ошибка высокая и на train, и на validation: модель слишком простая."
+  },
+  {
+   "id": "913af41274",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что такое bias и variance?",
+   "back": "Bias — систематическая ошибка слишком простой модели. Variance — чувствительность сложной модели к конкретной выборке."
+  },
+  {
+   "id": "90d1b11884",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Ожидаемая ошибка (MSE) = <span class=\"cloze\">[…]</span>",
+   "back": "Ожидаемая ошибка (MSE) = <span class=\"cloze on\">bias² + variance + неустранимый шум</span>",
+   "cloze": "Ожидаемая ошибка (MSE) = {{c1::bias² + variance + неустранимый шум}}"
+  },
+  {
+   "id": "b9ca55ac0f",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как бороться с переобучением?",
+   "back": "Больше данных, регуляризация, более простая модель, ранняя остановка."
+  },
+  {
+   "id": "128b9ac395",
+   "day": "2026-11-16",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Параметр модели и гиперпараметр — разница?",
+   "back": "Параметры (веса) модель учит сама. Гиперпараметры задаём до обучения: глубина дерева, α регуляризации, learning rate."
+  },
+  {
+   "id": "16d9806625",
+   "day": "2026-11-16",
+   "deck": "3 Алгоритмы",
+   "deck_full": "ML::3 Алгоритмы",
+   "kind": "basic",
+   "front": "Когда подходит скользящее окно?",
+   "back": "Ищем лучший непрерывный подотрезок или подстроку с условием. Правый край расширяет окно, левый сужает при нарушении: O(n) вместо O(n²)."
+  },
+  {
+   "id": "91c92b02c6",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Модель линейной регрессии?",
+   "back": "ŷ = Xw + b: взвешенная сумма признаков."
+  },
+  {
+   "id": "c74bccb7b0",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Функция потерь линейной регрессии: MSE = <span class=\"cloze\">[…]</span>",
+   "back": "Функция потерь линейной регрессии: MSE = <span class=\"cloze on\">(1/n) Σ (ŷᵢ − yᵢ)²</span>",
+   "cloze": "Функция потерь линейной регрессии: MSE = {{c1::(1/n) Σ (ŷᵢ − yᵢ)²}}"
+  },
+  {
+   "id": "c089af6ee1",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Аналитическое решение линейной регрессии? Чем оно плохо?",
+   "back": "w = (XᵀX)⁻¹Xᵀy. При многих признаках дорого (обращение матрицы ~O(d³)) и неустойчиво при коллинеарности."
+  },
+  {
+   "id": "e8bcf7c6d3",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Шаг градиентного спуска: w ← <span class=\"cloze\">[…]</span>",
+   "back": "Шаг градиентного спуска: w ← <span class=\"cloze on\">w − η · ∇L(w)</span>",
+   "cloze": "Шаг градиентного спуска: w ← {{c1::w − η · ∇L(w)}}"
+  },
+  {
+   "id": "fcccaffc5c",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что будет при слишком большом и слишком маленьком learning rate?",
+   "back": "Большой — скачет или расходится. Маленький — сходится очень медленно."
+  },
+  {
+   "id": "1e7ce19cb0",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Batch GD, SGD и mini-batch — разница?",
+   "back": "Batch — градиент по всем данным. SGD — по одному объекту (быстро, шумно). Mini-batch — по пачке: стандартный компромисс."
+  },
+  {
+   "id": "02472d71cf",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Зачем масштабировать признаки перед градиентным спуском?",
+   "back": "Разные масштабы вытягивают поверхность потерь: спуск идёт зигзагом и медленно. Штраф регуляризации тоже зависит от масштаба."
+  },
+  {
+   "id": "a40aa8e6ee",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "L2-регуляризация (Ridge): что добавляет и что делает с весами?",
+   "back": "+ α Σ wⱼ². Уменьшает все веса, но не обнуляет."
+  },
+  {
+   "id": "a16d509d3c",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "L1-регуляризация (Lasso): что добавляет и что делает с весами?",
+   "back": "+ α Σ |wⱼ|. Обнуляет часть весов — отбор признаков."
+  },
+  {
+   "id": "f888126a38",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что происходит при росте α регуляризации?",
+   "back": "Веса меньше: variance падает, bias растёт. Слишком большой α — недообучение."
+  },
+  {
+   "id": "f6482ab046",
+   "day": "2026-11-17",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что значит R²?",
+   "back": "Доля дисперсии y, которую объясняет модель. 1 — идеально, 0 — как прогноз средним, меньше 0 — хуже среднего."
+  },
+  {
+   "id": "a7a9783b1a",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что предсказывает логистическая регрессия?",
+   "back": "Вероятность класса 1: p = σ(wᵀx + b), где σ(z) = 1 / (1 + e⁻ᶻ)."
+  },
+  {
+   "id": "0b02804656",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Log loss: L = <span class=\"cloze\">[…]</span>",
+   "back": "Log loss: L = <span class=\"cloze on\">−[y·log p + (1 − y)·log(1 − p)]</span>",
+   "cloze": "Log loss: L = {{c1::−[y·log p + (1 − y)·log(1 − p)]}}"
+  },
+  {
+   "id": "0f1739dada",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Почему логистическую регрессию не учат на MSE?",
+   "back": "С сигмоидой MSE невыпукла и даёт слабые градиенты. Log loss выпукла и сильно штрафует уверенные ошибки."
+  },
+  {
+   "id": "0c6eb002f1",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Какая граница решения у логистической регрессии?",
+   "back": "Линейная: wᵀx + b = 0, то есть p = 0.5."
+  },
+  {
+   "id": "0591d147bb",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "σ′(z) = <span class=\"cloze\">[…]</span>",
+   "back": "σ′(z) = <span class=\"cloze on\">σ(z) · (1 − σ(z))</span>",
+   "cloze": "σ′(z) = {{c1::σ(z) · (1 − σ(z))}}"
+  },
+  {
+   "id": "37eb871226",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Precision = <span class=\"cloze\">[…]</span>: какая доля предсказанных «1» верна.",
+   "back": "Precision = <span class=\"cloze on\">TP / (TP + FP)</span>: какая доля предсказанных «1» верна.",
+   "cloze": "Precision = {{c1::TP / (TP + FP)}}: какая доля предсказанных «1» верна."
+  },
+  {
+   "id": "6cd91a7b82",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "Recall = <span class=\"cloze\">[…]</span>: какую долю настоящих «1» нашли.",
+   "back": "Recall = <span class=\"cloze on\">TP / (TP + FN)</span>: какую долю настоящих «1» нашли.",
+   "cloze": "Recall = {{c1::TP / (TP + FN)}}: какую долю настоящих «1» нашли."
+  },
+  {
+   "id": "a832810d2e",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "cloze",
+   "front": "F1 = <span class=\"cloze\">[…]</span> — гармоническое среднее precision и recall.",
+   "back": "F1 = <span class=\"cloze on\">2·P·R / (P + R)</span> — гармоническое среднее precision и recall.",
+   "cloze": "F1 = {{c1::2·P·R / (P + R)}} — гармоническое среднее precision и recall."
+  },
+  {
+   "id": "4667e74c8f",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "TP = 8, FP = 2, FN = 8. Precision, recall, F1?",
+   "back": "P = 0.8, R = 0.5, F1 = 0.8 / 1.3 ≈ 0.62."
+  },
+  {
+   "id": "d1421e7102",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Почему accuracy плоха при дисбалансе классов?",
+   "back": "Если 99% объектов — «0», модель «всегда 0» даёт 99% accuracy и не находит ни одной «1»."
+  },
+  {
+   "id": "fd8fd373b9",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что значит ROC-AUC?",
+   "back": "Вероятность, что случайный положительный объект получит скор выше случайного отрицательного. 0.5 — случайно, 1 — идеально. От порога не зависит."
+  },
+  {
+   "id": "b40d53c5cc",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Когда PR-AUC лучше ROC-AUC?",
+   "back": "При сильном дисбалансе, когда важен положительный класс: ROC-AUC выглядит оптимистично из-за множества TN."
+  },
+  {
+   "id": "bbf6edf778",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что важнее при скрининге болезни: precision или recall?",
+   "back": "Recall: пропустить больного (FN) дороже, чем ложная тревога."
+  },
+  {
+   "id": "1c6eea2683",
+   "day": "2026-11-19",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как обычно меняются precision и recall, если поднять порог?",
+   "back": "Precision растёт, recall падает."
+  },
+  {
+   "id": "3da32e3fa0",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как работает k-fold кросс-валидация?",
+   "back": "Данные делят на k частей. k раз учим на k − 1 частях и проверяем на оставшейся. Метрики усредняют."
+  },
+  {
+   "id": "69e8692918",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Зачем <code>StratifiedKFold</code>?",
+   "back": "Сохраняет долю классов в каждом фолде. Важно при дисбалансе."
+  },
+  {
+   "id": "bd266706ab",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Какую валидацию брать для временного ряда?",
+   "back": "<code>TimeSeriesSplit</code>: учимся на прошлом, проверяем на будущем. Перемешивать нельзя."
+  },
+  {
+   "id": "2f4df0f893",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Когда нужен <code>GroupKFold</code>?",
+   "back": "Несколько строк от одного объекта (пользователя, пациента): все его строки должны попасть в один фолд."
+  },
+  {
+   "id": "f254f85fbe",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Что такое утечка данных (leakage)?",
+   "back": "При обучении модель видит информацию, которой не будет при прогнозе. Оценка завышена, в проде качество падает."
+  },
+  {
+   "id": "8247fcfe4d",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Типичная утечка при предобработке?",
+   "back": "Scaler или отбор признаков обучили на всех данных до разбиения. Правильно: <code>fit</code> только на train, всё внутри <code>Pipeline</code>."
+  },
+  {
+   "id": "431cbabc92",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "По каким признакам заподозрить утечку?",
+   "back": "Слишком высокое качество. Один признак с огромной важностью."
+  },
+  {
+   "id": "bd37f80fa8",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Чем kNN отличается от k-means?",
+   "back": "kNN — с учителем: класс по k ближайшим соседям. k-means — без учителя: k кластеров вокруг центров. k означает разное."
+  },
+  {
+   "id": "5df6256532",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Шаги алгоритма k-means?",
+   "back": "1) Выбрать k центров. 2) Отнести каждую точку к ближайшему центру. 3) Пересчитать центры как средние. Повторять, пока центры меняются."
+  },
+  {
+   "id": "b23da72949",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Почему kNN и k-means требуют масштабирования признаков?",
+   "back": "Оба считают расстояния: признак с большим масштабом заглушает остальные."
+  },
+  {
+   "id": "75998004da",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Как выбрать k в k-means?",
+   "back": "Метод локтя (инерция от k), коэффициент силуэта и смысл задачи."
+  },
+  {
+   "id": "a6bcdcb5df",
+   "day": "2026-11-20",
+   "deck": "8 Основы ML",
+   "deck_full": "ML::8 Основы ML",
+   "kind": "basic",
+   "front": "Сколько стоит прогноз kNN?",
+   "back": "O(n·d) на один запрос: обучения нет, вся работа — при прогнозе."
+  },
+  {
+   "id": "5cec12aad3",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "В каком порядке выполняется SELECT-запрос?",
+   "back": "FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT."
+  },
+  {
+   "id": "2b0956adad",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Чем WHERE отличается от HAVING?",
+   "back": "WHERE фильтрует строки до группировки. HAVING — группы после агрегации (условия на COUNT, SUM)."
+  },
+  {
+   "id": "eb18bde472",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Можно ли в WHERE использовать алиас из SELECT?",
+   "back": "Обычно нет: WHERE выполняется раньше SELECT."
+  },
+  {
+   "id": "4ddc89fd0d",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Как проверить значение на NULL?",
+   "back": "<code>IS NULL</code> или <code>IS NOT NULL</code>. <code>x = NULL</code> даёт NULL, а не TRUE."
+  },
+  {
+   "id": "34979e51b0",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import sqlite3\ndb = sqlite3.connect(&quot;:memory:&quot;)\ndb.executescript(&quot;CREATE TABLE t(x INTEGER); INSERT INTO t VALUES (1), (NULL), (3);&quot;)\nprint(db.execute(&quot;SELECT COUNT(*), COUNT(x), AVG(x) FROM t&quot;).fetchone())</code></pre>",
+   "back": "<pre><code>(3, 2, 2.0)</code></pre> <code>COUNT(*)</code> считает все строки. <code>COUNT(x)</code> и <code>AVG(x)</code> пропускают NULL."
+  },
+  {
+   "id": "27062481fa",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "INNER JOIN и LEFT JOIN — разница?",
+   "back": "INNER — только пары с совпавшим ключом. LEFT — все строки левой таблицы; без пары справа будут NULL."
+  },
+  {
+   "id": "eccd7cfeda",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Как найти клиентов без заказов?",
+   "back": "<code>LEFT JOIN orders o ON o.client_id = c.id WHERE o.id IS NULL</code>."
+  },
+  {
+   "id": "32385ff80f",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Что делает CASE WHEN?",
+   "back": "Условное значение: <code>CASE WHEN условие THEN a ELSE b END</code>. Часто внутри SUM для подсчёта по условию."
+  },
+  {
+   "id": "c8840c6787",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "UNION и UNION ALL — разница?",
+   "back": "UNION убирает дубликаты (дороже). UNION ALL оставляет все строки."
+  },
+  {
+   "id": "98e820b751",
+   "day": "2026-11-21",
+   "deck": "9 SQL",
+   "deck_full": "ML::9 SQL",
+   "kind": "basic",
+   "front": "Что выведет код?<pre><code>import sqlite3\ndb = sqlite3.connect(&quot;:memory:&quot;)\ndb.executescript(&#x27;&#x27;&#x27;\nCREATE TABLE s(city TEXT, amount INTEGER);\nINSERT INTO s VALUES (&#x27;A&#x27;, 5), (&#x27;A&#x27;, 7), (&#x27;B&#x27;, 3), (&#x27;C&#x27;, 4), (&#x27;C&#x27;, 6);\n&#x27;&#x27;&#x27;)\nq = &quot;SELECT city, SUM(amount) FROM s GROUP BY city HAVING SUM(amount) &gt; 5 ORDER BY city&quot;\nprint(db.execute(q).fetchall())</code></pre>",
+   "back": "<pre><code>[(&#x27;A&#x27;, 12), (&#x27;C&#x27;, 10)]</code></pre> HAVING оставляет группы с суммой больше 5: B (3) отброшена."
   }
  ]
 }

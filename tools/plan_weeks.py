@@ -44,6 +44,7 @@ def EX(ex, minutes=20):
 
 
 def ANKI(deck="ML", intro=None):
+    # The site brings new cards by the plan day of their theory (data/anki.json); deck is the Anki deck name.
     return {"type": "anki", "deck": deck, **({"intro": intro} if intro else {})}
 
 
@@ -121,7 +122,7 @@ WEEKS = [
                     Q("q-w1-names"),
                     EX("ex-w1-b1", 10),
                     EX("ex-w1-b2", 10),
-                    ANKI("1 Python", "Пройдите новые карточки колоды «1 Python»."),
+                    ANKI("1 Python", "Пройдите новые карточки по темам дня: Python и оценка сложности."),
                 ],
             },
             "tue": {
@@ -164,7 +165,7 @@ WEEKS = [
                     T("w1-math-3b1b-calc-3", do="Выпишите правила: степень, сумма, `eˣ`, `ln x`."),
                     T("w1-math-derivative", goals=["взять производную многочлена, `eˣ`, `ln x`"]),
                     Q("q-w1-math1"),
-                    ANKI("2 Математика", "Повторите карточки. Новые придут из колоды «2 Математика»."),
+                    ANKI("2 Математика", "Повторите карточки. Новые — по производной."),
                 ],
             },
             "fri": {
@@ -176,7 +177,7 @@ WEEKS = [
                     T("w1-math-chain-rule", goals=["взять производную сигмоиды через цепное правило"]),
                     T("w1-math-partial-gradient", goals=["посчитать градиент функции двух переменных (D1)"]),
                     Q("q-w1-math2"),
-                    ANKI("2 Математика", "Повторите карточки всех колод."),
+                    ANKI("2 Математика", "Повторите карточки. Новые — по цепному правилу и градиенту."),
                 ],
             },
             "sat": {
