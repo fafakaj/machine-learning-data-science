@@ -2,6 +2,7 @@ import { accountConfigured, login, logout, session } from "./auth.js";
 import { icon, STEP_ICON } from "./icons.js";
 import { esc, md } from "./md.js";
 import { onStatus, warmUp } from "./py.js";
+import { renderTutorPage } from "./tutor.js";
 import {
   backend, blockLate, blockProgress, calendarWeek, currentStep, data, fmtDate, getStep, isDone, loadData, loadProgress,
   markDone, nextStepAfter, onSaveState, overallProgress, progress, pullRemote, rateStep, weekProgress,
@@ -59,6 +60,7 @@ function header({ menu = false } = {}) {
       </div>
       <nav class="nav">
         <a class="nav-link" href="#/review" title="Повторение">${icon("repeat")}<span class="nav-label">Повторение</span>${due ? `<span class="count">${due}</span>` : ""}</a>
+        <a class="nav-link" href="#/tutor" title="Визуализатор кода: выполнение по шагам">${icon("step")}<span class="nav-label">Визуализатор</span></a>
         <a class="nav-link" href="#/map" title="Карта курса">${icon("map")}<span class="nav-label">Карта курса</span></a>
         <span class="status"><span class="dot" data-py title="Python"></span><span class="dot" data-save title="Сохранение"></span></span>
         ${s
@@ -166,6 +168,7 @@ function render() {
   if (route === "login") return renderLogin();
   if (route === "map") return renderMap();
   if (route === "review") return renderReviewPage();
+  if (route === "tutor") return renderTutor();
 
   let step = null;
   if (route === "step") step = getStep(arg)?.step || null;
@@ -267,6 +270,12 @@ function renderReviewPage() {
   app.innerHTML = `${header()}<main class="review-page"><div data-body></div></main>`;
   bindChrome();
   renderReview(app.querySelector("[data-body]"));
+}
+
+function renderTutor() {
+  app.innerHTML = `${header()}<main class="tutor-page"><div data-body></div></main>`;
+  bindChrome();
+  cleanup = renderTutorPage(app.querySelector("[data-body]"));
 }
 
 function renderFinished() {

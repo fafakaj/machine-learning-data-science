@@ -1,7 +1,8 @@
-// Non-code steps: theory, anki, practice checklist.
+// Non-code steps: theory, Anki cards, practice checklist.
 import { esc, md } from "../md.js";
 import { data, isDone, logEvent, markDone, markUndone, progress, scheduleSave, stepState } from "../store.js";
 import { sourceCard } from "./common.js";
+import { ankiToday, runSession } from "./review.js";
 
 function doneBar(step, label = "Отметить как сделано") {
   return isDone(step.id)
@@ -47,13 +48,54 @@ export function renderTheory(root, step, ctx) {
   draw();
 }
 
+/**
+ * Anki inside the site: due cards of every deck, then new cards of this step's deck in plan order.
+ * Answers go to the shared review boxes, so the cards come back in "Повторение" on their own.
+ */
 export function renderAnki(root, step, ctx) {
-  const draw = () => {
-    root.innerHTML = `<div class="card">
-      <div class="md">${md(step.intro || `Повторите карточки колоды «${esc(step.deck || "ML")}» в Anki.`)}</div>
-      ${doneBar(step, "Повторил")}</div>`;
+  const deck = step.deck || "ML";
+  root.innerHTML = '<div class="card anki-step" data-anki></div>';
+  const box = root.querySelector("[data-anki]");
+  const start = (extra = 0) => {
+    const t = ankiToday(deck);
+    const fresh = extra ? t.fresh.slice(0, t.newToday.length + extra) : t.newToday;
+    runSession(box, [...t.due, ...fresh], {
+      onFinish: (right, total) => {
+        if (!isDone(step.id)) {
+          markDone(step.id);
+          ctx.onDone?.();
+        }
+        draw(`Готово: ${right} из ${total} с первого раза.`);
+      },
+    });
   };
-  bindDone(root, step, ctx.onDone, draw);
+  const draw = (summary = "") => {
+    box.onclick = null;
+    const t = ankiToday(deck);
+    const queue = t.due.length + t.newToday.length;
+    const more = t.fresh.length > t.newToday.length;
+    const scope = deck === "ML" ? "Все колоды" : `Колода «${esc(deck)}»`;
+    box.innerHTML = `
+      ${step.intro ? `<div class="md">${md(step.intro)}</div>` : ""}
+      ${summary ? `<div class="callout ok">${esc(summary)}</div>` : ""}
+      <div class="anki-stats">
+        <div><b>${t.due.length}</b><span>к повторению</span></div>
+        <div><b>${t.newToday.length}</b><span>новых сегодня</span></div>
+        <div><b>${t.met} из ${t.total}</b><span>${scope}: изучено</span></div>
+      </div>
+      <div class="review-actions">
+        ${queue ? `<button class="btn primary big" data-anki-start>Начать (${queue})</button>` : ""}
+        ${more ? `<button class="btn ${queue ? "ghost" : ""}" data-anki-more>Ещё 10 новых</button>` : ""}
+      </div>
+      ${queue ? "" : `<p class="muted">${more ? "Лимит новых карточек на сегодня исчерпан." : "На сегодня карточек нет."}</p>`}
+      <p class="muted small">Карточки повторяются прямо здесь, приложение Anki не нужно. Ответы попадают в общее «Повторение»: карточки вернутся сами по расписанию. Клавиши: пробел — ответ, 1–3 — оценка.</p>
+      ${!queue || isDone(step.id) ? doneBar(step, "Повторил") : ""}`;
+  };
+  box.addEventListener("click", (e) => {
+    if (e.target.closest("[data-anki-start]")) start();
+    if (e.target.closest("[data-anki-more]")) start(10);
+  });
+  bindDone(root, step, ctx.onDone, () => draw());
   draw();
 }
 

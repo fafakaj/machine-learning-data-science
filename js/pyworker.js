@@ -1,5 +1,5 @@
 // Web Worker: runs the student's Python with Pyodide and app/py/harness.py.
-// Messages in:  {id, op: "run" | "script" | "snippet" | "expr", args: [...]}
+// Messages in:  {id, op: "run" | "script" | "snippet" | "expr" | "trace", args: [...]}
 // Messages out: {id, ok: true, result} | {id, ok: false, error} | {ready: true, ms}
 import { loadPyodide } from "../vendor/pyodide/pyodide.mjs";
 
@@ -24,6 +24,8 @@ def _call(op, args_json):
         out = harness.run_snippet(args[0])
     elif op == "expr":
         out = harness.check_expr(*args)
+    elif op == "trace":
+        out = harness.trace(args[0], args[1])
     else:
         raise ValueError(op)
     return json.dumps(out, ensure_ascii=False, default=repr)
@@ -37,7 +39,7 @@ self.onmessage = async (event) => {
   try {
     const py = await ready;
     // numpy / pandas / scikit-learn are local wheels in vendor/pyodide; load them on first import.
-    const sources = op === "run" ? [args[1]] : op === "script" ? [args[1], args[0].tests] : op === "snippet" ? [args[0]] : [];
+    const sources = op === "run" ? [args[1]] : op === "script" ? [args[1], args[0].tests] : op === "snippet" || op === "trace" ? [args[0]] : [];
     const code = sources.join("\n");
     if (/\b(numpy|pandas|sklearn|scipy)\b/.test(code)) {
       self.postMessage({ loadingPackages: true });

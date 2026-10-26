@@ -1,0 +1,424 @@
+{
+ "cards": [
+  {
+   "id": "30da3fc427",
+   "deck": "1 Python",
+   "front": "Назовите три свойства любого объекта в Python.",
+   "back": "identity (<code>id</code>), тип, значение."
+  },
+  {
+   "id": "22e9d1ad29",
+   "deck": "1 Python",
+   "front": "Что делает присваивание <code>b = a</code>?",
+   "back": "Даёт тому же объекту второе имя. Объект не копируется."
+  },
+  {
+   "id": "95b1cc7fce",
+   "deck": "1 Python",
+   "front": "Что выведет код?<pre><code>a = [1, 2]\nb = a\nb.append(3)\nprint(a)</code></pre>",
+   "back": "<code>[1, 2, 3]</code>: <code>a</code> и <code>b</code> — один и тот же список."
+  },
+  {
+   "id": "a33c0cc89f",
+   "deck": "1 Python",
+   "front": "Чем <code>is</code> отличается от <code>==</code>?",
+   "back": "<code>is</code> проверяет, что это тот же объект (identity). <code>==</code> проверяет равенство значений."
+  },
+  {
+   "id": "aab96dcee0",
+   "deck": "1 Python",
+   "front": "Чему равны <code>[1] == [1]</code> и <code>[1] is [1]</code>?",
+   "back": "<code>True</code> и <code>False</code>: значения равны, но это два разных объекта."
+  },
+  {
+   "id": "158cd6bcd4",
+   "deck": "1 Python",
+   "front": "Можно ли проверять числа и строки через <code>is</code>?",
+   "back": "Нет. Результат зависит от реализации (кэш малых чисел, интернирование строк). Значения сравнивайте через <code>==</code>."
+  },
+  {
+   "id": "a9a49fb1d5",
+   "deck": "1 Python",
+   "front": "Когда правильно писать <code>is</code>?",
+   "back": "При сравнении с <code>None</code>: <code>x is None</code>."
+  },
+  {
+   "id": "5380153a89",
+   "deck": "1 Python",
+   "front": "Назовите изменяемые встроенные типы.",
+   "back": "<code>list</code>, <code>dict</code>, <code>set</code>, <code>bytearray</code>."
+  },
+  {
+   "id": "65083db33d",
+   "deck": "1 Python",
+   "front": "Назовите неизменяемые встроенные типы.",
+   "back": "<code>int</code>, <code>float</code>, <code>str</code>, <code>tuple</code>, <code>frozenset</code>, <code>bytes</code>."
+  },
+  {
+   "id": "4f536db280",
+   "deck": "1 Python",
+   "front": "B2. Что выведет код? Почему?<pre><code>a = [[0] * 3] * 3\na[0][0] = 1\nprint(a)</code></pre>",
+   "back": "<code>[[1, 0, 0], [1, 0, 0], [1, 0, 0]]</code>. <code>* 3</code> копирует ссылку на один и тот же внутренний список."
+  },
+  {
+   "id": "79787085b5",
+   "deck": "1 Python",
+   "front": "<code>[[0] * 3] * 3</code> создаёт <span class=\"cloze\">[…]</span>.",
+   "back": "<code>[[0] * 3] * 3</code> создаёт <span class=\"cloze on\">3 ссылки на один внутренний список</span>."
+  },
+  {
+   "id": "4084fc362f",
+   "deck": "1 Python",
+   "front": "Как правильно создать матрицу 3×3 из нулей?",
+   "back": "<code>[[0] * 3 for _ in range(3)]</code>: каждая строка — новый список."
+  },
+  {
+   "id": "00c508c7ec",
+   "deck": "1 Python",
+   "front": "Что делает shallow copy (<code>copy.copy(a)</code>, <code>a[:]</code>, <code>list(a)</code>)?",
+   "back": "Создаёт новый внешний объект. Элементы внутри — те же объекты, что в оригинале."
+  },
+  {
+   "id": "f3c7e3965f",
+   "deck": "1 Python",
+   "front": "Что делает <code>copy.deepcopy(a)</code>?",
+   "back": "Копирует объект и рекурсивно все вложенные объекты."
+  },
+  {
+   "id": "5803372736",
+   "deck": "1 Python",
+   "front": "Что выведет код?<pre><code>import copy\nx = [[1], [2]]\ny = copy.copy(x)\nprint(y is x, y[0] is x[0])</code></pre>",
+   "back": "<code>False True</code>: внешний список новый, вложенные списки общие."
+  },
+  {
+   "id": "557e7bc8c6",
+   "deck": "1 Python",
+   "front": "B1. Что выведет код? Почему?<pre><code>def add(x, items=[]):\n    items.append(x)\n    return items\n\nprint(add(1))\nprint(add(2))</code></pre>",
+   "back": "<code>[1]</code>, затем <code>[1, 2]</code>. Значение по умолчанию создаётся один раз при <code>def</code>. Список общий для всех вызовов."
+  },
+  {
+   "id": "fbc661fed2",
+   "deck": "1 Python",
+   "front": "Когда вычисляется значение аргумента по умолчанию?",
+   "back": "Один раз — когда выполняется <code>def</code>, а не при каждом вызове."
+  },
+  {
+   "id": "6a7466c5a4",
+   "deck": "1 Python",
+   "front": "Где хранится значение аргумента по умолчанию?",
+   "back": "На объекте функции: <code>f.__defaults__</code>."
+  },
+  {
+   "id": "cc15e7fdc1",
+   "deck": "1 Python",
+   "front": "Как исправить изменяемое значение по умолчанию?",
+   "back": "<pre><code>def add(x, items=None):\n    if items is None:\n        items = []\n    items.append(x)\n    return items</code></pre>"
+  },
+  {
+   "id": "5c1f4bf63d",
+   "deck": "1 Python",
+   "front": "Для <code>add</code> из B1: что выведет <code>print(add(1), add(2))</code> в одной строке?",
+   "back": "<code>[1, 2] [1, 2]</code>: оба вызова вернули один список, а <code>print</code> видит его после второго вызова."
+  },
+  {
+   "id": "795dd0645f",
+   "deck": "1 Python",
+   "front": "Какое правило ruff находит изменяемый default (B1)?",
+   "back": "<code>B006</code> — mutable-argument-default."
+  },
+  {
+   "id": "28ff371321",
+   "deck": "1 Python",
+   "front": "Назовите порядок поиска имени (LEGB).",
+   "back": "Local → Enclosing → Global → Built-in."
+  },
+  {
+   "id": "57628d06bc",
+   "deck": "1 Python",
+   "front": "Почему <code>x += 1</code> в функции даёт <code>UnboundLocalError</code>, если <code>x</code> — глобальная?",
+   "back": "Присваивание делает <code>x</code> локальной во всей функции. Прочитать её до присваивания нельзя."
+  },
+  {
+   "id": "285bbd728e",
+   "deck": "1 Python",
+   "front": "Чем <code>global</code> отличается от <code>nonlocal</code>?",
+   "back": "<code>global</code> — имя уровня модуля. <code>nonlocal</code> — имя из охватывающей функции."
+  },
+  {
+   "id": "9e3e37e071",
+   "deck": "1 Python",
+   "front": "Что такое замыкание (closure)?",
+   "back": "Внутренняя функция, которая помнит переменные внешней функции. Она хранит ссылку на переменную, а не её значение."
+  },
+  {
+   "id": "b5cbb17549",
+   "deck": "1 Python",
+   "front": "B3. Что выведет код? Почему?<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>",
+   "back": "<code>[2, 2, 2]</code>. Лямбда читает <code>i</code> в момент вызова. К этому моменту цикл закончился и <code>i == 2</code>."
+  },
+  {
+   "id": "19f4e48e0c",
+   "deck": "1 Python",
+   "front": "Что такое позднее связывание (late binding) в замыкании?",
+   "back": "Замыкание читает значение переменной при вызове, а не при создании функции."
+  },
+  {
+   "id": "28750579b5",
+   "deck": "1 Python",
+   "front": "Назовите два исправления B3.",
+   "back": "<code>lambda i=i: i</code> и <code>functools.partial</code>."
+  },
+  {
+   "id": "a75b67ab3c",
+   "deck": "1 Python",
+   "front": "Почему <code>lambda i=i: i</code> исправляет B3?",
+   "back": "Значение по умолчанию вычисляется при создании лямбды. Оно «замораживает» текущее i."
+  },
+  {
+   "id": "e8bfc08d28",
+   "deck": "1 Python",
+   "front": "Какое правило ruff находит B3?",
+   "back": "<code>B023</code> — function-uses-loop-variable."
+  },
+  {
+   "id": "7392affe11",
+   "deck": "1 Python",
+   "front": "Во что <code>*args</code> собирает аргументы?",
+   "back": "В <code>tuple</code> лишних позиционных аргументов."
+  },
+  {
+   "id": "74abbe523f",
+   "deck": "1 Python",
+   "front": "Во что <code>**kwargs</code> собирает аргументы?",
+   "back": "В <code>dict</code> лишних именованных аргументов."
+  },
+  {
+   "id": "59ce1f26f9",
+   "deck": "1 Python",
+   "front": "Что значат <code>/</code> и <code>*</code> в <code>def f(a, /, b, *, c)</code>?",
+   "back": "<code>a</code> — только позиционный. <code>b</code> — любой. <code>c</code> — только именованный."
+  },
+  {
+   "id": "98dcefa279",
+   "deck": "1 Python",
+   "front": "Что делают <code>f(*lst)</code> и <code>f(**d)</code> при вызове?",
+   "back": "Распаковывают список в позиционные аргументы, словарь — в именованные."
+  },
+  {
+   "id": "47476f4c8e",
+   "deck": "1 Python",
+   "front": "Что значит hashable?",
+   "back": "Хэш объекта не меняется за время его жизни (<code>__hash__</code>), и объект сравним через <code>__eq__</code>."
+  },
+  {
+   "id": "09951abd5d",
+   "deck": "1 Python",
+   "front": "B4. Почему <code>tuple</code> может быть ключом <code>dict</code>, а <code>list</code> — нет?",
+   "back": "<code>tuple</code> из hashable-элементов hashable: хэш не меняется. <code>list</code> изменяемый и не hashable."
+  },
+  {
+   "id": "66a81ddbf2",
+   "deck": "1 Python",
+   "front": "Почему ключ <code>dict</code> не может менять хэш?",
+   "back": "Словарь ищет ключ по хэшу. Если хэш изменится, словарь ключ не найдёт."
+  },
+  {
+   "id": "4624628475",
+   "deck": "1 Python",
+   "front": "Что даст <code>hash((1, [2]))</code>?",
+   "back": "<code>TypeError</code>: tuple hashable, только если все его элементы hashable."
+  },
+  {
+   "id": "cefebdee99",
+   "deck": "1 Python",
+   "front": "B4. Сложность поиска по ключу в <code>dict</code>?",
+   "back": "O(1) в среднем. O(n) в худшем случае — при коллизиях хэшей."
+  },
+  {
+   "id": "e2611a23e9",
+   "deck": "1 Python",
+   "front": "Сложность <code>x in some_list</code> и <code>x in some_set</code>?",
+   "back": "O(n) и O(1) в среднем."
+  },
+  {
+   "id": "f59abb8d65",
+   "deck": "1 Python",
+   "front": "Чему равен <code>{1: &quot;a&quot;, 1.0: &quot;b&quot;, True: &quot;c&quot;}</code>?",
+   "back": "<code>{1: &quot;c&quot;}</code>: <code>1 == 1.0 == True</code> и хэши равны — это один ключ."
+  },
+  {
+   "id": "17625fdcdc",
+   "deck": "1 Python",
+   "front": "Что выведет код?<pre><code>a = b = [1]\na += [2]\nprint(b)</code></pre>",
+   "back": "<code>[1, 2]</code>: <code>+=</code> меняет список на месте. С <code>a = a + [2]</code> список <code>b</code> не изменился бы."
+  },
+  {
+   "id": "55235a55aa",
+   "deck": "2 Математика",
+   "front": "Что такое производная (интуиция)?",
+   "back": "Отношение малого сдвига выхода к малому сдвигу входа: во сколько раз изменится f, если чуть сдвинуть x."
+  },
+  {
+   "id": "4f3dd0af07",
+   "deck": "2 Математика",
+   "front": "Определение производной f′(x₀)?",
+   "back": "lim<sub>h→0</sub> (f(x₀ + h) − f(x₀)) / h."
+  },
+  {
+   "id": "df8cc8ec71",
+   "deck": "2 Математика",
+   "front": "(xⁿ)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(xⁿ)′ = <span class=\"cloze on\">n·xⁿ⁻¹</span>"
+  },
+  {
+   "id": "00c28a9130",
+   "deck": "2 Математика",
+   "front": "(eˣ)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(eˣ)′ = <span class=\"cloze on\">eˣ</span>"
+  },
+  {
+   "id": "201b4b6a7c",
+   "deck": "2 Математика",
+   "front": "(ln x)′ = <span class=\"cloze\">[…]</span>",
+   "back": "(ln x)′ = <span class=\"cloze on\">1/x</span>"
+  },
+  {
+   "id": "0b4fdb04bf",
+   "deck": "2 Математика",
+   "front": "Найдите (3x⁴ − 5x² + 7x − 2)′.",
+   "back": "12x³ − 10x + 7."
+  },
+  {
+   "id": "2088beb243",
+   "deck": "2 Математика",
+   "front": "Правило произведения: (uv)′ = ?",
+   "back": "u′v + uv′."
+  },
+  {
+   "id": "2006fa6754",
+   "deck": "2 Математика",
+   "front": "Цепное правило: (f(g(x)))′ = ?",
+   "back": "f′(g(x)) · g′(x)."
+  },
+  {
+   "id": "40649aaa91",
+   "deck": "2 Математика",
+   "front": "Цепное правило — словами?",
+   "back": "Скорости перемножаются: производная внешней функции в точке g(x) умножается на производную внутренней."
+  },
+  {
+   "id": "8dc311b423",
+   "deck": "2 Математика",
+   "front": "Найдите ((3x + 1)⁵)′.",
+   "back": "15(3x + 1)⁴: внешняя даёт 5u⁴, внутренняя даёт 3."
+  },
+  {
+   "id": "b113980f5e",
+   "deck": "2 Математика",
+   "front": "Найдите (e<sup>−x²</sup>)′.",
+   "back": "−2x · e<sup>−x²</sup>."
+  },
+  {
+   "id": "886cbf64d7",
+   "deck": "2 Математика",
+   "front": "Сигмоида σ(x) и её производная?",
+   "back": "σ(x) = 1 / (1 + e<sup>−x</sup>). σ′ = σ(1 − σ)."
+  },
+  {
+   "id": "f7493cf385",
+   "deck": "2 Математика",
+   "front": "Чему равна σ′(0)?",
+   "back": "1/4: σ(0) = 1/2, значит 1/2 · 1/2."
+  },
+  {
+   "id": "590156303f",
+   "deck": "2 Математика",
+   "front": "Как взять частную производную ∂f/∂x?",
+   "back": "Считайте все остальные переменные константами и дифференцируйте по x."
+  },
+  {
+   "id": "b4c046afdc",
+   "deck": "2 Математика",
+   "front": "Что такое градиент ∇f?",
+   "back": "Вектор всех частных производных: (∂f/∂x, ∂f/∂y, …)."
+  },
+  {
+   "id": "d625b1e5fd",
+   "deck": "2 Математика",
+   "front": "Что показывает градиент?",
+   "back": "Направление быстрейшего роста функции."
+  },
+  {
+   "id": "b218940405",
+   "deck": "2 Математика",
+   "front": "D1. Найдите ∇f для f(x, y) = x²y + 3y.",
+   "back": "∇f = (2xy, x² + 3)."
+  },
+  {
+   "id": "7e9e135f81",
+   "deck": "2 Математика",
+   "front": "Чему равен ∇(x²y + 3y) в точке (1, 2)?",
+   "back": "(4, 4)."
+  },
+  {
+   "id": "ca4e4c57be",
+   "deck": "2 Математика",
+   "front": "Формула шага градиентного спуска?",
+   "back": "p ← p − lr · ∇f(p). Минус: идём против роста, к минимуму."
+  },
+  {
+   "id": "9e0b5c529a",
+   "deck": "2 Математика",
+   "front": "Градиент MSE для ŷ = wx + b по w и b?",
+   "back": "∂L/∂w = (2/n) Σ (ŷᵢ − yᵢ) · xᵢ<br>∂L/∂b = (2/n) Σ (ŷᵢ − yᵢ)"
+  },
+  {
+   "id": "3cb7926103",
+   "deck": "2 Математика",
+   "front": "Формула центральной разности для f′(x)? Почему она лучше прямой?",
+   "back": "(f(x + h) − f(x − h)) / (2h). Ошибка ~h², у прямой разности ~h."
+  },
+  {
+   "id": "1f4a9e5710",
+   "deck": "2 Математика",
+   "front": "Backprop — в одной фразе?",
+   "back": "Цепное правило на графе вычислений от выхода к входу: производные перемножаются по рёбрам и складываются по путям."
+  },
+  {
+   "id": "ae50cf3f2c",
+   "deck": "2 Математика",
+   "front": "e = (a + b)(b + 1), a = 2, b = 1. Найдите ∂e/∂a и ∂e/∂b.",
+   "back": "∂e/∂a = b + 1 = 2. ∂e/∂b = (b + 1) + (a + b) = 5: два пути от b к e."
+  },
+  {
+   "id": "2f4040f46b",
+   "deck": "3 Алгоритмы",
+   "front": "Что значит O(n)?",
+   "back": "Время растёт пропорционально размеру входа n."
+  },
+  {
+   "id": "dd64169451",
+   "deck": "3 Алгоритмы",
+   "front": "Почему O(n²) плохо при n = 10⁵?",
+   "back": "10¹⁰ операций — это слишком долго. O(n) — 10⁵ операций."
+  },
+  {
+   "id": "3c903605ca",
+   "deck": "3 Алгоритмы",
+   "front": "Сколько стоит сортировка?",
+   "back": "O(n log n)."
+  },
+  {
+   "id": "14335b4ef2",
+   "deck": "3 Алгоритмы",
+   "front": "Сложность поиска, вставки и удаления в хэш-таблице?",
+   "back": "O(1) в среднем."
+  },
+  {
+   "id": "454a56f97d",
+   "deck": "3 Алгоритмы",
+   "front": "Когда нужен паттерн hash set / hash map?",
+   "back": "Решение много раз спрашивает «видел ли я X?». Храните виденное в <code>set</code> или <code>dict</code>: O(n²) → O(n)."
+  }
+ ]
+}

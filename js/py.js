@@ -80,3 +80,4 @@ export const runProblem = (problem, code, includeHidden) => call("run", [problem
 export const runScript = (exercise, code) => call("script", [exercise, code], 15000);
 export const runSnippet = (code) => call("snippet", [code], 8000);
 export const checkExpr = (answer, reference, vars, points) => call("expr", [answer, reference, vars, points], 5000);
+export const runTrace = (code, problem = null) => call("trace", [code, problem], 20000);

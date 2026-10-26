@@ -3,6 +3,7 @@ import { createEditor } from "../editor.js";
 import { icon } from "../icons.js";
 import { esc, md } from "../md.js";
 import { runProblem, runScript, TimeoutError } from "../py.js";
+import { openTutor } from "../tutor.js";
 import { data, isDone, logEvent, markDone, progress, scheduleSave, stepState } from "../store.js";
 import { sourceCard } from "./common.js";
 
@@ -20,7 +21,7 @@ function codeKey(step) {
   return `lc:${step.problem}`;
 }
 
-function resultsHTML(res, mode) {
+export function resultsHTML(res, mode) {
   if (!res.compiled) {
     return `<div class="verdict bad">Код не запускается</div><pre class="err">${esc(res.error)}</pre>`;
   }
@@ -92,6 +93,7 @@ export function renderCode(root, step, { onDone }) {
           <button class="btn" data-act="run" title="Ctrl+Enter">${icon("play")}Запустить</button>
           <button class="btn primary" data-act="submit" title="Ctrl+Shift+Enter">Сдать</button>
           <span class="spacer"></span>
+          <button class="btn ghost small" data-act="trace" title="Выполнить код по шагам, как в Python Tutor" aria-label="По шагам">${icon("step")}<span class="btn-label">По шагам</span></button>
           <button class="btn ghost small" data-act="reset">Сбросить</button>
         </div>
         <div class="editor" data-editor></div>
@@ -148,6 +150,7 @@ export function renderCode(root, step, { onDone }) {
     const act = e.target.closest("[data-act]")?.dataset.act;
     if (act === "run") run(false);
     if (act === "submit") run(true);
+    if (act === "trace") openTutor({ code: editor.value, problem: isExercise ? null : item, title: isExercise ? "Код по шагам" : `#${item.id} по шагам` });
     if (act === "reset" && confirm("Заменить код шаблоном?")) {
       editor.value = starter;
     }

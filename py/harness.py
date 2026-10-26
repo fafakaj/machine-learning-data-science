@@ -437,3 +437,184 @@ def check_expr(answer, reference, variables, points):
         if not math.isclose(got, want, rel_tol=1e-6, abs_tol=1e-9):
             return {"ok": False, "error": None}
     return {"ok": True, "error": None}
+
+
+# ---------------------------------------------------------------- step-by-step tracer (Python Tutor)
+
+TRACE_FILE = "<tutor>"
+TRACE_STEPS = 800
+TRACE_ITEMS = 40  # items of one container shown before "…"
+
+
+class _TraceLimit(BaseException):
+    """Raised from the tracer to stop a long run; BaseException so `except Exception` in user code cannot catch it."""
+
+
+class _Heap:
+    """Encodes values the way Python Tutor shows them: primitives inline, everything else as a reference."""
+
+    def __init__(self):
+        self.ids = {}
+        self.keep = []  # holds every seen object, so a freed id() is never reused for another one
+
+    def ref(self, obj):
+        key = id(obj)
+        if key not in self.ids:
+            self.ids[key] = len(self.ids) + 1
+            self.keep.append(obj)
+        return self.ids[key]
+
+    def value(self, obj, heap):
+        if obj is None or isinstance(obj, (bool, int, float, complex)):
+            return ["P", repr(obj)]
+        if isinstance(obj, str) and len(obj) <= 60 and "\n" not in obj:
+            return ["P", repr(obj)]
+        n = self.ref(obj)
+        if n not in heap:
+            heap[n] = None  # placeholder first: cycles stop here
+            heap[n] = self.encode(obj, heap)
+        return ["R", n]
+
+    def items(self, seq, heap):
+        out = [self.value(x, heap) for x in itertools.islice(seq, TRACE_ITEMS)]
+        return out, len(seq) > TRACE_ITEMS if hasattr(seq, "__len__") else False
+
+    def encode(self, obj, heap):
+        if isinstance(obj, str):
+            return {"t": "str", "v": _short(obj, 400)}
+        if isinstance(obj, (list, tuple, collections.deque)):
+            items, more = self.items(obj, heap)
+            return {"t": type(obj).__name__, "items": items, "more": more}
+        if isinstance(obj, (set, frozenset)):
+            try:
+                ordered = sorted(obj, key=_sorted_key)
+            except TypeError:
+                ordered = list(obj)
+            items, more = self.items(ordered, heap)
+            return {"t": type(obj).__name__, "items": items, "more": more}
+        if isinstance(obj, dict):
+            pairs = [[self.value(k, heap), self.value(v, heap)] for k, v in itertools.islice(obj.items(), TRACE_ITEMS)]
+            name = "dict" if type(obj) is dict else type(obj).__name__
+            return {"t": "dict", "name": name, "pairs": pairs, "more": len(obj) > TRACE_ITEMS}
+        if isinstance(obj, (types.FunctionType, types.MethodType)):
+            fn = getattr(obj, "__func__", obj)
+            return {"t": "function", "v": f"{fn.__qualname__}({', '.join(fn.__code__.co_varnames[: fn.__code__.co_argcount])})"}
+        if isinstance(obj, type):
+            return {"t": "class", "v": obj.__name__}
+        if isinstance(obj, types.ModuleType):
+            return {"t": "other", "v": f"модуль {obj.__name__}"}
+        attrs = getattr(obj, "__dict__", None)
+        if isinstance(attrs, dict) and type(obj).__module__ in ("solution", "tutor", __name__):
+            pairs = [[k, self.value(v, heap)] for k, v in itertools.islice(attrs.items(), TRACE_ITEMS)]
+            return {"t": "instance", "v": type(obj).__name__, "attrs": pairs}
+        return {"t": "other", "v": _short(obj, 200)}
+
+
+def _frame_vars(frame, hidden):
+    if frame.f_code.co_name == "<module>":
+        names = [k for k in frame.f_globals if k not in hidden and not k.startswith("__")]
+        return [(k, frame.f_globals[k]) for k in names]
+    local = frame.f_locals
+    order = list(frame.f_code.co_varnames) + [k for k in local if k not in frame.f_code.co_varnames]
+    return [(k, local[k]) for k in order if k in local and not k.startswith((".", "__"))]
+
+
+def trace(user_code, problem=None, max_steps=TRACE_STEPS):
+    """Run the code line by line and return every step: line, call stack with variables, heap, output.
+
+    With a problem the code is a LeetCode solution: after the module runs, the method is called on the
+    first visible test (a design problem replays its operations). Only frames of the user's code are shown.
+    Returns {"steps": [...], "error": str|None, "limited": bool, "call": str|None}.
+    """
+    module = types.ModuleType("tutor")
+    sys.modules["tutor"] = module
+    ns = module.__dict__
+    ns.update(_namespace() if problem else {"__name__": "__main__"})
+    hidden = set(ns)
+    linecache.cache[TRACE_FILE] = (len(user_code), None, user_code.splitlines(True), TRACE_FILE)
+    try:
+        code = compile(user_code, TRACE_FILE, "exec")
+    except SyntaxError as exc:
+        return {"steps": [], "error": _error_text(exc).replace("<solution>", TRACE_FILE), "limited": False, "call": None}
+
+    heap_enc = _Heap()
+    out = io.StringIO()
+    steps = []
+
+    def snapshot(frame, event, arg):
+        stack = []
+        f = frame
+        while f is not None:
+            if f.f_code.co_filename == TRACE_FILE:
+                stack.append(f)
+            f = f.f_back
+        heap = {}
+        frames = []
+        for f in reversed(stack):
+            name = "Глобальные" if f.f_code.co_name == "<module>" else f.f_code.co_qualname
+            vars_ = [[k, heap_enc.value(v, heap)] for k, v in _frame_vars(f, hidden)]
+            frames.append({"name": name, "vars": vars_})
+        step = {"line": frame.f_lineno, "event": event, "frames": frames, "heap": heap, "out": out.getvalue()[-STDOUT_LIMIT:]}
+        if event == "return":
+            step["ret"] = heap_enc.value(arg, heap)
+        if event == "exception":
+            step["exc"] = "".join(traceback.format_exception_only(arg[0], arg[1])).strip()
+        steps.append(step)
+        if len(steps) >= max_steps:
+            raise _TraceLimit
+
+    def local_trace(frame, event, arg):
+        if event in ("line", "return", "exception"):
+            snapshot(frame, event, arg)
+        return local_trace
+
+    def global_trace(frame, event, arg):
+        if frame.f_code.co_filename != TRACE_FILE:
+            return None
+        if frame.f_code.co_name not in ("<module>", "<listcomp>", "<genexpr>"):
+            snapshot(frame, event, arg)  # the call itself: arguments are already bound
+        return local_trace
+
+    error = None
+    limited = False
+    call = None
+    sys.settrace(global_trace)
+    try:
+        with contextlib.redirect_stdout(out):
+            exec(code, ns)
+            if problem:
+                # A LeetCode solution: the module only defines the class, so start at the call.
+                first = len(steps)
+                call = _trace_call(problem, ns)
+                del steps[:first]
+    except _TraceLimit:
+        limited = True
+    except Exception as exc:  # noqa: BLE001 — the student's code can raise anything
+        error = "".join(traceback.format_exception_only(type(exc), exc)).strip()
+    finally:
+        sys.settrace(None)
+    # Arrows point at ids that are stable across steps; JSON keys must be strings.
+    for s in steps:
+        s["heap"] = {str(k): v for k, v in s["heap"].items()}
+    return {"steps": steps, "error": error, "limited": limited, "call": call}
+
+
+def _trace_call(problem, ns):
+    """Call the solution on the first visible test (traced by the caller). Returns the call as text."""
+    test = next((t for t in problem.get("tests", []) if not t.get("hidden")), None)
+    if test is None:
+        return None
+    if problem.get("kind") == "design":
+        cls = ns.get(problem["method"])
+        if cls is None:
+            raise NameError(f"Не найден класс {problem['method']}")
+        obj = cls(*test["args"][0])
+        for op, op_args in zip(test["ops"][1:], test["args"][1:]):
+            getattr(obj, op)(*op_args)
+        return f"{problem['method']}: {', '.join(test['ops'][1:])}"
+    solution_cls = ns.get("Solution")
+    if solution_cls is None:
+        raise NameError("Не найден класс Solution")
+    built = [build(t, a) for t, a in zip(problem["arg_types"], test["args"])]
+    getattr(solution_cls(), problem["method"])(*built)
+    return f"Solution().{problem['method']}({', '.join(_short(a, 80) for a in test['args'])})"

@@ -18,6 +18,8 @@ const PATHS = {
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   external: '<path d="M7 17L17 7M9 7h8v8"/>',
   play: '<path d="M7 5l12 7-12 7z"/>',
+  step: '<path d="M5 5v14"/><path d="M9 6l10 6-10 6z"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
 };
 
 export const STEP_ICON = {

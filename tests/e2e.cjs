@@ -30,6 +30,8 @@ async function setCode(page, code) {
   await page.keyboard.insertText(code);
 }
 
+const guestFile = (user) => PROGRESS.replace(/progress\.json$/, `progress-${user}.json`);
+
 async function savedProgress(ready, file = PROGRESS) {
   // The app debounces saves by 600 ms.
   let p = null;
@@ -213,8 +215,113 @@ async function savedProgress(ready, file = PROGRESS) {
     await page.click("[data-dunno]");
     await page.waitForSelector("[data-next]");
     const p = await savedProgress((x) => Object.keys(x.review || {}).length > 0);
-    const card = Object.values(p.review)[0];
-    assert(card.wrong === 1 && card.box === 0, JSON.stringify(card));
+    const cards = Object.values(p.review);
+    assert(cards.some((c) => c.wrong === 1 && c.box === 0), JSON.stringify(cards));
+  });
+
+  await check("Anki на сайте: колода «1 Python» целиком, 15 новых в день, сессия сдаёт шаг", async () => {
+    await page.goto(`${BASE}/?today=2026-10-26#/step/w01-mon-10`);
+    await page.waitForSelector("[data-anki-start]");
+    const stats = await page.textContent(".anki-stats");
+    assert(stats.includes(`0 из ${REFS.ankiPython}`), `в колоде не ${REFS.ankiPython} карточек: ${stats}`);
+    assert((await page.textContent("[data-anki-start]")).includes("(15)"), "в сессии не 15 новых карточек");
+    await page.click("[data-anki-start]");
+    // The first card by keyboard (Space shows the answer, 2 = "Хорошо"), the second "again": it comes back at the end.
+    await page.waitForSelector(".anki-face");
+    await page.keyboard.press(" ");
+    await page.waitForSelector("[data-grade]");
+    assert((await page.$$(".anki-back")).length === 1, "оборот карточки не показан");
+    await page.keyboard.press("2");
+    await page.click("[data-reveal]");
+    await page.click("[data-grade=again]");
+    let total = "";
+    for (let i = 0; i < 40 && !(await page.$(".callout.ok")); i++) {
+      total = await page.textContent(".review-top");
+      await page.click("[data-reveal]");
+      await page.click("[data-grade=good]");
+    }
+    assert(total.includes("/ 16"), `карточка «Снова» не вернулась в сессию: ${total}`);
+    await page.waitForSelector("[data-next] a.btn.primary");
+    const p = await savedProgress((x) => x.steps?.["w01-mon-10"]?.status === "done");
+    assert(p?.steps?.["w01-mon-10"]?.status === "done", "шаг Anki не сдан");
+    const anki = Object.entries(p.review).filter(([k]) => k.startsWith("a:"));
+    assert(anki.length === 15, `в коробках ${anki.length} карточек Anki, а не 15`);
+    assert(anki.filter(([, c]) => c.wrong === 1).length === 1, "нет карточки с ответом «Снова»");
+    assert((await page.textContent(".anki-stats")).includes(`15 из ${REFS.ankiPython}`), "счётчик изученных не 15");
+  });
+
+  await check("Повторение задачи: условие без названия, похожие варианты, «Решить заново» с тестами", async () => {
+    const ctx4 = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+    const posted = [];
+    // Only #217 is solved: the session is exactly one problem card.
+    const start = { version: 1, steps: { "w01-mon-02": { status: "done", solution: REFS.lc217 } }, code: {}, quiz: {}, checklist: {}, notes: {}, review: {}, events: [] };
+    await ctx4.route("**/api/progress*", (r) => r.request().method() === "POST"
+      ? (posted.push(JSON.parse(r.request().postData())), r.fulfill({ json: { ok: true } }))
+      : r.fulfill({ json: start }));
+    const rp = await ctx4.newPage();
+    rp.on("pageerror", (e) => errors.push(e.message));
+    await rp.goto(`${BASE}/?today=2026-10-26#/review`);
+    await rp.click("[data-start]");
+    await rp.waitForSelector(".review-problem [data-card]");
+    const face = await rp.textContent("[data-card]");
+    assert(face.includes("два раза или больше"), `нет условия задачи: ${face.slice(0, 120)}`);
+    assert(!face.includes("217") && !face.includes("Есть ли повтор"), "в карточке видно номер или название задачи");
+    await rp.click("[data-choices]");
+    const options = await rp.$$eval(".option", (els) => els.map((e) => e.textContent.trim()));
+    assert(options.length === 4 && options.includes("хэш-множество"), `варианты: ${options}`);
+    const wrong = options.filter((o) => o !== "хэш-множество");
+    assert(!wrong.some((o) => /хэш|словар|set/.test(o)), `среди неверных вариантов есть тоже верный приём: ${wrong}`);
+    assert(!wrong.some((o) => /проектирование класса|связный список|дерево|сетка/.test(o)), `вариант для другого входа: ${wrong}`);
+    await rp.click("[data-dunno]");
+    await rp.waitForSelector(".review-actions .btn.primary[data-resolve-open]");
+    assert((await rp.textContent("[data-verdict]")).includes("хэш-множество"), "ответ не показан");
+    await rp.click("[data-resolve-open]");
+    await rp.waitForSelector(".resolve .cm-content");
+    await setCode(rp, "class Solution:\n    def containsDuplicate(self, nums):\n        return False\n");
+    await rp.click("[data-resolve-run]");
+    await rp.waitForSelector("[data-resolve-out] .verdict", { timeout: 90000 });
+    assert(await rp.isVisible("[data-resolve-out] .verdict.bad"), "неверное решение принято");
+    await setCode(rp, REFS.lc217);
+    await rp.click("[data-resolve-run]");
+    await rp.waitForSelector("[data-resolve-out] .verdict.ok", { timeout: 60000 });
+    await rp.waitForTimeout(1200);
+    const last = posted.at(-1);
+    assert(last?.review?.["p:217"]?.wrong === 1 && last.review["p:217"].box === 0, `коробка задачи: ${JSON.stringify(last?.review)}`);
+    assert(last.events.some((e) => e.type === "resolve" && e.passed === e.total), "нет события решённой заново задачи");
+    await rp.screenshot({ path: `${process.env.SHOTS}/review-problem.png`, fullPage: true });
+    await ctx4.close();
+  });
+
+  await check("Визуализатор: кадры, объекты, стрелки и вывод по шагам", async () => {
+    await page.goto(`${BASE}/?today=2026-10-26#/tutor`);
+    await page.click("[data-act=sample]");
+    await page.click("[data-act=trace]");
+    await page.waitForSelector(".tutor .tu-frame", { timeout: 60000 });
+    let maxFrames = 0;
+    while (await page.isEnabled("[data-go=next]")) {
+      await page.click("[data-go=next]");
+      maxFrames = Math.max(maxFrames, (await page.$$(".tu-frame")).length);
+    }
+    assert(maxFrames === 2, `вызов функции не показан отдельным кадром (кадров: ${maxFrames})`);
+    assert((await page.textContent("[data-out]")).includes("[1, 2] [1, 2] True"), "вывод программы не тот");
+    await page.waitForTimeout(100);
+    assert((await page.$$(".tu-arrows path[marker-end]")).length >= 3, "нет стрелок от имён к объектам");
+    assert((await page.$$(".tu-obj")).length >= 2, "нет объектов");
+    await page.keyboard.press("ArrowLeft");
+    assert(!(await page.textContent("[data-count]")).startsWith("Шаг 1 "), "стрелка влево не листает");
+    await page.screenshot({ path: `${process.env.SHOTS}/tutor.png`, fullPage: true });
+  });
+
+  await check("«По шагам» в задаче: решение запускается на тесте 1", async () => {
+    await page.goto(`${BASE}/?today=2026-10-26#/step/w01-mon-02`);
+    await page.waitForSelector(".cm-content");
+    await page.click("[data-act=trace]");
+    await page.waitForSelector("dialog.tutor-dlg .tu-frame", { timeout: 60000 });
+    assert((await page.textContent("dialog.tutor-dlg")).includes("containsDuplicate([1, 2, 3, 1])"), "нет вызова на тесте 1");
+    await page.click("[data-go=last]");
+    assert((await page.textContent("[data-event]")).includes("Возврат"), "последний шаг — не возврат из метода");
+    await page.keyboard.press("Escape");
+    await page.waitForSelector("dialog.tutor-dlg", { state: "detached" });
   });
 
   await check("Панель шагов сворачивается и помнит это после перезагрузки", async () => {
@@ -248,31 +355,38 @@ async function savedProgress(ready, file = PROGRESS) {
     await ctx2.close();
   });
 
-  await check("Второй аккаунт: свой прогресс, отдельный от владельца (пароль из TEST_PASS_GUEST)", async () => {
-    if (!process.env.TEST_PASS_GUEST) return;
-    const ctx3 = await browser.newContext();
-    await ctx3.route("https://api.github.com/**", (r) => r.abort());
-    const gp = await ctx3.newPage();
-    await gp.goto(`${BASE}/?today=2026-10-26#/login`);
-    await gp.fill("[name=user]", "smetanka");
-    await gp.fill("[name=password]", process.env.TEST_PASS_GUEST);
-    await gp.click("[data-login] button");
-    await gp.waitForSelector(".stage-head h1", { timeout: 20000 });
-    assert(!(await gp.$(".panel .steps li.done")), "у нового аккаунта уже есть сданные шаги");
-    const id = await gp.$eval(".step-bar .sq.cur", (a) => a.getAttribute("href").split("/").pop());
-    await gp.click("[data-skip]");
-    const guestFile = PROGRESS.replace(/progress\.json$/, "progress-smetanka.json");
-    const guest = await savedProgress((p) => p.steps[id]?.skipped, guestFile);
-    assert(guest?.steps[id]?.skipped, "прогресс соседа не сохранился в его файл");
-    const owner = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
-    assert(!owner.steps[id]?.skipped, "пропуск соседа попал в прогресс владельца");
-    await ctx3.close();
-  });
+  for (const [user, pass] of [["smetanka", process.env.TEST_PASS_GUEST], ["keshapticya", process.env.TEST_PASS_KESHA]]) {
+    await check(`Аккаунт ${user}: вход, свой прогресс, отдельный от владельца и других`, async () => {
+      if (!pass) throw new Error(`нет пароля в окружении для ${user}`);
+      const ctx3 = await browser.newContext();
+      await ctx3.route("https://api.github.com/**", (r) => r.abort());
+      const gp = await ctx3.newPage();
+      await gp.goto(`${BASE}/?today=2026-10-26#/login`);
+      await gp.fill("[name=user]", user);
+      await gp.fill("[name=password]", pass);
+      await gp.click("[data-login] button");
+      await gp.waitForSelector(".stage-head h1", { timeout: 20000 });
+      assert((await gp.textContent("[data-logout]")).includes(user), "имя не в шапке");
+      const before = fs.existsSync(guestFile(user)) ? JSON.parse(fs.readFileSync(guestFile(user), "utf8")) : { steps: {} };
+      assert(!Object.keys(before.steps).length, "у нового аккаунта уже есть сданные шаги");
+      const id = await gp.$eval(".step-bar .sq.cur", (a) => a.getAttribute("href").split("/").pop());
+      await gp.click("[data-skip]");
+      const mine = await savedProgress((p) => p.steps[id]?.skipped, guestFile(user));
+      assert(mine?.steps[id]?.skipped, `прогресс ${user} не сохранился в его файл`);
+      const owner = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
+      assert(!owner.steps[id]?.skipped, `пропуск ${user} попал в прогресс владельца`);
+      for (const other of ["smetanka", "keshapticya"].filter((u) => u !== user && fs.existsSync(guestFile(u)))) {
+        const o = JSON.parse(fs.readFileSync(guestFile(other), "utf8"));
+        assert(o.events.filter((e) => e.type === "skip").length <= 1, `пропуск ${user} попал в прогресс ${other}`);
+      }
+      await ctx3.close();
+    });
+  }
 
   for (const [w, h] of [[390, 844], [360, 740]]) {
     await check(`Ширина ${w} px: нет горизонтальной прокрутки (главный экран, задача, квиз, карта)`, async () => {
       const m = await browser.newPage({ viewport: { width: w, height: h } });
-      for (const route of ["#/", "#/step/w01-mon-02", "#/step/w01-mon-07", "#/map", "#/review", "#/block/w01-b3"]) {
+      for (const route of ["#/", "#/step/w01-mon-02", "#/step/w01-mon-07", "#/step/w01-mon-10", "#/map", "#/review", "#/tutor", "#/block/w01-b3"]) {
         await m.goto(`${BASE}/?today=2026-10-26${route}`);
         await m.waitForSelector("header.top");
         await m.waitForTimeout(300);

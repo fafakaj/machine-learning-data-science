@@ -8,7 +8,7 @@ import { gistLoad, gistSave, session } from "./auth.js";
 const LS_KEY = "path-progress-backup";
 const SAVE_DELAY = 800;
 
-export const data = { plan: null, problems: {}, quizzes: {}, exercises: {} };
+export const data = { plan: null, problems: {}, quizzes: {}, exercises: {}, anki: { cards: [] } };
 export let progress = emptyProgress();
 
 const stepIndex = new Map(); // id -> {step, block, week, order}
@@ -38,16 +38,18 @@ async function getJSON(url) {
 }
 
 export async function loadData() {
-  const [plan, problems, quizzes, exercises] = await Promise.all([
+  const [plan, problems, quizzes, exercises, anki] = await Promise.all([
     getJSON("data/plan.json"),
     getJSON("data/problems.json"),
     getJSON("data/quizzes.json"),
     getJSON("data/exercises.json"),
+    getJSON("data/anki.json"),
   ]);
   data.plan = plan;
   for (const p of problems.problems) data.problems[p.id] = p;
   data.quizzes = quizzes;
   data.exercises = exercises;
+  data.anki = anki;
 
   const byId = new Map();
   for (const week of plan.weeks) for (const day of week.days) for (const step of day.steps) byId.set(step.id, { step, day });
