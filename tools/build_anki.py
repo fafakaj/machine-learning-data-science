@@ -2,7 +2,8 @@
 
 Source: tools/content/anki_w1.py ... anki_w4.py; anki/make_month1_deck.py turns this json into an .apkg.
 Each card has the plan date of its theory: the site brings it in only once the student reaches that day.
-A card id is a hash of its front, so an edit of the back keeps the card's review history.
+A card id is a hash of its front, so an edit of the back keeps the card's review history
+(an edit of the front keeps it with KEEP("<old id>"), see content/anki_common.py).
 Cloze cards become a front with a gap and a back with the gap filled in.
 "Output" cards are run here: the back shows what the code really prints (numpy and pandas are the
 versions the site runs in Pyodide, see build_all.sh).
@@ -36,12 +37,12 @@ def run(code):
     return r.stdout.rstrip("\n")
 
 
-def card(day, deck, kind, front, back):
+def card(day, deck, kind, front, back, keep=None):
     base = {"day": day, "deck": short_deck(deck), "deck_full": deck}
     if kind == "output":
         front = "Что выведет код?" + pre(code := front)
         back = pre(run(code)) + (f" {back}" if back else "")
-    cid = hashlib.sha1(front.encode()).hexdigest()[:10]
+    cid = keep or hashlib.sha1(front.encode()).hexdigest()[:10]
     if kind == "cloze":
         gap = lambda m: f'<span class="cloze">[{m.group(2) or "…"}]</span>'  # noqa: E731
         fill = lambda m: f'<span class="cloze on">{m.group(1)}</span>'  # noqa: E731

@@ -87,7 +87,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "B2. Что выведет код? Почему?<pre><code>a = [[0] * 3] * 3\na[0][0] = 1\nprint(a)</code></pre>",
+   "front": "Что выведет код? Почему?<pre><code>a = [[0] * 3] * 3\na[0][0] = 1\nprint(a)</code></pre>",
    "back": "<code>[[1, 0, 0], [1, 0, 0], [1, 0, 0]]</code>. <code>* 3</code> копирует ссылку на один и тот же внутренний список."
   },
   {
@@ -142,7 +142,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "B1. Что выведет код? Почему?<pre><code>def add(x, items=[]):\n    items.append(x)\n    return items\n\nprint(add(1))\nprint(add(2))</code></pre>",
+   "front": "Что выведет код? Почему?<pre><code>def add(x, items=[]):\n    items.append(x)\n    return items\n\nprint(add(1))\nprint(add(2))</code></pre>",
    "back": "<code>[1]</code>, затем <code>[1, 2]</code>. Значение по умолчанию создаётся один раз при <code>def</code>. Список общий для всех вызовов."
   },
   {
@@ -178,7 +178,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "Для <code>add</code> из B1: что выведет <code>print(add(1), add(2))</code> в одной строке?",
+   "front": "Дана функция:<pre><code>def add(x, items=[]):\n    items.append(x)\n    return items</code></pre>Что выведет <code>print(add(1), add(2))</code> в одной строке?",
    "back": "<code>[1, 2] [1, 2]</code>: оба вызова вернули один список, а <code>print</code> видит его после второго вызова."
   },
   {
@@ -187,7 +187,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "Какое правило ruff находит изменяемый default (B1)?",
+   "front": "Какое правило ruff находит изменяемое значение по умолчанию, например <code>def f(x=[])</code>?",
    "back": "<code>B006</code> — mutable-argument-default."
   },
   {
@@ -277,7 +277,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "B3. Что выведет код? Почему?<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>",
+   "front": "Что выведет код? Почему?<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>",
    "back": "<code>[2, 2, 2]</code>. Лямбда читает <code>i</code> в момент вызова. К этому моменту цикл закончился и <code>i == 2</code>."
   },
   {
@@ -295,7 +295,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "Назовите два исправления B3.",
+   "front": "Код печатает <code>[2, 2, 2]</code>, а нужно <code>[0, 1, 2]</code>:<pre><code>funcs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])</code></pre>Назовите два исправления.",
    "back": "<code>lambda i=i: i</code> и <code>functools.partial</code>."
   },
   {
@@ -304,7 +304,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "Почему <code>lambda i=i: i</code> исправляет B3?",
+   "front": "Почему <code>[lambda i=i: i for i in range(3)]</code> даёт функции, которые возвращают 0, 1, 2, а <code>[lambda: i for i in range(3)]</code> — функции, которые все возвращают 2?",
    "back": "Значение по умолчанию вычисляется при создании лямбды. Оно «замораживает» текущее i."
   },
   {
@@ -313,7 +313,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "Какое правило ruff находит B3?",
+   "front": "Какое правило ruff находит <code>lambda</code> в цикле, которая читает переменную цикла (позднее связывание)?",
    "back": "<code>B023</code> — function-uses-loop-variable."
   },
   {
@@ -367,7 +367,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "B4. Почему <code>tuple</code> может быть ключом <code>dict</code>, а <code>list</code> — нет?",
+   "front": "Почему <code>tuple</code> может быть ключом <code>dict</code>, а <code>list</code> — нет?",
    "back": "<code>tuple</code> из hashable-элементов hashable: хэш не меняется. <code>list</code> изменяемый и не hashable."
   },
   {
@@ -394,7 +394,7 @@
    "deck": "1 Python",
    "deck_full": "ML::1 Python",
    "kind": "basic",
-   "front": "B4. Сложность поиска по ключу в <code>dict</code>?",
+   "front": "Сложность поиска по ключу в <code>dict</code>?",
    "back": "O(1) в среднем. O(n) в худшем случае — при коллизиях хэшей."
   },
   {
@@ -577,7 +577,7 @@
    "deck": "2 Математика",
    "deck_full": "ML::2 Математика",
    "kind": "basic",
-   "front": "D1. Найдите ∇f для f(x, y) = x²y + 3y.",
+   "front": "Найдите ∇f для f(x, y) = x²y + 3y.",
    "back": "∇f = (2xy, x² + 3)."
   },
   {
@@ -966,7 +966,7 @@
    "deck_full": "ML::4 Python: функции и ООП",
    "kind": "basic",
    "front": "Как задать список по умолчанию в поле dataclass?",
-   "back": "<code>items: list = field(default_factory=list)</code>. Просто <code>= []</code> даёт <code>ValueError</code>: защита от ловушки B1."
+   "back": "<code>items: list = field(default_factory=list)</code>. Просто <code>= []</code> даёт <code>ValueError</code>: защита от ловушки «изменяемое значение по умолчанию» (как в <code>def f(x=[])</code>)."
   },
   {
    "id": "696a21e0a2",

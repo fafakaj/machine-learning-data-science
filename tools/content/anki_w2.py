@@ -143,7 +143,7 @@ print(D().hi())""",
     (PY, "basic", f"Что создаёт {c('@dataclass')}?",
      f"{c('__init__')}, {c('__repr__')} и {c('__eq__')} по полям. {c('order=True')} добавляет сравнение, {c('frozen=True')} делает объект неизменяемым и хэшируемым."),
     (PY, "basic", "Как задать список по умолчанию в поле dataclass?",
-     f"{c('items: list = field(default_factory=list)')}. Просто {c('= []')} даёт {c('ValueError')}: защита от ловушки B1."),
+     f"{c('items: list = field(default_factory=list)')}. Просто {c('= []')} даёт {c('ValueError')}: защита от ловушки «изменяемое значение по умолчанию» (как в {c('def f(x=[])')})."),
     (PY, "output", """from dataclasses import dataclass
 
 @dataclass

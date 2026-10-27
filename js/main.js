@@ -17,6 +17,7 @@ const CODE_TYPES = ["leetcode", "review", "exercise"];
 const PANEL_KEY = "ml-panel";
 const phone = () => matchMedia("(max-width: 820px)").matches;
 const app = document.getElementById("app");
+const TITLE = document.title;
 let cleanup = null;
 
 // ---------------------------------------------------------------- side panel prefs
@@ -162,6 +163,7 @@ function nextBanner(step) {
 function render() {
   cleanup?.();
   cleanup = null;
+  document.title = TITLE;
   const hash = location.hash || "#/";
   const [, route, arg] = hash.match(/^#\/(\w*)\/?(.*)$/) || [];
 
@@ -169,6 +171,7 @@ function render() {
   if (route === "map") return renderMap();
   if (route === "review") return renderReviewPage();
   if (route === "tutor") return renderTutor();
+  if (route === "read") return renderRead(arg);
 
   let step = null;
   if (route === "step") step = getStep(arg)?.step || null;
@@ -276,6 +279,36 @@ function renderTutor() {
   app.innerHTML = `${header()}<main class="tutor-page"><div data-body></div></main>`;
   bindChrome();
   cleanup = renderTutorPage(app.querySelector("[data-body]"));
+}
+
+/** A Russian translation (or retelling) of an English source: data/articles/<slug>.md with front matter. */
+async function renderRead(slug) {
+  app.innerHTML = `${header()}<main class="read-page"><article class="card article" data-body><p class="muted"><span class="spinner"></span>Загружаю статью…</p></article></main>`;
+  bindChrome();
+  window.scrollTo(0, 0);
+  const body = app.querySelector("[data-body]");
+  let text = "";
+  try {
+    if (!/^[\w-]+$/.test(slug)) throw new Error("неверный адрес статьи");
+    const r = await fetch(`data/articles/${slug}.md`);
+    if (!r.ok) throw new Error(`статья не найдена (${r.status})`);
+    text = await r.text();
+  } catch (err) {
+    if (body.isConnected) body.innerHTML = `<h1>Не удалось открыть статью</h1><p class="bad">${esc(err.message)}</p>`;
+    return;
+  }
+  if (!body.isConnected) return;
+  const [, head = "", rest = text] = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/) || [];
+  const fm = Object.fromEntries([...head.matchAll(/^(\w+): (.*)$/gm)].map((m) => [m[1], m[2]]));
+  document.title = `${fm.title || slug} · ML-дорожка`;
+  const what = fm.kind === "пересказ" ? "Пересказ на русском" : "Перевод на русский";
+  body.innerHTML = `<header class="article-head">
+      <span class="tag">${esc(fm.kind || "перевод")}</span>
+      <h1>${esc(fm.title || slug)}</h1>
+      <p class="muted small">${what}. Источник: ${esc(fm.source || "")}.${fm.license ? ` ${esc(fm.license)}` : ""}</p>
+      ${fm.original ? `<a class="btn" href="${esc(fm.original)}" target="_blank" rel="noopener">Оригинал (англ.) ${icon("external")}</a>` : ""}
+    </header>
+    <div class="md article-body">${md(rest, { article: true })}</div>`;
 }
 
 function renderFinished() {

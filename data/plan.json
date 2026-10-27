@@ -6,7 +6,7 @@
    "n": 1,
    "title": "Python: модель данных. Производные",
    "short": "Python, производные",
-   "goal": "- Ловушки B1–B4 и задача D1 — ответ без подсказок.\n- 4 задачи LeetCode: #217, #242, #1, #121.\n- Тесты на ловушки B1–B3 (на сайте) и квиз по uv, ruff, pytest, CI.",
+   "goal": "- Ловушки Python (общий список по умолчанию, `[[0] * 3] * 3`, `lambda` в цикле, hashable-ключи `dict`) и градиент f(x, y) = x²y + 3y — ответ без подсказок.\n- 4 задачи LeetCode: #217 «Есть ли повтор», #242 «Анаграмма», #1 «Сумма двух», #121 «Купить и продать акцию».\n- Тесты на три ловушки (на сайте) и квиз по uv, ruff, pytest, CI.",
    "blocks": [
     {
      "id": "w01-b1",
@@ -87,7 +87,7 @@
     {
      "date": "2026-10-26",
      "weekday": "mon",
-     "title": "Python I: имена, копии, B1, B2",
+     "title": "Python I: имена, копии, изменяемые значения по умолчанию",
      "hours": 2.5,
      "kind": "study",
      "intro": "Порядок дня: LeetCode → теория → проверка → Anki. Anki — после теории: сначала поймите, потом запоминайте.",
@@ -187,7 +187,7 @@
        "topic": "w1-python-list-of-lists",
        "do": "Запустите `a = [[0]*3]*3; a[0][0] = 1` в Python Tutor и посмотрите на стрелки.",
        "goals": [
-        "объяснить ловушку B2"
+        "объяснить, почему `[[0] * 3] * 3` даёт три ссылки на одну строку"
        ],
        "id": "w01-mon-04",
        "source": {
@@ -211,7 +211,7 @@
         }
        ],
        "minutes": 4,
-       "title": "Ловушка B2: список списков [[0]*n]*m"
+       "title": "Ловушка: список списков [[0]*n]*m"
       },
       {
        "type": "theory",
@@ -231,10 +231,12 @@
        },
        "alt": [
         {
-         "title": "Python docs: copy — Shallow and deep copy operations",
-         "url": "https://docs.python.org/3/library/copy.html",
+         "title": "copy — поверхностное и глубокое копирование",
+         "url": "#/read/python-copy",
          "section": "Вся страница",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://docs.python.org/3/library/copy.html",
          "minutes": 5,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -248,7 +250,7 @@
        "topic": "w1-python-default-args",
        "do": "Запишите своими словами 3 фразы: «имя — это…», «`*` для списка…», «default вычисляется…».",
        "goals": [
-        "объяснить ловушку B1 и исправить её через `None`"
+        "объяснить, почему `def add(x, items=[])` делит один список между вызовами, и исправить через `None`"
        ],
        "id": "w01-mon-06",
        "source": {
@@ -272,13 +274,13 @@
         }
        ],
        "minutes": 5,
-       "title": "Ловушка B1: изменяемые аргументы по умолчанию"
+       "title": "Ловушка: изменяемые аргументы по умолчанию"
       },
       {
        "type": "quiz",
        "quiz": "q-w1-names",
        "id": "w01-mon-07",
-       "title": "Имена, ссылки, изменяемость, копии, B1, B2",
+       "title": "Имена, ссылки, изменяемость, копии, изменяемое значение по умолчанию",
        "minutes": 24
       },
       {
@@ -286,14 +288,14 @@
        "exercise": "ex-w1-b1",
        "minutes": 10,
        "id": "w01-mon-08",
-       "title": "B1: исправьте значение по умолчанию"
+       "title": "Исправьте изменяемое значение по умолчанию"
       },
       {
        "type": "exercise",
        "exercise": "ex-w1-b2",
        "minutes": 10,
        "id": "w01-mon-09",
-       "title": "B2: матрица без общих строк"
+       "title": "Матрица без общих строк"
       },
       {
        "type": "anki",
@@ -308,7 +310,7 @@
     {
      "date": "2026-10-27",
      "weekday": "tue",
-     "title": "Python II: области видимости, B3, аргументы, B4",
+     "title": "Python II: области видимости, позднее связывание, аргументы, hashable",
      "hours": 2.5,
      "kind": "study",
      "intro": null,
@@ -443,33 +445,37 @@
       {
        "type": "theory",
        "topic": "w1-python-late-binding",
-       "do": "Запустите B3 в Python Tutor.",
+       "do": "Запустите в Python Tutor `funcs = [lambda: i for i in range(3)]; print([f() for f in funcs])`.",
        "goals": [
-        "объяснить ловушку B3 и исправить её"
+        "объяснить, почему код печатает `[2, 2, 2]`, и исправить его"
        ],
        "id": "w01-tue-05",
        "source": {
-        "title": "Python FAQ: Why do lambdas defined in a loop with different values all return the same result?",
-        "url": "https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
-        "section": "Этот вопрос FAQ",
-        "lang": "en",
+        "title": "Почему lambda, созданные в цикле, возвращают один и тот же результат?",
+        "url": "#/read/python-faq-lambda-loop",
+        "section": "Вопрос FAQ целиком",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
         "minutes": 4,
         "type": "docs",
         "verified": "200 2026-10-25"
        },
        "alt": [
         {
-         "title": "The Hitchhiker’s Guide to Python: Late Binding Closures",
-         "url": "https://docs.python-guide.org/writing/gotchas/#late-binding-closures",
+         "title": "Замыкания с поздним связыванием",
+         "url": "#/read/hitchhiker-late-binding",
          "section": "Раздел «Late Binding Closures»",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://docs.python-guide.org/writing/gotchas/#late-binding-closures",
          "minutes": 5,
          "type": "article",
          "verified": "200 2026-10-25"
         }
        ],
        "minutes": 4,
-       "title": "Ловушка B3: позднее связывание lambda в цикле"
+       "title": "Ловушка: позднее связывание lambda в цикле"
       },
       {
        "type": "theory",
@@ -505,7 +511,7 @@
        "type": "theory",
        "topic": "w1-python-hashable",
        "goals": [
-        "объяснить, почему ключ `dict` должен быть hashable (B4)"
+        "объяснить, почему ключ `dict` должен быть hashable"
        ],
        "id": "w01-tue-07",
        "source": {
@@ -529,12 +535,12 @@
         }
        ],
        "minutes": 2,
-       "title": "Хэшируемость (B4)"
+       "title": "Хэшируемость"
       },
       {
        "type": "theory",
        "topic": "w1-python-complexity",
-       "do": "Запишите полный ответ на B4 своими словами.",
+       "do": "Запишите своими словами: почему ключом `dict` может быть `tuple`, но не `list`, и какая сложность поиска по ключу.",
        "goals": [
         "назвать сложность `in` для list, set, dict"
        ],
@@ -550,6 +556,17 @@
        },
        "alt": [
         {
+         "title": "Временная сложность операций в CPython",
+         "url": "#/read/python-time-complexity",
+         "section": "Таблицы list, collections.deque, set, dict",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://web.archive.org/web/20241231101827/https://wiki.python.org/moin/TimeComplexity",
+         "minutes": 6,
+         "type": "docs",
+         "verified": "200 2026-10-25"
+        },
+        {
          "title": "Хендбук Яндекса «Основы алгоритмов», 2.3. Словарь",
          "url": "https://contest.yandex.ru/tracks/algorithms/fundamental-data-structures/dictionary",
          "section": "Вся глава",
@@ -557,25 +574,16 @@
          "minutes": 3,
          "type": "article",
          "verified": "200 2026-10-25"
-        },
-        {
-         "title": "Python Wiki: TimeComplexity (архивная копия)",
-         "url": "https://web.archive.org/web/20241231101827/https://wiki.python.org/moin/TimeComplexity",
-         "section": "Таблицы list, collections.deque, set, dict",
-         "lang": "en",
-         "minutes": 6,
-         "type": "docs",
-         "verified": "200 2026-10-25"
         }
        ],
        "minutes": 8,
-       "title": "Сложность операций list / dict / set (B4)"
+       "title": "Сложность операций list / dict / set"
       },
       {
        "type": "quiz",
        "quiz": "q-w1-scopes",
        "id": "w01-tue-09",
-       "title": "Области видимости, замыкания, B3, аргументы, хэшируемость, B4",
+       "title": "Области видимости, замыкания, позднее связывание, аргументы, хэшируемость",
        "minutes": 22
       },
       {
@@ -583,7 +591,7 @@
        "exercise": "ex-w1-b3",
        "minutes": 10,
        "id": "w01-tue-10",
-       "title": "B3: фабрика множителей"
+       "title": "Фабрика множителей (позднее связывание)"
       },
       {
        "type": "exercise",
@@ -597,7 +605,7 @@
        "exercise": "ex-w1-freeze",
        "minutes": 10,
        "id": "w01-tue-12",
-       "title": "B4: сделать значение hashable"
+       "title": "Сделать значение hashable"
       },
       {
        "type": "anki",
@@ -635,7 +643,7 @@
        }
       },
       {
-       "text": "5-я задача недели #383 Ransom Note — в списке шагов."
+       "text": "5-я задача недели #383 «Записка из журнала» — в списке шагов."
       }
      ],
      "steps": [
@@ -928,7 +936,7 @@
        "type": "theory",
        "topic": "w1-math-partial-gradient",
        "goals": [
-        "посчитать градиент функции двух переменных (D1)"
+        "посчитать градиент функции двух переменных"
        ],
        "id": "w01-fri-05",
        "source": {
@@ -942,7 +950,7 @@
        },
        "alt": [],
        "minutes": 18,
-       "title": "Частная производная и градиент (D1)"
+       "title": "Частная производная и градиент"
       },
       {
        "type": "quiz",
@@ -967,7 +975,7 @@
      "title": "Практика: инструменты и тесты на ловушки",
      "hours": 5,
      "kind": "study",
-     "intro": "Вся практика — на сайте. Прочитайте про инструменты, ответьте на квиз и напишите тесты на ловушки B1–B3. Сайт проверит, что ваши тесты ловят ошибки.",
+     "intro": "Вся практика — на сайте. Прочитайте про инструменты, ответьте на квиз и напишите тесты на три ловушки: общий список по умолчанию, общие строки матрицы, `lambda` в цикле. Сайт проверит, что ваши тесты ловят ошибки.",
      "optional": [],
      "steps": [
       {
@@ -978,10 +986,12 @@
        ],
        "id": "w01-sat-01",
        "source": {
-        "title": "uv docs: Working on projects",
-        "url": "https://docs.astral.sh/uv/guides/projects/",
+        "title": "uv — работа с проектами",
+        "url": "#/read/uv-projects",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://docs.astral.sh/uv/guides/projects/",
         "minutes": 10,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -994,14 +1004,16 @@
        "type": "theory",
        "topic": "w1-tools-ruff",
        "goals": [
-        "знать правила B006 и B023 для ловушек B1 и B3"
+        "знать правила B006 (изменяемое значение по умолчанию) и B023 (`lambda` в цикле читает переменную цикла)"
        ],
        "id": "w01-sat-02",
        "source": {
-        "title": "Ruff docs: Tutorial",
-        "url": "https://docs.astral.sh/ruff/tutorial/",
+        "title": "Ruff — учебник",
+        "url": "#/read/ruff-tutorial",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://docs.astral.sh/ruff/tutorial/",
         "minutes": 10,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -1019,26 +1031,28 @@
        ],
        "id": "w01-sat-03",
        "source": {
-        "title": "Habr: «Что такое pytest и как его использовать?»",
-        "url": "https://habr.com/ru/articles/876570/",
-        "section": "Вся статья",
+        "title": "pytest — начало работы",
+        "url": "#/read/pytest-getting-started",
+        "section": "Вся страница",
         "lang": "ru",
-        "minutes": 4,
-        "type": "article",
+        "translated": "перевод",
+        "original": "https://docs.pytest.org/en/stable/getting-started.html",
+        "minutes": 10,
+        "type": "docs",
         "verified": "200 2026-10-25"
        },
        "alt": [
         {
-         "title": "pytest docs: Get Started",
-         "url": "https://docs.pytest.org/en/stable/getting-started.html",
-         "section": "Вся страница",
-         "lang": "en",
-         "minutes": 10,
-         "type": "docs",
+         "title": "Habr: «Что такое pytest и как его использовать?»",
+         "url": "https://habr.com/ru/articles/876570/",
+         "section": "Вся статья",
+         "lang": "ru",
+         "minutes": 4,
+         "type": "article",
          "verified": "200 2026-10-25"
         }
        ],
-       "minutes": 4,
+       "minutes": 10,
        "title": "pytest: первые тесты"
       },
       {
@@ -1090,7 +1104,7 @@
        "exercise": "ex-w1-tests",
        "minutes": 45,
        "id": "w01-sat-07",
-       "title": "Пишем тесты на ловушки B1–B3 (как в pytest)"
+       "title": "Пишем тесты на три ловушки Python (как в pytest)"
       }
      ]
     },
@@ -1106,9 +1120,9 @@
       {
        "type": "quiz",
        "quiz": "q-w1-sunday",
-       "why": "Это проверка недели из плана: B1–B4 и D1 без подсказок. Цель — все ответы верны.",
+       "why": "Это проверка недели: ловушки Python, градиент и градиентный спуск без подсказок. Цель — все ответы верны.",
        "id": "w01-sun-01",
-       "title": "Самопроверка недели: B1–B4, D1 и задачи 13–17",
+       "title": "Самопроверка недели 1: ловушки Python, градиент, градиентный спуск",
        "minutes": 24
       },
       {
@@ -1124,15 +1138,15 @@
        "minutes": 30,
        "items": [
         {
-         "text": "B1: почему список по умолчанию общий для всех вызовов?",
+         "text": "`def add(x, items=[])`: почему список по умолчанию общий для всех вызовов?",
          "write": true
         },
         {
-         "text": "B2: почему `[[0] * 3] * 3` даёт три одинаковые строки?",
+         "text": "Почему `[[0] * 3] * 3` даёт три одинаковые строки?",
          "write": true
         },
         {
-         "text": "B3: почему все lambda из цикла видят последнее значение?",
+         "text": "`[lambda: i for i in range(3)]`: почему все lambda из цикла видят последнее значение?",
          "write": true
         }
        ],
@@ -1141,7 +1155,7 @@
       {
        "type": "oral",
        "quiz": "q-w1-oral",
-       "why": "Отвечайте **вслух**, потом сверьте с образцом. Можно попросить Claude: «задай мне 5 вопросов по B1–B4 и D1».",
+       "why": "Отвечайте **вслух**, потом сверьте с образцом. Можно попросить Claude: «задай мне 5 вопросов по ловушкам Python (изменяемый default, список списков, lambda в цикле, hashable) и по градиенту».",
        "id": "w01-sun-04",
        "title": "Вопросы вслух (как на собеседовании)",
        "minutes": 16
@@ -1154,7 +1168,7 @@
    "n": 2,
    "title": "Python: функции и ООП. Линейная алгебра",
    "short": "ООП, линал",
-   "goal": "- Генераторы (B5), декораторы (B6), GIL (B7), dunder (B8) — объясняю без шпаргалки.\n- Декоратор с нуля без подсказок.\n- 3Blue1Brown «Essence of linear algebra», гл. 1–9.\n- 5 задач: #125, #167, #88, #283, #169.",
+   "goal": "- Генераторы, декораторы, GIL, dunder-методы — объясняю без шпаргалки.\n- Декоратор с нуля без подсказок.\n- 3Blue1Brown «Essence of linear algebra», гл. 1–9.\n- 5 задач: #125 «Палиндром», #167 «Сумма двух в отсортированном списке», #88 «Слить два отсортированных списка», #283 «Нули в конец», #169 «Элемент большинства».",
    "blocks": [
     {
      "id": "w02-b1",
@@ -1309,7 +1323,7 @@
        "type": "theory",
        "topic": "w2-python-iterators-generators",
        "goals": [
-        "объяснить, чем генератор отличается от списка (B5)"
+        "объяснить, чем генератор отличается от списка"
        ],
        "id": "w02-mon-04",
        "source": {
@@ -1342,13 +1356,13 @@
         }
        ],
        "minutes": 8,
-       "title": "Итераторы и генераторы (B5)"
+       "title": "Итераторы и генераторы"
       },
       {
        "type": "theory",
        "topic": "w2-python-decorators",
        "goals": [
-        "написать декоратор с `functools.wraps` (B6)"
+        "написать декоратор с `functools.wraps`"
        ],
        "id": "w02-mon-05",
        "source": {
@@ -1372,13 +1386,13 @@
         }
        ],
        "minutes": 11,
-       "title": "Декораторы (B6)"
+       "title": "Декораторы"
       },
       {
        "type": "quiz",
        "quiz": "q-w2-gen",
        "id": "w02-mon-06",
-       "title": "Итераторы и генераторы (B5)",
+       "title": "Итераторы и генераторы",
        "minutes": 16
       },
       {
@@ -1386,7 +1400,7 @@
        "exercise": "ex-w2-fib",
        "minutes": 15,
        "id": "w02-mon-07",
-       "title": "B5: бесконечный генератор Фибоначчи"
+       "title": "бесконечный генератор Фибоначчи"
       },
       {
        "type": "anki",
@@ -1505,7 +1519,7 @@
        "type": "quiz",
        "quiz": "q-w2-deco",
        "id": "w02-tue-05",
-       "title": "Декораторы (B6), контекстные менеджеры, исключения",
+       "title": "Декораторы, контекстные менеджеры, исключения",
        "minutes": 18
       },
       {
@@ -1513,7 +1527,7 @@
        "exercise": "ex-w2-timer",
        "minutes": 15,
        "id": "w02-tue-06",
-       "title": "B6: декоратор timer"
+       "title": "декоратор timer"
       },
       {
        "type": "exercise",
@@ -1662,7 +1676,7 @@
        "type": "theory",
        "topic": "w2-python-dunder",
        "goals": [
-        "сделать класс с `__repr__`, `__eq__`, `__add__`, `__len__` (B8)"
+        "сделать класс с `__repr__`, `__eq__`, `__add__`, `__len__`"
        ],
        "id": "w02-thu-05",
        "source": {
@@ -1686,7 +1700,7 @@
         }
        ],
        "minutes": 10,
-       "title": "Dunder-методы (B8)"
+       "title": "Dunder-методы"
       },
       {
        "type": "theory",
@@ -1719,14 +1733,14 @@
        "type": "quiz",
        "quiz": "q-w2-oop",
        "id": "w02-thu-07",
-       "title": "ООП: staticmethod, classmethod, MRO, super, dunder, dataclasses (B8)",
+       "title": "ООП: staticmethod, classmethod, MRO, super, dunder, dataclasses",
        "minutes": 14
       },
       {
        "type": "theory",
        "topic": "w2-python-gil-concurrency",
        "goals": [
-        "выбрать между `threading`, `multiprocessing` и `asyncio` (B7)"
+        "выбрать между `threading`, `multiprocessing` и `asyncio`"
        ],
        "id": "w02-thu-08",
        "source": {
@@ -1759,13 +1773,13 @@
         }
        ],
        "minutes": 9,
-       "title": "GIL, threading vs multiprocessing vs asyncio (B7)"
+       "title": "GIL, threading vs multiprocessing vs asyncio"
       },
       {
        "type": "quiz",
        "quiz": "q-w2-gil",
        "id": "w02-thu-09",
-       "title": "GIL: threading, multiprocessing, asyncio (B7)",
+       "title": "GIL: threading, multiprocessing, asyncio",
        "minutes": 10
       },
       {
@@ -1773,7 +1787,7 @@
        "exercise": "ex-w2-vector",
        "minutes": 20,
        "id": "w02-thu-10",
-       "title": "B8: класс Vector с dunder-методами"
+       "title": "класс Vector с dunder-методами"
       },
       {
        "type": "anki",
@@ -2270,9 +2284,9 @@
       {
        "type": "quiz",
        "quiz": "q-w2-bench",
-       "why": "Проверка недели: объясните замер потоков и процессов (B7).",
+       "why": "Проверка недели: объясните замер потоков и процессов.",
        "id": "w02-sun-03",
-       "title": "Замер: потоки и процессы (B7)",
+       "title": "Замер: потоки и процессы (GIL)",
        "minutes": 12
       }
      ]
@@ -2283,7 +2297,7 @@
    "n": 3,
    "title": "Теорвер, статистика, NumPy, pandas",
    "short": "Теорвер, NumPy",
-   "goal": "- D3 (Байес) и D5 (p-value) — решаю без подсказок.\n- NumPy: векторизация и broadcasting; pandas: groupby, merge, pivot.\n- Разобран свой хакатон: EDA своими руками и рассказ на 3 минуты.",
+   "goal": "- Задачи на формулу Байеса (тест на болезнь) и на p-value — решаю без подсказок.\n- NumPy: векторизация и broadcasting; pandas: groupby, merge, pivot.\n- Разобран свой хакатон: EDA своими руками и рассказ на 3 минуты.",
    "blocks": [
     {
      "id": "w03-b1",
@@ -2456,7 +2470,7 @@
        "type": "theory",
        "topic": "w3-math-conditional-bayes",
        "goals": [
-        "решить задачу на формулу Байеса (D3)"
+        "решить задачу на формулу Байеса"
        ],
        "id": "w03-mon-05",
        "source": {
@@ -2470,13 +2484,13 @@
        },
        "alt": [],
        "minutes": 12,
-       "title": "Условная вероятность и формула Байеса (D3)"
+       "title": "Условная вероятность и формула Байеса"
       },
       {
        "type": "theory",
        "topic": "w3-math-expectation-variance",
        "goals": [
-        "посчитать матожидание и дисперсию (D4)"
+        "посчитать матожидание и дисперсию"
        ],
        "id": "w03-mon-06",
        "source": {
@@ -2500,13 +2514,13 @@
         }
        ],
        "minutes": 10,
-       "title": "Матожидание и дисперсия (D4)"
+       "title": "Матожидание и дисперсия"
       },
       {
        "type": "quiz",
        "quiz": "q-w3-prob",
        "id": "w03-mon-07",
-       "title": "Вероятность, условная вероятность, Байес (D3), матожидание и дисперсия (D4)",
+       "title": "Вероятность, условная вероятность, Байес, матожидание и дисперсия",
        "minutes": 16
       },
       {
@@ -2514,7 +2528,7 @@
        "exercise": "ex-w3-bayes",
        "minutes": 15,
        "id": "w03-mon-08",
-       "title": "D3 в коде: апостериорная вероятность"
+       "title": "Формула Байеса в коде: апостериорная вероятность"
       },
       {
        "type": "anki",
@@ -2653,7 +2667,7 @@
        "type": "theory",
        "topic": "w3-math-hypotheses-pvalue",
        "goals": [
-        "объяснить p-value одной фразой без ошибки (D5)"
+        "объяснить p-value одной фразой без ошибки"
        ],
        "id": "w03-tue-06",
        "source": {
@@ -2677,13 +2691,13 @@
         }
        ],
        "minutes": 26,
-       "title": "Проверка гипотез и p-value (D5)"
+       "title": "Проверка гипотез и p-value"
       },
       {
        "type": "quiz",
        "quiz": "q-w3-stats",
        "id": "w03-tue-07",
-       "title": "Распределения, ЦПТ, гипотезы, p-value (D5)",
+       "title": "Распределения, ЦПТ, гипотезы, p-value",
        "minutes": 14
       },
       {
@@ -2816,10 +2830,12 @@
        },
        "alt": [
         {
-         "title": "rougier/numpy-100 (упражнения 1–40)",
-         "url": "https://github.com/rougier/numpy-100",
+         "title": "100 упражнений NumPy — упражнения 1–40",
+         "url": "#/read/numpy-100",
          "section": "Упражнения 1–40",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://github.com/rougier/numpy-100",
          "minutes": 60,
          "type": "course",
          "verified": "200 2026-10-25"
@@ -2836,10 +2852,12 @@
        ],
        "id": "w03-thu-05",
        "source": {
-        "title": "NumPy docs: Broadcasting",
-        "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+        "title": "Broadcasting в NumPy",
+        "url": "#/read/numpy-broadcasting",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
         "minutes": 12,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -2973,10 +2991,12 @@
          "verified": "200 2026-10-25"
         },
         {
-         "title": "pandas docs: Merge, join, concatenate and compare",
-         "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
+         "title": "pandas — объединение таблиц через merge",
+         "url": "#/read/pandas-merge",
          "section": "Раздел merge",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://pandas.pydata.org/docs/user_guide/merging.html",
          "minutes": 15,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -3007,10 +3027,12 @@
        "topic": "w3-tools-jupyter",
        "id": "w03-fri-06",
        "source": {
-        "title": "Project Jupyter docs: Get started",
-        "url": "https://docs.jupyter.org/en/latest/start/index.html",
+        "title": "Jupyter — с чего начать",
+        "url": "#/read/jupyter-start",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://docs.jupyter.org/en/latest/start/index.html",
         "minutes": 5,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -3100,13 +3122,13 @@
         }
        ],
        "minutes": 25,
-       "title": "Bash: grep, find, пайпы (G4)"
+       "title": "Bash: grep, find, пайпы"
       },
       {
        "type": "quiz",
        "quiz": "q-w3-bash",
        "id": "w03-sat-03",
-       "title": "Bash: grep, find, пайпы (G4)",
+       "title": "Bash: grep, find, пайпы",
        "minutes": 10
       },
       {
@@ -3313,7 +3335,7 @@
          "verified": "200 2026-10-25"
         }
        ],
-       "title": "Паттерн «скользящее окно» (Longest Substring, C2)"
+       "title": "Паттерн «скользящее окно» (#3 «Самая длинная подстрока без повторов»)"
       },
       {
        "type": "leetcode",
@@ -3371,7 +3393,7 @@
        "type": "theory",
        "topic": "w4-ml-train-val-test-overfitting",
        "goals": [
-        "объяснить, зачем нужна валидационная выборка (E2)"
+        "объяснить, зачем нужна валидационная выборка"
        ],
        "id": "w04-mon-05",
        "source": {
@@ -3395,7 +3417,7 @@
         }
        ],
        "minutes": 10,
-       "title": "Train/val/test и переобучение (E2)"
+       "title": "Train/val/test и переобучение"
       },
       {
        "type": "theory",
@@ -3525,7 +3547,7 @@
        "type": "theory",
        "topic": "w4-ml-regularization",
        "goals": [
-        "сравнить L1 и L2 (E6)"
+        "сравнить L1 и L2"
        ],
        "id": "w04-tue-05",
        "source": {
@@ -3549,13 +3571,13 @@
         }
        ],
        "minutes": 10,
-       "title": "Регуляризация L1/L2 (E6)"
+       "title": "Регуляризация L1/L2"
       },
       {
        "type": "quiz",
        "quiz": "q-w4-ml1",
        "id": "w04-tue-06",
-       "title": "Train/val/test, переобучение (E2), bias–variance, регуляризация (E6)",
+       "title": "Train/val/test, переобучение, bias–variance, регуляризация",
        "minutes": 14
       },
       {
@@ -3675,7 +3697,7 @@
        "type": "theory",
        "topic": "w4-ml-metrics",
        "goals": [
-        "выбрать метрику для несбалансированных классов (E3)"
+        "выбрать метрику для несбалансированных классов"
        ],
        "id": "w04-thu-04",
        "source": {
@@ -3689,7 +3711,7 @@
        },
        "alt": [],
        "minutes": 25,
-       "title": "Метрики классификации и регрессии (E3)"
+       "title": "Метрики классификации и регрессии"
       },
       {
        "type": "exercise",
@@ -3762,7 +3784,7 @@
        "type": "theory",
        "topic": "w4-ml-cross-validation",
        "goals": [
-        "объяснить StratifiedKFold (E4)"
+        "объяснить StratifiedKFold"
        ],
        "id": "w04-fri-03",
        "source": {
@@ -3776,23 +3798,25 @@
        },
        "alt": [
         {
-         "title": "scikit-learn: Cross-validation",
-         "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+         "title": "Кросс-валидация — K-fold и Stratified K-fold",
+         "url": "#/read/sklearn-cross-validation",
          "section": "Разделы 3.1.2.1 K-fold, Stratified k-fold",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://scikit-learn.org/stable/modules/cross_validation.html",
          "minutes": 15,
          "type": "docs",
          "verified": "200 2026-10-25"
         }
        ],
        "minutes": 15,
-       "title": "Кросс-валидация, StratifiedKFold (E4)"
+       "title": "Кросс-валидация, StratifiedKFold"
       },
       {
        "type": "theory",
        "topic": "w4-ml-leakage",
        "goals": [
-        "найти утечку в пайплайне (E7)"
+        "найти утечку в пайплайне"
        ],
        "id": "w04-fri-04",
        "source": {
@@ -3816,13 +3840,13 @@
         }
        ],
        "minutes": 8,
-       "title": "Утечка данных (E7)"
+       "title": "Утечка данных"
       },
       {
        "type": "theory",
        "topic": "w4-ml-knn-vs-kmeans",
        "goals": [
-        "отличить kNN от k-means (E8)"
+        "отличить kNN от k-means"
        ],
        "id": "w04-fri-05",
        "source": {
@@ -3846,13 +3870,13 @@
         }
        ],
        "minutes": 12,
-       "title": "kNN и k-means: разница (E8)"
+       "title": "kNN и k-means: разница"
       },
       {
        "type": "quiz",
        "quiz": "q-w4-ml2",
        "id": "w04-fri-06",
-       "title": "Метрики (E3), кросс-валидация (E4), утечки (E7), kNN и k-means (E8)",
+       "title": "Метрики, кросс-валидация, утечки, kNN и k-means",
        "minutes": 14
       },
       {
@@ -3913,10 +3937,12 @@
        },
        "alt": [
         {
-         "title": "SQLBolt: Interactive SQL lessons",
-         "url": "https://sqlbolt.com/",
+         "title": "SQLBolt — уроки 1–6 (SELECT, WHERE, ORDER BY, JOIN)",
+         "url": "#/read/sqlbolt-1-6",
          "section": "Уроки 1–6",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "пересказ",
+         "original": "https://sqlbolt.com/",
          "minutes": 60,
          "type": "course",
          "verified": "200 2026-10-25"
@@ -3929,7 +3955,7 @@
        "type": "quiz",
        "quiz": "q-w4-sql",
        "id": "w04-sat-03",
-       "title": "SQL: SELECT, WHERE, GROUP BY, HAVING, ORDER BY (G1)",
+       "title": "SQL: SELECT, WHERE, GROUP BY, HAVING, ORDER BY",
        "minutes": 12
       },
       {
@@ -4001,7 +4027,7 @@
        "quiz": "q-w4-checkpoint",
        "why": "Контрольная точка месяца 1. Цель — ≥ 70% верно с первой попытки.",
        "id": "w04-sun-02",
-       "title": "Контрольная точка 22.11: части B, D, E входного теста",
+       "title": "Контрольная точка 22.11: Python, математика, основы ML",
        "minutes": 18
       },
       {
@@ -4020,7 +4046,7 @@
    "n": 5,
    "title": "Деревья, ансамбли, бустинг. Старт Проекта №1",
    "short": "Бустинг, Kaggle",
-   "goal": "- Объясняю бэггинг и бустинг (E5), разницу CatBoost / LightGBM / XGBoost.\n- Проект №1: Kaggle Playground, EDA, бейзлайн, CatBoost, первая отправка.\n- SQL: 5 задач на JOIN, GROUP BY, HAVING.",
+   "goal": "- Объясняю бэггинг и бустинг, разницу CatBoost / LightGBM / XGBoost.\n- Проект №1: Kaggle Playground, EDA, бейзлайн, CatBoost, первая отправка.\n- SQL: 5 задач на JOIN, GROUP BY, HAVING.",
    "blocks": [
     {
      "id": "w05-b1",
@@ -4266,7 +4292,7 @@
        "type": "theory",
        "topic": "w5-ml-bagging-vs-boosting",
        "goals": [
-        "объяснить разницу бэггинга и бустинга (E5)"
+        "объяснить разницу бэггинга и бустинга"
        ],
        "id": "w05-tue-05",
        "source": {
@@ -4280,7 +4306,7 @@
        },
        "alt": [],
        "minutes": 5,
-       "title": "Бэггинг против бустинга (E5)"
+       "title": "Бэггинг против бустинга"
       },
       {
        "type": "anki",
@@ -5239,10 +5265,12 @@
        "topic": "w6-tools-mlflow",
        "id": "w06-sat-03",
        "source": {
-        "title": "MLflow docs: Tracking",
-        "url": "https://mlflow.org/docs/latest/ml/tracking/",
+        "title": "MLflow Tracking — учёт экспериментов",
+        "url": "#/read/mlflow-tracking",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://mlflow.org/docs/latest/ml/tracking/",
         "minutes": 15,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -5598,7 +5626,7 @@
        "type": "theory",
        "topic": "w7-docker-image-container",
        "goals": [
-        "объяснить разницу образа и контейнера (G3)"
+        "объяснить разницу образа и контейнера"
        ],
        "id": "w07-thu-03",
        "source": {
@@ -5622,7 +5650,7 @@
         }
        ],
        "minutes": 20,
-       "title": "Docker: образ и контейнер (G3)"
+       "title": "Docker: образ и контейнер"
       },
       {
        "type": "theory",
@@ -5715,7 +5743,7 @@
        "type": "theory",
        "topic": "w7-git-rebase-reset",
        "goals": [
-        "объяснить `rebase` и три режима `reset` (G2)"
+        "объяснить `rebase` и три режима `reset`"
        ],
        "id": "w07-fri-04",
        "source": {
@@ -5739,7 +5767,7 @@
         }
        ],
        "minutes": 20,
-       "title": "git rebase и git reset (G2)"
+       "title": "git rebase и git reset"
       },
       {
        "type": "anki",
@@ -6140,7 +6168,7 @@
        "type": "theory",
        "topic": "w8-dl-backprop",
        "goals": [
-        "посчитать backprop для двух нейронов вручную (F1)"
+        "посчитать backprop для двух нейронов вручную"
        ],
        "id": "w08-tue-04",
        "source": {
@@ -6173,7 +6201,7 @@
         }
        ],
        "minutes": 20,
-       "title": "Обратное распространение ошибки (F1)"
+       "title": "Обратное распространение ошибки"
       },
       {
        "type": "theory",
@@ -6188,17 +6216,7 @@
         "type": "video",
         "verified": "200 2026-10-25"
        },
-       "alt": [
-        {
-         "title": "Andrej Karpathy: The spelled-out intro to neural networks and backpropagation: building micrograd",
-         "url": "https://www.youtube.com/watch?v=VMj-3S1tku0",
-         "section": "Всё видео",
-         "lang": "en",
-         "minutes": 145,
-         "type": "video",
-         "verified": "200 2026-10-25"
-        }
-       ],
+       "alt": [],
        "minutes": 146,
        "title": "Karpathy Zero to Hero 1: micrograd"
       },
@@ -6276,21 +6294,23 @@
        "type": "theory",
        "topic": "w8-pytorch-training-loop",
        "goals": [
-        "объяснить `zero_grad`, `backward`, `step` (F2)"
+        "объяснить `zero_grad`, `backward`, `step`"
        ],
        "id": "w08-thu-03",
        "source": {
-        "title": "PyTorch Tutorials: Optimizing Model Parameters",
-        "url": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+        "title": "PyTorch — оптимизация параметров модели",
+        "url": "#/read/pytorch-optimization-loop",
         "section": "Раздел «Optimization Loop»",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
         "minutes": 15,
         "type": "docs",
         "verified": "200 2026-10-25"
        },
        "alt": [],
        "minutes": 15,
-       "title": "PyTorch: backward, step, zero_grad (F2)"
+       "title": "PyTorch: backward, step, zero_grad"
       },
       {
        "type": "theory",
@@ -6508,17 +6528,7 @@
         "type": "video",
         "verified": "200 2026-10-25"
        },
-       "alt": [
-        {
-         "title": "Andrej Karpathy: The spelled-out intro to language modeling: building makemore",
-         "url": "https://www.youtube.com/watch?v=PaCmpygFfXo",
-         "section": "Всё видео",
-         "lang": "en",
-         "minutes": 118,
-         "type": "video",
-         "verified": "200 2026-10-25"
-        }
-       ],
+       "alt": [],
        "minutes": 118,
        "title": "Karpathy Zero to Hero 2: makemore"
       },
@@ -7057,7 +7067,7 @@
        "type": "theory",
        "topic": "w9-bpe-tokenization",
        "goals": [
-        "объяснить шаг слияния BPE (F4)"
+        "объяснить шаг слияния BPE"
        ],
        "id": "w09-fri-03",
        "source": {
@@ -7090,7 +7100,7 @@
         }
        ],
        "minutes": 20,
-       "title": "Токенизация BPE (F4)"
+       "title": "Токенизация BPE"
       },
       {
        "type": "anki",
@@ -7132,10 +7142,12 @@
        "topic": "w9-tools-timm",
        "id": "w09-sat-02",
        "source": {
-        "title": "Hugging Face docs: timm Quickstart",
-        "url": "https://huggingface.co/docs/timm/quickstart",
+        "title": "timm — быстрый старт",
+        "url": "#/read/timm-quickstart",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://huggingface.co/docs/timm/quickstart",
         "minutes": 10,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -7327,7 +7339,7 @@
        "type": "theory",
        "topic": "w10-attention",
        "goals": [
-        "написать softmax(QKᵀ/√d)·V (F3)"
+        "написать softmax(QKᵀ/√d)·V"
        ],
        "id": "w10-mon-03",
        "source": {
@@ -7360,7 +7372,7 @@
         }
        ],
        "minutes": 10,
-       "title": "Механизм внимания: Q, K, V, softmax (F3)"
+       "title": "Механизм внимания: Q, K, V, softmax"
       },
       {
        "type": "anki",
@@ -7692,10 +7704,12 @@
        },
        "alt": [
         {
-         "title": "Hugging Face blog: How to generate text",
-         "url": "https://huggingface.co/blog/how-to-generate",
+         "title": "Как языковая модель выбирает следующее слово — сэмплирование, temperature, top-k, top-p",
+         "url": "#/read/hf-how-to-generate",
          "section": "Разделы Sampling, Top-K, Top-p",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "пересказ",
+         "original": "https://huggingface.co/blog/how-to-generate",
          "minutes": 20,
          "type": "article",
          "verified": "200 2026-10-25"
@@ -8086,7 +8100,7 @@
        "type": "theory",
        "topic": "w11-lora-qlora",
        "goals": [
-        "посчитать число параметров LoRA (F5)"
+        "посчитать число параметров LoRA"
        ],
        "id": "w11-tue-03",
        "source": {
@@ -8109,17 +8123,19 @@
          "verified": "200 2026-10-25"
         },
         {
-         "title": "Hu et al.: LoRA (arXiv 2106.09685)",
-         "url": "https://arxiv.org/abs/2106.09685",
-         "section": "Abstract, раздел 4",
-         "lang": "en",
+         "title": "LoRA — низкоранговая адаптация больших языковых моделей",
+         "url": "#/read/lora-paper",
+         "section": "Аннотация и раздел 4 «Метод»",
+         "lang": "ru",
+         "translated": "пересказ",
+         "original": "https://arxiv.org/abs/2106.09685",
          "minutes": 20,
          "type": "article",
          "verified": "200 2026-10-25"
         }
        ],
        "minutes": 8,
-       "title": "LoRA и QLoRA (F5)"
+       "title": "LoRA и QLoRA"
       },
       {
        "type": "anki",
@@ -8193,20 +8209,24 @@
        "topic": "w11-training-memory",
        "id": "w11-thu-03",
        "source": {
-        "title": "Hugging Face docs: Model training anatomy",
-        "url": "https://huggingface.co/docs/transformers/model_memory_anatomy",
-        "section": "Раздел «Anatomy of Model's Memory»",
-        "lang": "en",
+        "title": "Память GPU при обучении",
+        "url": "#/read/hf-gpu-memory",
+        "section": "Вся страница",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://huggingface.co/docs/transformers/model_memory_anatomy",
         "minutes": 15,
         "type": "docs",
         "verified": "200 2026-10-25"
        },
        "alt": [
         {
-         "title": "Hugging Face docs: Gradient checkpointing",
-         "url": "https://huggingface.co/docs/transformers/grad_checkpointing",
+         "title": "Gradient checkpointing — экономия памяти на активациях",
+         "url": "#/read/hf-gradient-checkpointing",
          "section": "Вся страница",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://huggingface.co/docs/transformers/grad_checkpointing",
          "minutes": 8,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -8230,10 +8250,12 @@
        },
        "alt": [
         {
-         "title": "PyTorch 2.14 docs: Automatic Mixed Precision (torch.amp)",
-         "url": "https://docs.pytorch.org/docs/2.14/amp.html",
+         "title": "torch.amp — автоматическая смешанная точность",
+         "url": "#/read/torch-amp",
          "section": "Вся страница",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://docs.pytorch.org/docs/2.14/amp.html",
          "minutes": 10,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -8361,10 +8383,12 @@
          "verified": "200 2026-10-25"
         },
         {
-         "title": "vLLM docs",
-         "url": "https://docs.vllm.ai/en/latest/",
-         "section": "Главная страница, Quickstart",
-         "lang": "en",
+         "title": "vLLM — быстрый инференс и сервер для LLM",
+         "url": "#/read/vllm",
+         "section": "Главная страница и Quickstart",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://docs.vllm.ai/en/latest/",
          "minutes": 10,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -8565,7 +8589,7 @@
         }
        ],
        "minutes": 34,
-       "title": "RAG: общая схема (F6)"
+       "title": "RAG: общая схема"
       },
       {
        "type": "theory",
@@ -8859,10 +8883,12 @@
        },
        "alt": [
         {
-         "title": "Claude Docs: Tool use overview",
-         "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+         "title": "Вызов инструментов (tool use) в Claude",
+         "url": "#/read/claude-tool-use",
          "section": "Вся страница",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "пересказ",
+         "original": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
          "minutes": 15,
          "type": "docs",
          "verified": "200 2026-10-25"
@@ -8876,26 +8902,28 @@
        "topic": "w12-agents",
        "id": "w12-fri-04",
        "source": {
-        "title": "Habr: LLM-агенты",
-        "url": "https://habr.com/ru/articles/904880/",
+        "title": "Как строить эффективных агентов",
+        "url": "#/read/anthropic-agents",
         "section": "Вся статья",
         "lang": "ru",
-        "minutes": 15,
+        "translated": "пересказ",
+        "original": "https://www.anthropic.com/research/building-effective-agents",
+        "minutes": 25,
         "type": "article",
         "verified": "200 2026-10-25"
        },
        "alt": [
         {
-         "title": "Anthropic: Building effective agents",
-         "url": "https://www.anthropic.com/research/building-effective-agents",
+         "title": "Habr: LLM-агенты",
+         "url": "https://habr.com/ru/articles/904880/",
          "section": "Вся статья",
-         "lang": "en",
-         "minutes": 25,
+         "lang": "ru",
+         "minutes": 15,
          "type": "article",
          "verified": "200 2026-10-25"
         }
        ],
-       "minutes": 15,
+       "minutes": 25,
        "title": "Агенты"
       },
       {
@@ -8903,10 +8931,12 @@
        "topic": "w12-mcp",
        "id": "w12-fri-05",
        "source": {
-        "title": "Model Context Protocol: Introduction",
-        "url": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
+        "title": "Что такое MCP (Model Context Protocol)",
+        "url": "#/read/mcp-intro",
         "section": "Вся страница",
-        "lang": "en",
+        "lang": "ru",
+        "translated": "перевод",
+        "original": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
         "minutes": 10,
         "type": "docs",
         "verified": "200 2026-10-25"
@@ -8965,10 +8995,12 @@
        },
        "alt": [
         {
-         "title": "Ragas docs: Available metrics",
-         "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
+         "title": "Метрики Ragas — Faithfulness и Context Recall",
+         "url": "#/read/ragas-metrics",
          "section": "Faithfulness, Context Recall",
-         "lang": "en",
+         "lang": "ru",
+         "translated": "перевод",
+         "original": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
          "minutes": 15,
          "type": "docs",
          "verified": "200 2026-10-25"

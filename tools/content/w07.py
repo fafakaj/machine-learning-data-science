@@ -25,9 +25,9 @@ QUIZZES = {
         ],
     },
     "q-w7-docker": {
-        "title": "Docker и docker-compose (G3)",
+        "title": "Docker и docker-compose",
         "questions": [
-            {"type": "choice", "q": "G3. Образ и контейнер:",
+            {"type": "choice", "q": "Образ и контейнер:",
              "options": ["Одно и то же", "Образ — неизменяемый шаблон из слоёв; контейнер — запущенный экземпляр образа со своим записываемым слоем", "Контейнер — это файл Dockerfile", "Образ — это виртуальная машина"],
              "answer": 1},
             {"type": "choice", "q": "Почему в Dockerfile сначала `COPY requirements.txt` и `RUN pip install`, а потом `COPY . .`?",
@@ -45,9 +45,9 @@ QUIZZES = {
         ],
     },
     "q-w7-git": {
-        "title": "git (G2), GitHub Actions, Linux",
+        "title": "git, GitHub Actions, Linux",
         "questions": [
-            {"type": "choice", "q": "G2. `git reset --soft HEAD~1`:",
+            {"type": "choice", "q": "`git reset --soft HEAD~1`:",
              "options": ["Удаляет изменения последнего коммита", "Отменяет последний коммит, изменения остаются в индексе (staged)", "Отменяет коммит, изменения в рабочей папке не в индексе", "Пушит на сервер"],
              "answer": 1, "explain": "`--mixed` (по умолчанию) — изменения остаются, но не в индексе. `--hard` — изменения удаляются."},
             {"type": "choice", "q": "Нужно отменить коммит, который уже в общей ветке `main`:",

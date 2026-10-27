@@ -441,6 +441,28 @@ async function savedProgress(ready, file = PROGRESS) {
     assert(empty.length === 0, `пустые шаги: ${empty.join(", ")}`);
   });
 
+  await check("Переводы: каждая статья #/read/ открывается, разметка разобрана, на 360 px нет прокрутки", async () => {
+    const sources = await (await fetch(`${BASE}/data/sources.json`)).json();
+    const slugs = [...new Set(sources.topics.flatMap((t) => t.sources).filter((s) => s.url.startsWith("#/read/")).map((s) => s.url.slice(7)))];
+    assert(slugs.length >= 26, `переводов ${slugs.length}`);
+    const m = await browser.newPage({ viewport: { width: 360, height: 740 } });
+    m.on("pageerror", (e) => errors.push(e.message));
+    for (const slug of slugs) {
+      await m.goto(`${BASE}/?today=2026-10-26#/read/${slug}`);
+      await m.waitForSelector(".article-body", { timeout: 5000 });
+      // Code blocks keep their text as is (pytest output starts lines with "> "), so check the rest.
+      const text = await m.evaluate(() => [...document.querySelectorAll(".article-body > :not(pre)")].map((e) => e.innerText).join("\n"));
+      assert(!/(^|\n)\s*(#{2,4} |\|---|```|> )/.test(text), `${slug}: в тексте осталась разметка Markdown`);
+      assert(await m.$(".article-head a[href^='http']"), `${slug}: нет ссылки на оригинал`);
+      const over = await m.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      assert(over <= 0, `${slug}: страница шире экрана на ${over} px`);
+    }
+    await m.goto(`${BASE}/?today=2026-10-26#/read/python-time-complexity`);
+    await m.waitForSelector(".article-body table");
+    await m.screenshot({ path: `${process.env.SHOTS}/article-360.png`, fullPage: false });
+    await m.close();
+  });
+
   await check("Нет ошибок JavaScript на странице", async () => {
     assert(errors.length === 0, errors.join("\n"));
   });

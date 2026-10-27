@@ -4,7 +4,7 @@ from textwrap import dedent as d
 
 QUIZZES = {
     "q-w10-attn": {
-        "title": "Attention (F3), маска, multi-head, позиции, BERT и GPT",
+        "title": "Attention, маска, multi-head, позиции, BERT и GPT",
         "questions": [
             {"type": "choice", "q": "Q имеет форму (T, d), K — (T, d). Какой формы матрица QKᵀ?",
              "options": ["(d, d)", "(T, T): сходство каждой позиции с каждой", "(T, d)", "(1, T)"], "answer": 1},

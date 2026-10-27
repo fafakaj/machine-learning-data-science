@@ -2,7 +2,9 @@
 
 Checks: 91 consecutive days from the start date; unique step ids; every theory topic exists in
 data/sources.json; every problem, quiz and exercise exists; every review comes after the problem.
---check-links additionally requests every source URL (HTTP status must be < 400).
+A source with url "#/read/<slug>" is a translation: data/articles/<slug>.md must exist with front matter
+(title, original, kind) and the source must name its "original".
+--check-links additionally requests every source URL (HTTP status must be < 400); for a translation, its original.
 """
 
 import argparse
@@ -53,11 +55,23 @@ def main():
     errors = []
     used_topics = set()
 
+    def check_article(src, topic_id):
+        if not src["url"].startswith("#/read/"):
+            return
+        path = ROOT / "data" / "articles" / f"{src['url'][len('#/read/'):]}.md"
+        head = path.read_text().split("---\n")[1] if path.exists() else ""
+        missing = [k for k in ("title", "original", "kind") if f"\n{k}: " not in f"\n{head}"]
+        if not path.exists() or missing or not src.get("original"):
+            errors.append(f"{topic_id}: перевод {src['url']} — нет файла, полей {missing} или original в sources.json")
+
     def source_of(topic_id, where):
         t = topics.get(topic_id)
         if not t:
             errors.append(f"{where}: нет темы {topic_id} в sources.json")
             return None, []
+        if topic_id not in used_topics:
+            for src in t["sources"]:
+                check_article(src, topic_id)
         used_topics.add(topic_id)
         # The main source is in Russian whenever the topic has one; the rest go to "alt".
         srcs = sorted(t["sources"], key=lambda x: x["lang"] != "ru")
@@ -175,8 +189,8 @@ def main():
         print(f"Готово, но пока не в плане: {len(spare)} квизов и упражнений ({spare[0]} … {spare[-1]})")
 
     if opts.check_links:
-        urls = sorted({s["source"]["url"] for w in weeks_out for d in w["days"] for s in d["steps"] if s.get("source")}
-                      | {a["url"] for w in weeks_out for d in w["days"] for s in d["steps"] for a in s.get("alt", [])})
+        urls = sorted({s["source"].get("original", s["source"]["url"]) for w in weeks_out for d in w["days"] for s in d["steps"] if s.get("source")}
+                      | {a.get("original", a["url"]) for w in weeks_out for d in w["days"] for s in d["steps"] for a in s.get("alt", [])})
 
         def status(url):
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) study-app link check"})

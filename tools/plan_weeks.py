@@ -101,12 +101,12 @@ WEEKS = [
     {
         "title": "Python: модель данных. Производные",
         "short": "Python, производные",
-        "goal": ("- Ловушки B1–B4 и задача D1 — ответ без подсказок.\n"
-                 "- 4 задачи LeetCode: #217, #242, #1, #121.\n"
-                 "- Тесты на ловушки B1–B3 (на сайте) и квиз по uv, ruff, pytest, CI."),
+        "goal": ("- Ловушки Python (общий список по умолчанию, `[[0] * 3] * 3`, `lambda` в цикле, hashable-ключи `dict`) и градиент f(x, y) = x²y + 3y — ответ без подсказок.\n"
+                 "- 4 задачи LeetCode: #217 «Есть ли повтор», #242 «Анаграмма», #1 «Сумма двух», #121 «Купить и продать акцию».\n"
+                 "- Тесты на три ловушки (на сайте) и квиз по uv, ruff, pytest, CI."),
         "days": {
             "mon": {
-                "title": "Python I: имена, копии, B1, B2",
+                "title": "Python I: имена, копии, изменяемые значения по умолчанию",
                 "intro": "Порядок дня: LeetCode → теория → проверка → Anki. Anki — после теории: сначала поймите, потом запоминайте.",
                 "steps": [
                     T("lc-bigo", minutes=10, intro="Перед первой задачей: как оценивать сложность алгоритма.",
@@ -114,11 +114,11 @@ WEEKS = [
                     LC(217),
                     T("w1-python-mutability", goals=["объяснить разницу `is` и `==`", "сказать, какие типы изменяемые"]),
                     T("w1-python-list-of-lists", do="Запустите `a = [[0]*3]*3; a[0][0] = 1` в Python Tutor и посмотрите на стрелки.",
-                      goals=["объяснить ловушку B2"]),
+                      goals=["объяснить, почему `[[0] * 3] * 3` даёт три ссылки на одну строку"]),
                     T("w1-python-copy", goals=["выбрать между `copy.copy` и `copy.deepcopy`"]),
                     T("w1-python-default-args",
                       do="Запишите своими словами 3 фразы: «имя — это…», «`*` для списка…», «default вычисляется…».",
-                      goals=["объяснить ловушку B1 и исправить её через `None`"]),
+                      goals=["объяснить, почему `def add(x, items=[])` делит один список между вызовами, и исправить через `None`"]),
                     Q("q-w1-names"),
                     EX("ex-w1-b1", 10),
                     EX("ex-w1-b2", 10),
@@ -126,16 +126,17 @@ WEEKS = [
                 ],
             },
             "tue": {
-                "title": "Python II: области видимости, B3, аргументы, B4",
+                "title": "Python II: области видимости, позднее связывание, аргументы, hashable",
                 "steps": [
                     T("lc-hash-map", minutes=10, goals=["подсчитать частоты через `dict` и `Counter`"]),
                     LC(242),
                     T("w1-python-scopes", goals=["назвать правило LEGB", "объяснить `UnboundLocalError`"]),
                     T("w1-python-closures", goals=["написать замыкание с `nonlocal`"]),
-                    T("w1-python-late-binding", do="Запустите B3 в Python Tutor.", goals=["объяснить ловушку B3 и исправить её"]),
+                    T("w1-python-late-binding", do="Запустите в Python Tutor `funcs = [lambda: i for i in range(3)]; print([f() for f in funcs])`.",
+                      goals=["объяснить, почему код печатает `[2, 2, 2]`, и исправить его"]),
                     T("w1-python-args-kwargs", goals=["читать сигнатуру с `/`, `*`, `*args`, `**kwargs`"]),
-                    T("w1-python-hashable", goals=["объяснить, почему ключ `dict` должен быть hashable (B4)"]),
-                    T("w1-python-complexity", do="Запишите полный ответ на B4 своими словами.",
+                    T("w1-python-hashable", goals=["объяснить, почему ключ `dict` должен быть hashable"]),
+                    T("w1-python-complexity", do="Запишите своими словами: почему ключом `dict` может быть `tuple`, но не `list`, и какая сложность поиска по ключу.",
                       goals=["назвать сложность `in` для list, set, dict"]),
                     Q("q-w1-scopes"),
                     EX("ex-w1-b3", 10),
@@ -151,7 +152,7 @@ WEEKS = [
                     OPT("Доделайте теорию пн или вт (долг — в списке слева)."),
                     OPT("wtfpython: «Beware of default mutable arguments!», «A tic-tac-toe where X wins», «Schrödinger's variable», «Hash brownies»."),
                     OPT("Повтор на русском: модель памяти Python.", "w1-python-mutability"),
-                    OPT("5-я задача недели #383 Ransom Note — в списке шагов."),
+                    OPT("5-я задача недели #383 «Записка из журнала» — в списке шагов."),
                 ],
                 "steps": [dict(LC(383), optional=True)],
             },
@@ -175,18 +176,18 @@ WEEKS = [
                     R(242),
                     T("w1-math-3b1b-calc-4"),
                     T("w1-math-chain-rule", goals=["взять производную сигмоиды через цепное правило"]),
-                    T("w1-math-partial-gradient", goals=["посчитать градиент функции двух переменных (D1)"]),
+                    T("w1-math-partial-gradient", goals=["посчитать градиент функции двух переменных"]),
                     Q("q-w1-math2"),
                     ANKI("2 Математика", "Повторите карточки. Новые — по цепному правилу и градиенту."),
                 ],
             },
             "sat": {
                 "title": "Практика: инструменты и тесты на ловушки",
-                "intro": ("Вся практика — на сайте. Прочитайте про инструменты, ответьте на квиз и напишите тесты на ловушки B1–B3. "
+                "intro": ("Вся практика — на сайте. Прочитайте про инструменты, ответьте на квиз и напишите тесты на три ловушки: общий список по умолчанию, общие строки матрицы, `lambda` в цикле. "
                           "Сайт проверит, что ваши тесты ловят ошибки."),
                 "steps": [
                     T("w1-tools-uv", goals=["знать команды `uv init`, `uv add --dev`, `uv run`"]),
-                    T("w1-tools-ruff", goals=["знать правила B006 и B023 для ловушек B1 и B3"]),
+                    T("w1-tools-ruff", goals=["знать правила B006 (изменяемое значение по умолчанию) и B023 (`lambda` в цикле читает переменную цикла)"]),
                     T("w1-tools-pytest", goals=["писать тесты через `assert`", "понимать `parametrize`"]),
                     T("w1-tools-github-actions", goals=["читать простой `ci.yml`"]),
                     Q("q-w1-tools"),
@@ -198,15 +199,15 @@ WEEKS = [
                 "title": "Повтор и вопросы вслух",
                 "intro": "Начните с самопроверки, пока голова свежая.",
                 "steps": [
-                    Q("q-w1-sunday", "Это проверка недели из плана: B1–B4 и D1 без подсказок. Цель — все ответы верны."),
+                    Q("q-w1-sunday", "Это проверка недели: ловушки Python, градиент и градиентный спуск без подсказок. Цель — все ответы верны."),
                     EX("ex-w1-numgrad", 20),
                     P("Своими словами: почему ловушки работают так", minutes=30,
                       items=[
-                          I("B1: почему список по умолчанию общий для всех вызовов?", write=True),
-                          I("B2: почему `[[0] * 3] * 3` даёт три одинаковые строки?", write=True),
-                          I("B3: почему все lambda из цикла видят последнее значение?", write=True),
+                          I("`def add(x, items=[])`: почему список по умолчанию общий для всех вызовов?", write=True),
+                          I("Почему `[[0] * 3] * 3` даёт три одинаковые строки?", write=True),
+                          I("`[lambda: i for i in range(3)]`: почему все lambda из цикла видят последнее значение?", write=True),
                       ]),
-                    ORAL("q-w1-oral", "Отвечайте **вслух**, потом сверьте с образцом. Можно попросить Claude: «задай мне 5 вопросов по B1–B4 и D1»."),
+                    ORAL("q-w1-oral", "Отвечайте **вслух**, потом сверьте с образцом. Можно попросить Claude: «задай мне 5 вопросов по ловушкам Python (изменяемый default, список списков, lambda в цикле, hashable) и по градиенту»."),
                 ],
             },
         },
@@ -214,18 +215,18 @@ WEEKS = [
     {
         "title": "Python: функции и ООП. Линейная алгебра",
         "short": "ООП, линал",
-        "goal": ("- Генераторы (B5), декораторы (B6), GIL (B7), dunder (B8) — объясняю без шпаргалки.\n"
+        "goal": ("- Генераторы, декораторы, GIL, dunder-методы — объясняю без шпаргалки.\n"
                  "- Декоратор с нуля без подсказок.\n"
                  "- 3Blue1Brown «Essence of linear algebra», гл. 1–9.\n"
-                 "- 5 задач: #125, #167, #88, #283, #169."),
+                 "- 5 задач: #125 «Палиндром», #167 «Сумма двух в отсортированном списке», #88 «Слить два отсортированных списка», #283 «Нули в конец», #169 «Элемент большинства»."),
         "days": {
             "mon": {
                 "title": "Генераторы и декораторы",
                 "steps": [
                     T("lc-two-pointers", minutes=10, goals=["узнать задачу на два указателя"]),
                     LC(125), R(1),
-                    T("w2-python-iterators-generators", goals=["объяснить, чем генератор отличается от списка (B5)"]),
-                    T("w2-python-decorators", goals=["написать декоратор с `functools.wraps` (B6)"]),
+                    T("w2-python-iterators-generators", goals=["объяснить, чем генератор отличается от списка"]),
+                    T("w2-python-decorators", goals=["написать декоратор с `functools.wraps`"]),
                     Q("q-w2-gen"),
                     EX("ex-w2-fib", 15),
                     ANKI(),
@@ -250,10 +251,10 @@ WEEKS = [
                     LC(88), R(125),
                     T("w2-python-classmethod-staticmethod"),
                     T("w2-python-mro-super", goals=["предсказать порядок MRO при множественном наследовании"]),
-                    T("w2-python-dunder", goals=["сделать класс с `__repr__`, `__eq__`, `__add__`, `__len__` (B8)"]),
+                    T("w2-python-dunder", goals=["сделать класс с `__repr__`, `__eq__`, `__add__`, `__len__`"]),
                     T("w2-python-dataclasses"),
                     Q("q-w2-oop"),
-                    T("w2-python-gil-concurrency", goals=["выбрать между `threading`, `multiprocessing` и `asyncio` (B7)"]),
+                    T("w2-python-gil-concurrency", goals=["выбрать между `threading`, `multiprocessing` и `asyncio`"]),
                     Q("q-w2-gil"),
                     EX("ex-w2-vector", 20),
                     ANKI(),
@@ -284,7 +285,7 @@ WEEKS = [
                 "steps": [
                     R(169),
                     EX("ex-w2-deco10", 10),
-                    Q("q-w2-bench", "Проверка недели: объясните замер потоков и процессов (B7)."),
+                    Q("q-w2-bench", "Проверка недели: объясните замер потоков и процессов."),
                 ],
             },
         },
@@ -292,7 +293,7 @@ WEEKS = [
     {
         "title": "Теорвер, статистика, NumPy, pandas",
         "short": "Теорвер, NumPy",
-        "goal": ("- D3 (Байес) и D5 (p-value) — решаю без подсказок.\n"
+        "goal": ("- Задачи на формулу Байеса (тест на болезнь) и на p-value — решаю без подсказок.\n"
                  "- NumPy: векторизация и broadcasting; pandas: groupby, merge, pivot.\n"
                  "- Разобран свой хакатон: EDA своими руками и рассказ на 3 минуты."),
         "days": {
@@ -301,8 +302,8 @@ WEEKS = [
                 "steps": [
                     T("lc-stack", minutes=10), LC(20), R(88),
                     T("w3-math-probability"),
-                    T("w3-math-conditional-bayes", goals=["решить задачу на формулу Байеса (D3)"]),
-                    T("w3-math-expectation-variance", goals=["посчитать матожидание и дисперсию (D4)"]),
+                    T("w3-math-conditional-bayes", goals=["решить задачу на формулу Байеса"]),
+                    T("w3-math-expectation-variance", goals=["посчитать матожидание и дисперсию"]),
                     Q("q-w3-prob"),
                     EX("ex-w3-bayes", 15),
                     ANKI(),
@@ -313,7 +314,7 @@ WEEKS = [
                 "steps": [
                     T("lc-binary-search", minutes=10), LC(704), R(283),
                     T("w3-math-distributions"), T("w3-math-clt"),
-                    T("w3-math-hypotheses-pvalue", goals=["объяснить p-value одной фразой без ошибки (D5)"]),
+                    T("w3-math-hypotheses-pvalue", goals=["объяснить p-value одной фразой без ошибки"]),
                     Q("q-w3-stats"),
                     ANKI(),
                 ],
@@ -385,7 +386,7 @@ WEEKS = [
                 "steps": [
                     T("lc-sliding-window", minutes=10), LC(3), R(70),
                     T("w4-ml-intro"),
-                    T("w4-ml-train-val-test-overfitting", goals=["объяснить, зачем нужна валидационная выборка (E2)"]),
+                    T("w4-ml-train-val-test-overfitting", goals=["объяснить, зачем нужна валидационная выборка"]),
                     T("w4-ml-bias-variance"),
                     ANKI(),
                 ],
@@ -395,7 +396,7 @@ WEEKS = [
                 "steps": [
                     LC(219), R(206),
                     T("w4-ml-linear-regression"), T("w4-math-gradient-descent"),
-                    T("w4-ml-regularization", goals=["сравнить L1 и L2 (E6)"]),
+                    T("w4-ml-regularization", goals=["сравнить L1 и L2"]),
                     Q("q-w4-ml1"),
                     EX("ex-w4-linreg", 30),
                     ANKI(),
@@ -407,7 +408,7 @@ WEEKS = [
                 "steps": [
                     LC(567), R(3),
                     T("w4-ml-logistic-regression"),
-                    T("w4-ml-metrics", goals=["выбрать метрику для несбалансированных классов (E3)"]),
+                    T("w4-ml-metrics", goals=["выбрать метрику для несбалансированных классов"]),
                     EX("ex-w4-logreg", 30),
                     EX("ex-w4-metrics", 20),
                     ANKI(),
@@ -417,9 +418,9 @@ WEEKS = [
                 "title": "Кросс-валидация, утечки, kNN и k-means",
                 "steps": [
                     LC(392), R(219),
-                    T("w4-ml-cross-validation", goals=["объяснить StratifiedKFold (E4)"]),
-                    T("w4-ml-leakage", goals=["найти утечку в пайплайне (E7)"]),
-                    T("w4-ml-knn-vs-kmeans", goals=["отличить kNN от k-means (E8)"]),
+                    T("w4-ml-cross-validation", goals=["объяснить StratifiedKFold"]),
+                    T("w4-ml-leakage", goals=["найти утечку в пайплайне"]),
+                    T("w4-ml-knn-vs-kmeans", goals=["отличить kNN от k-means"]),
                     Q("q-w4-ml2"),
                     EX("ex-w4-kfold", 20),
                     ANKI(),
@@ -452,7 +453,7 @@ WEEKS = [
     {
         "title": "Деревья, ансамбли, бустинг. Старт Проекта №1",
         "short": "Бустинг, Kaggle",
-        "goal": ("- Объясняю бэггинг и бустинг (E5), разницу CatBoost / LightGBM / XGBoost.\n"
+        "goal": ("- Объясняю бэггинг и бустинг, разницу CatBoost / LightGBM / XGBoost.\n"
                  "- Проект №1: Kaggle Playground, EDA, бейзлайн, CatBoost, первая отправка.\n"
                  "- SQL: 5 задач на JOIN, GROUP BY, HAVING."),
         "days": {
@@ -461,7 +462,7 @@ WEEKS = [
                 T("w5-ml-decision-trees", goals=["посчитать Gini для разбиения"]), ANKI()]},
             "tue": {"title": "Random Forest, бэггинг и бустинг", "steps": [
                 T("lc-group-anagrams", minutes=10), LC(49), R(392),
-                T("w5-ml-bagging-rf"), T("w5-ml-bagging-vs-boosting", goals=["объяснить разницу бэггинга и бустинга (E5)"]), ANKI()]},
+                T("w5-ml-bagging-rf"), T("w5-ml-bagging-vs-boosting", goals=["объяснить разницу бэггинга и бустинга"]), ANKI()]},
             "wed": {"optional": [OPT("Доделайте долг пн–вт."), OPT("Выберите соревнование Kaggle Playground заранее.")]},
             "thu": {"title": "Градиентный бустинг", "steps": [
                 T("lc-heap-top-k", minutes=10), LC(347), R(56),
@@ -532,10 +533,10 @@ WEEKS = [
             "wed": {"optional": [OPT("Доделайте долг пн–вт.")]},
             "thu": {"title": "Docker", "steps": [
                 LC(100), R(226),
-                T("w7-docker-image-container", goals=["объяснить разницу образа и контейнера (G3)"]), T("w7-docker-compose"), ANKI()]},
+                T("w7-docker-image-container", goals=["объяснить разницу образа и контейнера"]), T("w7-docker-compose"), ANKI()]},
             "fri": {"title": "CI и git", "steps": [
                 LC(572), R(104),
-                T("w7-github-actions-ci"), T("w7-git-rebase-reset", goals=["объяснить `rebase` и три режима `reset` (G2)"]), ANKI()]},
+                T("w7-github-actions-ci"), T("w7-git-rebase-reset", goals=["объяснить `rebase` и три режима `reset`"]), ANKI()]},
             "sat": {"title": "Проект №1 в прод", "steps": [
                 LC(543), T("w7-linux-basics"),
                 P("Проект №1: API, Docker, CI", minutes=200, items=[
@@ -563,11 +564,11 @@ WEEKS = [
                 T("w8-dl-neuron-mlp-activations"), T("w8-dl-loss"), ANKI()]},
             "tue": {"title": "Backprop и micrograd", "steps": [
                 T("lc-bst", minutes=10), LC(98), R(572),
-                T("w8-dl-backprop", goals=["посчитать backprop для двух нейронов вручную (F1)"]), T("w8-karpathy-micrograd"), ANKI()]},
+                T("w8-dl-backprop", goals=["посчитать backprop для двух нейронов вручную"]), T("w8-karpathy-micrograd"), ANKI()]},
             "wed": {"optional": [OPT("Доделайте долг пн–вт."), OPT("Допишите micrograd.")]},
             "thu": {"title": "PyTorch: цикл обучения и оптимизаторы", "steps": [
                 LC(215), R(102),
-                T("w8-pytorch-training-loop", goals=["объяснить `zero_grad`, `backward`, `step` (F2)"]),
+                T("w8-pytorch-training-loop", goals=["объяснить `zero_grad`, `backward`, `step`"]),
                 T("w8-dl-optimizers"), T("w8-dl-learning-rate"), ANKI()]},
             "fri": {"title": "Нормализация, dropout, RNN", "steps": [
                 LC(230), R(98),
@@ -602,7 +603,7 @@ WEEKS = [
                 T("lc-dp-coin-change", minutes=10), LC(322), R(200),
                 T("w9-embeddings-cosine"), T("w9-clip"), ANKI()]},
             "fri": {"title": "Токенизация BPE", "steps": [
-                LC(695), R(733), T("w9-bpe-tokenization", goals=["объяснить шаг слияния BPE (F4)"]), ANKI()]},
+                LC(695), R(733), T("w9-bpe-tokenization", goals=["объяснить шаг слияния BPE"]), ANKI()]},
             "sat": {"title": "timm и BPE", "steps": [
                 LC(994), T("w9-tools-timm"),
                 P("Практика: timm и BPE", minutes=200, items=[
@@ -621,7 +622,7 @@ WEEKS = [
         "goal": "- Ваш attention ≈ `scaled_dot_product_attention`.\n- nanoGPT + KV-кэш.\n- Проект №2: бейзлайны TF-IDF + LogReg и `rubert-tiny2`.\n\nНовогодняя неделя — можно сдвинуть, но не пропускать.",
         "days": {
             "mon": {"title": "Attention", "steps": [
-                LC(198), R(322), T("w10-attention", goals=["написать softmax(QKᵀ/√d)·V (F3)"]), ANKI()]},
+                LC(198), R(322), T("w10-attention", goals=["написать softmax(QKᵀ/√d)·V"]), ANKI()]},
             "tue": {"title": "Маска, multi-head, позиции", "steps": [
                 T("lc-topological-sort", minutes=10), LC(207), R(695),
                 T("w10-attention-mask-multihead"), T("w10-positional-encoding"), ANKI()]},
@@ -653,7 +654,7 @@ WEEKS = [
         "goal": "- LoRA и QLoRA для Qwen ~0,5B.\n- Таблица инференса: F1, память, токенов/с. Релиз v1.0.\n- Пиковая память совпадает с расчётом ±20%. Мок №3 с Claude.",
         "days": {
             "mon": {"title": "Fine-tuning и SFT", "steps": [LC(33), R(213), T("w11-sft-fine-tuning"), ANKI()]},
-            "tue": {"title": "LoRA и QLoRA", "steps": [LC(153), R(210), T("w11-lora-qlora", goals=["посчитать число параметров LoRA (F5)"]), ANKI()]},
+            "tue": {"title": "LoRA и QLoRA", "steps": [LC(153), R(210), T("w11-lora-qlora", goals=["посчитать число параметров LoRA"]), ANKI()]},
             "wed": {"optional": [OPT("Доделайте долг пн–вт.")]},
             "thu": {"title": "Память обучения и точность", "steps": [
                 LC(739), R(33), T("w11-training-memory"), T("w11-mixed-precision"), ANKI()]},

@@ -42,10 +42,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Python docs: copy — Shallow and deep copy operations",
-          "url": "https://docs.python.org/3/library/copy.html",
+          "title": "copy — поверхностное и глубокое копирование",
+          "url": "#/read/python-copy",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.python.org/3/library/copy.html",
           "minutes": 5,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -55,7 +57,7 @@
     {
       "id": "w1-python-list-of-lists",
       "week": 1,
-      "topic_ru": "Ловушка B2: список списков [[0]*n]*m",
+      "topic_ru": "Ловушка: список списков [[0]*n]*m",
       "kind": "theory",
       "sources": [
         {
@@ -81,7 +83,7 @@
     {
       "id": "w1-python-default-args",
       "week": 1,
-      "topic_ru": "Ловушка B1: изменяемые аргументы по умолчанию",
+      "topic_ru": "Ловушка: изменяемые аргументы по умолчанию",
       "kind": "theory",
       "sources": [
         {
@@ -168,23 +170,27 @@
     {
       "id": "w1-python-late-binding",
       "week": 1,
-      "topic_ru": "Ловушка B3: позднее связывание lambda в цикле",
+      "topic_ru": "Ловушка: позднее связывание lambda в цикле",
       "kind": "theory",
       "sources": [
         {
-          "title": "Python FAQ: Why do lambdas defined in a loop with different values all return the same result?",
-          "url": "https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
-          "section": "Этот вопрос FAQ",
-          "lang": "en",
+          "title": "Почему lambda, созданные в цикле, возвращают один и тот же результат?",
+          "url": "#/read/python-faq-lambda-loop",
+          "section": "Вопрос FAQ целиком",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.python.org/3/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
           "minutes": 4,
           "type": "docs",
           "verified": "200 2026-10-25"
         },
         {
-          "title": "The Hitchhiker’s Guide to Python: Late Binding Closures",
-          "url": "https://docs.python-guide.org/writing/gotchas/#late-binding-closures",
+          "title": "Замыкания с поздним связыванием",
+          "url": "#/read/hitchhiker-late-binding",
           "section": "Раздел «Late Binding Closures»",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.python-guide.org/writing/gotchas/#late-binding-closures",
           "minutes": 5,
           "type": "article",
           "verified": "200 2026-10-25"
@@ -220,7 +226,7 @@
     {
       "id": "w1-python-hashable",
       "week": 1,
-      "topic_ru": "Хэшируемость (B4)",
+      "topic_ru": "Хэшируемость",
       "kind": "theory",
       "sources": [
         {
@@ -246,7 +252,7 @@
     {
       "id": "w1-python-complexity",
       "week": 1,
-      "topic_ru": "Сложность операций list / dict / set (B4)",
+      "topic_ru": "Сложность операций list / dict / set",
       "kind": "theory",
       "sources": [
         {
@@ -259,10 +265,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Python Wiki: TimeComplexity (архивная копия)",
-          "url": "https://web.archive.org/web/20241231101827/https://wiki.python.org/moin/TimeComplexity",
+          "title": "Временная сложность операций в CPython",
+          "url": "#/read/python-time-complexity",
           "section": "Таблицы list, collections.deque, set, dict",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://web.archive.org/web/20241231101827/https://wiki.python.org/moin/TimeComplexity",
           "minutes": 6,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -428,7 +436,7 @@
     {
       "id": "w1-math-partial-gradient",
       "week": 1,
-      "topic_ru": "Частная производная и градиент (D1)",
+      "topic_ru": "Частная производная и градиент",
       "kind": "math",
       "sources": [
         {
@@ -449,10 +457,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "uv docs: Working on projects",
-          "url": "https://docs.astral.sh/uv/guides/projects/",
+          "title": "uv — работа с проектами",
+          "url": "#/read/uv-projects",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.astral.sh/uv/guides/projects/",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -466,10 +476,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Ruff docs: Tutorial",
-          "url": "https://docs.astral.sh/ruff/tutorial/",
+          "title": "Ruff — учебник",
+          "url": "#/read/ruff-tutorial",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.astral.sh/ruff/tutorial/",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -483,10 +495,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "pytest docs: Get Started",
-          "url": "https://docs.pytest.org/en/stable/getting-started.html",
+          "title": "pytest — начало работы",
+          "url": "#/read/pytest-getting-started",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.pytest.org/en/stable/getting-started.html",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -627,7 +641,7 @@
     {
       "id": "w2-python-iterators-generators",
       "week": 2,
-      "topic_ru": "Итераторы и генераторы (B5)",
+      "topic_ru": "Итераторы и генераторы",
       "kind": "theory",
       "sources": [
         {
@@ -662,7 +676,7 @@
     {
       "id": "w2-python-decorators",
       "week": 2,
-      "topic_ru": "Декораторы (B6)",
+      "topic_ru": "Декораторы",
       "kind": "theory",
       "sources": [
         {
@@ -801,7 +815,7 @@
     {
       "id": "w2-python-dunder",
       "week": 2,
-      "topic_ru": "Dunder-методы (B8)",
+      "topic_ru": "Dunder-методы",
       "kind": "theory",
       "sources": [
         {
@@ -853,7 +867,7 @@
     {
       "id": "w2-python-gil-concurrency",
       "week": 2,
-      "topic_ru": "GIL, threading vs multiprocessing vs asyncio (B7)",
+      "topic_ru": "GIL, threading vs multiprocessing vs asyncio",
       "kind": "theory",
       "sources": [
         {
@@ -1262,7 +1276,7 @@
     {
       "id": "w3-math-conditional-bayes",
       "week": 3,
-      "topic_ru": "Условная вероятность и формула Байеса (D3)",
+      "topic_ru": "Условная вероятность и формула Байеса",
       "kind": "math",
       "sources": [
         {
@@ -1279,7 +1293,7 @@
     {
       "id": "w3-math-expectation-variance",
       "week": 3,
-      "topic_ru": "Матожидание и дисперсия (D4)",
+      "topic_ru": "Матожидание и дисперсия",
       "kind": "math",
       "sources": [
         {
@@ -1348,7 +1362,7 @@
     {
       "id": "w3-math-hypotheses-pvalue",
       "week": 3,
-      "topic_ru": "Проверка гипотез и p-value (D5)",
+      "topic_ru": "Проверка гипотез и p-value",
       "kind": "math",
       "sources": [
         {
@@ -1387,10 +1401,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "rougier/numpy-100 (упражнения 1–40)",
-          "url": "https://github.com/rougier/numpy-100",
+          "title": "100 упражнений NumPy — упражнения 1–40",
+          "url": "#/read/numpy-100",
           "section": "Упражнения 1–40",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://github.com/rougier/numpy-100",
           "minutes": 60,
           "type": "course",
           "verified": "200 2026-10-25"
@@ -1404,10 +1420,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "NumPy docs: Broadcasting",
-          "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+          "title": "Broadcasting в NumPy",
+          "url": "#/read/numpy-broadcasting",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
           "minutes": 12,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -1439,10 +1457,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "pandas docs: Merge, join, concatenate and compare",
-          "url": "https://pandas.pydata.org/docs/user_guide/merging.html",
+          "title": "pandas — объединение таблиц через merge",
+          "url": "#/read/pandas-merge",
           "section": "Раздел merge",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://pandas.pydata.org/docs/user_guide/merging.html",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -1473,10 +1493,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Project Jupyter docs: Get started",
-          "url": "https://docs.jupyter.org/en/latest/start/index.html",
+          "title": "Jupyter — с чего начать",
+          "url": "#/read/jupyter-start",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.jupyter.org/en/latest/start/index.html",
           "minutes": 5,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -1486,7 +1508,7 @@
     {
       "id": "w3-tools-bash",
       "week": 3,
-      "topic_ru": "Bash: grep, find, пайпы (G4)",
+      "topic_ru": "Bash: grep, find, пайпы",
       "kind": "theory",
       "sources": [
         {
@@ -1656,10 +1678,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "SQLBolt: Interactive SQL lessons",
-          "url": "https://sqlbolt.com/",
+          "title": "SQLBolt — уроки 1–6 (SELECT, WHERE, ORDER BY, JOIN)",
+          "url": "#/read/sqlbolt-1-6",
           "section": "Уроки 1–6",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "пересказ",
+          "original": "https://sqlbolt.com/",
           "minutes": 60,
           "type": "course",
           "verified": "200 2026-10-25"
@@ -1686,7 +1710,7 @@
     {
       "id": "w4-ml-train-val-test-overfitting",
       "week": 4,
-      "topic_ru": "Train/val/test и переобучение (E2)",
+      "topic_ru": "Train/val/test и переобучение",
       "kind": "theory",
       "sources": [
         {
@@ -1807,7 +1831,7 @@
     {
       "id": "w4-ml-regularization",
       "week": 4,
-      "topic_ru": "Регуляризация L1/L2 (E6)",
+      "topic_ru": "Регуляризация L1/L2",
       "kind": "theory",
       "sources": [
         {
@@ -1833,7 +1857,7 @@
     {
       "id": "w4-ml-metrics",
       "week": 4,
-      "topic_ru": "Метрики классификации и регрессии (E3)",
+      "topic_ru": "Метрики классификации и регрессии",
       "kind": "theory",
       "sources": [
         {
@@ -1850,7 +1874,7 @@
     {
       "id": "w4-ml-cross-validation",
       "week": 4,
-      "topic_ru": "Кросс-валидация, StratifiedKFold (E4)",
+      "topic_ru": "Кросс-валидация, StratifiedKFold",
       "kind": "theory",
       "sources": [
         {
@@ -1863,10 +1887,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "scikit-learn: Cross-validation",
-          "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+          "title": "Кросс-валидация — K-fold и Stratified K-fold",
+          "url": "#/read/sklearn-cross-validation",
           "section": "Разделы 3.1.2.1 K-fold, Stratified k-fold",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://scikit-learn.org/stable/modules/cross_validation.html",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -1876,7 +1902,7 @@
     {
       "id": "w4-ml-leakage",
       "week": 4,
-      "topic_ru": "Утечка данных (E7)",
+      "topic_ru": "Утечка данных",
       "kind": "theory",
       "sources": [
         {
@@ -1902,7 +1928,7 @@
     {
       "id": "w4-ml-knn-vs-kmeans",
       "week": 4,
-      "topic_ru": "kNN и k-means: разница (E8)",
+      "topic_ru": "kNN и k-means: разница",
       "kind": "theory",
       "sources": [
         {
@@ -1928,7 +1954,7 @@
     {
       "id": "lc-sliding-window",
       "week": 4,
-      "topic_ru": "Паттерн «скользящее окно» (Longest Substring, C2)",
+      "topic_ru": "Паттерн «скользящее окно» (#3 «Самая длинная подстрока без повторов»)",
       "kind": "leetcode-pattern",
       "sources": [
         {
@@ -2041,7 +2067,7 @@
     {
       "id": "w5-ml-bagging-vs-boosting",
       "week": 5,
-      "topic_ru": "Бэггинг против бустинга (E5)",
+      "topic_ru": "Бэггинг против бустинга",
       "kind": "theory",
       "sources": [
         {
@@ -2399,10 +2425,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "MLflow docs: Tracking",
-          "url": "https://mlflow.org/docs/latest/ml/tracking/",
+          "title": "MLflow Tracking — учёт экспериментов",
+          "url": "#/read/mlflow-tracking",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://mlflow.org/docs/latest/ml/tracking/",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -2506,7 +2534,7 @@
     {
       "id": "w7-docker-image-container",
       "week": 7,
-      "topic_ru": "Docker: образ и контейнер (G3)",
+      "topic_ru": "Docker: образ и контейнер",
       "kind": "theory",
       "sources": [
         {
@@ -2566,7 +2594,7 @@
     {
       "id": "w7-git-rebase-reset",
       "week": 7,
-      "topic_ru": "git rebase и git reset (G2)",
+      "topic_ru": "git rebase и git reset",
       "kind": "theory",
       "sources": [
         {
@@ -2704,7 +2732,7 @@
     {
       "id": "w8-dl-backprop",
       "week": 8,
-      "topic_ru": "Обратное распространение ошибки (F1)",
+      "topic_ru": "Обратное распространение ошибки",
       "kind": "theory",
       "sources": [
         {
@@ -2750,15 +2778,6 @@
           "minutes": 146,
           "type": "video",
           "verified": "200 2026-10-25"
-        },
-        {
-          "title": "Andrej Karpathy: The spelled-out intro to neural networks and backpropagation: building micrograd",
-          "url": "https://www.youtube.com/watch?v=VMj-3S1tku0",
-          "section": "Всё видео",
-          "lang": "en",
-          "minutes": 145,
-          "type": "video",
-          "verified": "200 2026-10-25"
         }
       ]
     },
@@ -2776,29 +2795,22 @@
           "minutes": 118,
           "type": "video",
           "verified": "200 2026-10-25"
-        },
-        {
-          "title": "Andrej Karpathy: The spelled-out intro to language modeling: building makemore",
-          "url": "https://www.youtube.com/watch?v=PaCmpygFfXo",
-          "section": "Всё видео",
-          "lang": "en",
-          "minutes": 118,
-          "type": "video",
-          "verified": "200 2026-10-25"
         }
       ]
     },
     {
       "id": "w8-pytorch-training-loop",
       "week": 8,
-      "topic_ru": "PyTorch: backward, step, zero_grad (F2)",
+      "topic_ru": "PyTorch: backward, step, zero_grad",
       "kind": "theory",
       "sources": [
         {
-          "title": "PyTorch Tutorials: Optimizing Model Parameters",
-          "url": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+          "title": "PyTorch — оптимизация параметров модели",
+          "url": "#/read/pytorch-optimization-loop",
           "section": "Раздел «Optimization Loop»",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3084,7 +3096,7 @@
     {
       "id": "w9-bpe-tokenization",
       "week": 9,
-      "topic_ru": "Токенизация BPE (F4)",
+      "topic_ru": "Токенизация BPE",
       "kind": "theory",
       "sources": [
         {
@@ -3123,10 +3135,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Hugging Face docs: timm Quickstart",
-          "url": "https://huggingface.co/docs/timm/quickstart",
+          "title": "timm — быстрый старт",
+          "url": "#/read/timm-quickstart",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://huggingface.co/docs/timm/quickstart",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3188,7 +3202,7 @@
     {
       "id": "w10-attention",
       "week": 10,
-      "topic_ru": "Механизм внимания: Q, K, V, softmax (F3)",
+      "topic_ru": "Механизм внимания: Q, K, V, softmax",
       "kind": "theory",
       "sources": [
         {
@@ -3331,10 +3345,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Hugging Face blog: How to generate text",
-          "url": "https://huggingface.co/blog/how-to-generate",
+          "title": "Как языковая модель выбирает следующее слово — сэмплирование, temperature, top-k, top-p",
+          "url": "#/read/hf-how-to-generate",
           "section": "Разделы Sampling, Top-K, Top-p",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "пересказ",
+          "original": "https://huggingface.co/blog/how-to-generate",
           "minutes": 20,
           "type": "article",
           "verified": "200 2026-10-25"
@@ -3491,7 +3507,7 @@
     {
       "id": "w11-lora-qlora",
       "week": 11,
-      "topic_ru": "LoRA и QLoRA (F5)",
+      "topic_ru": "LoRA и QLoRA",
       "kind": "theory",
       "sources": [
         {
@@ -3513,10 +3529,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Hu et al.: LoRA (arXiv 2106.09685)",
-          "url": "https://arxiv.org/abs/2106.09685",
-          "section": "Abstract, раздел 4",
-          "lang": "en",
+          "title": "LoRA — низкоранговая адаптация больших языковых моделей",
+          "url": "#/read/lora-paper",
+          "section": "Аннотация и раздел 4 «Метод»",
+          "lang": "ru",
+          "translated": "пересказ",
+          "original": "https://arxiv.org/abs/2106.09685",
           "minutes": 20,
           "type": "article",
           "verified": "200 2026-10-25"
@@ -3530,19 +3548,23 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Hugging Face docs: Model training anatomy",
-          "url": "https://huggingface.co/docs/transformers/model_memory_anatomy",
-          "section": "Раздел «Anatomy of Model's Memory»",
-          "lang": "en",
+          "title": "Память GPU при обучении",
+          "url": "#/read/hf-gpu-memory",
+          "section": "Вся страница",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://huggingface.co/docs/transformers/model_memory_anatomy",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Hugging Face docs: Gradient checkpointing",
-          "url": "https://huggingface.co/docs/transformers/grad_checkpointing",
+          "title": "Gradient checkpointing — экономия памяти на активациях",
+          "url": "#/read/hf-gradient-checkpointing",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://huggingface.co/docs/transformers/grad_checkpointing",
           "minutes": 8,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3565,10 +3587,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "PyTorch 2.14 docs: Automatic Mixed Precision (torch.amp)",
-          "url": "https://docs.pytorch.org/docs/2.14/amp.html",
+          "title": "torch.amp — автоматическая смешанная точность",
+          "url": "#/read/torch-amp",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.pytorch.org/docs/2.14/amp.html",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3617,10 +3641,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "vLLM docs",
-          "url": "https://docs.vllm.ai/en/latest/",
-          "section": "Главная страница, Quickstart",
-          "lang": "en",
+          "title": "vLLM — быстрый инференс и сервер для LLM",
+          "url": "#/read/vllm",
+          "section": "Главная страница и Quickstart",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.vllm.ai/en/latest/",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3630,7 +3656,7 @@
     {
       "id": "w12-rag-overview",
       "week": 12,
-      "topic_ru": "RAG: общая схема (F6)",
+      "topic_ru": "RAG: общая схема",
       "kind": "theory",
       "sources": [
         {
@@ -3781,10 +3807,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Claude Docs: Tool use overview",
-          "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+          "title": "Вызов инструментов (tool use) в Claude",
+          "url": "#/read/claude-tool-use",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "пересказ",
+          "original": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3798,10 +3826,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Anthropic: Building effective agents",
-          "url": "https://www.anthropic.com/research/building-effective-agents",
+          "title": "Как строить эффективных агентов",
+          "url": "#/read/anthropic-agents",
           "section": "Вся статья",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "пересказ",
+          "original": "https://www.anthropic.com/research/building-effective-agents",
           "minutes": 25,
           "type": "article",
           "verified": "200 2026-10-25"
@@ -3824,10 +3854,12 @@
       "kind": "theory",
       "sources": [
         {
-          "title": "Model Context Protocol: Introduction",
-          "url": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
+          "title": "Что такое MCP (Model Context Protocol)",
+          "url": "#/read/mcp-intro",
           "section": "Вся страница",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro",
           "minutes": 10,
           "type": "docs",
           "verified": "200 2026-10-25"
@@ -3850,10 +3882,12 @@
           "verified": "200 2026-10-25"
         },
         {
-          "title": "Ragas docs: Available metrics",
-          "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
+          "title": "Метрики Ragas — Faithfulness и Context Recall",
+          "url": "#/read/ragas-metrics",
           "section": "Faithfulness, Context Recall",
-          "lang": "en",
+          "lang": "ru",
+          "translated": "перевод",
+          "original": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/",
           "minutes": 15,
           "type": "docs",
           "verified": "200 2026-10-25"
