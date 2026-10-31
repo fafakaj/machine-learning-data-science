@@ -386,7 +386,7 @@ async function savedProgress(ready, file = PROGRESS) {
     await ctx2.close();
   });
 
-  for (const [user, pass] of [["smetanka", process.env.TEST_PASS_GUEST], ["keshapticya", process.env.TEST_PASS_KESHA]]) {
+  for (const [user, pass] of [["smetanka", process.env.TEST_PASS_GUEST], ["keshapticya", process.env.TEST_PASS_KESHA], ["ir630", process.env.TEST_PASS_IR630]]) {
     await check(`Аккаунт ${user}: вход, свой прогресс, отдельный от владельца и других`, async () => {
       if (!pass) throw new Error(`нет пароля в окружении для ${user}`);
       const ctx3 = await browser.newContext();
@@ -406,7 +406,7 @@ async function savedProgress(ready, file = PROGRESS) {
       assert(mine?.steps[id]?.skipped, `прогресс ${user} не сохранился в его файл`);
       const owner = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
       assert(!owner.steps[id]?.skipped, `пропуск ${user} попал в прогресс владельца`);
-      for (const other of ["smetanka", "keshapticya"].filter((u) => u !== user && fs.existsSync(guestFile(u)))) {
+      for (const other of ["smetanka", "keshapticya", "ir630"].filter((u) => u !== user && fs.existsSync(guestFile(u)))) {
         const o = JSON.parse(fs.readFileSync(guestFile(other), "utf8"));
         assert(o.events.filter((e) => e.type === "skip").length <= 1, `пропуск ${user} попал в прогресс ${other}`);
       }

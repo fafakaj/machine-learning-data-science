@@ -29,7 +29,8 @@ for _ in $(seq 20); do curl -fs http://127.0.0.1:8799/ >/dev/null 2>&1 && break;
 # Guest account passwords live outside git, in ~/.config/claude; the owner's comes from TEST_PASS.
 TEST_PASS_GUEST="${TEST_PASS_GUEST:-$(cat ~/.config/claude/ml-site-smetanka-pass 2>/dev/null || true)}"
 TEST_PASS_KESHA="${TEST_PASS_KESHA:-$(cat ~/.config/claude/ml-site-keshapticya-pass 2>/dev/null || true)}"
-export TEST_PASS_GUEST TEST_PASS_KESHA
+TEST_PASS_IR630="${TEST_PASS_IR630:-$(cat ~/.config/claude/ml-site-ir630-pass 2>/dev/null || true)}"
+export TEST_PASS_GUEST TEST_PASS_KESHA TEST_PASS_IR630
 
 SHOTS="${SHOTS:-$APP/tests/shots}"
 mkdir -p "$SHOTS"
