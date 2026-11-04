@@ -80,6 +80,10 @@ class FitClass(unittest.TestCase):
         ranking = pc.fit_class(self.NS, [1e-6 * n * math.log2(n) for n in self.NS])
         self.assertEqual(ranking[0][0], "nlogn")
 
+    def test_square_root_loop_fits_sqrtn(self):
+        q = choice(measure={"by": "ops", "stmt": "i = 1\nwhile i * i < n:\n    i += 1", "ns": [1000, 4000, 16000, 64000, 256000], "cls": "sqrtn"})
+        self.assertEqual(pc.check_measure(q), [])
+
     def test_exponential_does_not_overflow_on_large_n(self):
         ranking = pc.fit_class(self.NS, [1e-6] * 5)
         self.assertEqual(ranking[0][0], "1")

@@ -27,6 +27,7 @@ MIN_WRONG = 40
 CLASSES = {
     "1": lambda n: 1.0,
     "logn": lambda n: math.log2(n),
+    "sqrtn": lambda n: math.sqrt(n),
     "n": lambda n: float(n),
     "nlogn": lambda n: n * math.log2(n),
     "n2": lambda n: float(n) ** 2,
