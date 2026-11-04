@@ -4,15 +4,14 @@
 import { createEditor } from "../editor.js";
 import { grade, questionBody, readValue } from "../grade.js";
 import { icon } from "../icons.js";
+import { schedule } from "../leitner.js";
 import { esc, md } from "../md.js";
 import { runProblem, TimeoutError } from "../py.js";
 import { openTutor } from "../tutor.js";
 import { allSteps, data, getStep, isDone, logEvent, progress, scheduleSave, todayISO } from "../store.js";
 import { resultsHTML } from "./code.js";
 
-const INTERVAL_DAYS = [0, 1, 2, 4, 8, 16, 32];
 const SESSION = 12;
-const DAY = 86400000;
 const NEW_PER_DAY = 15; // new Anki cards a day, as in the .apkg deck settings
 const REQUEUE = 2; // an Anki card answered "again" comes back this many times within one session
 
@@ -81,16 +80,8 @@ function box(key) {
 
 /** grade: "again" | "good" | "easy". */
 function record(c, gradeName) {
-  const b = box(c.key);
-  b.seen += 1;
+  const b = Object.assign(box(c.key), schedule(box(c.key), gradeName, Date.now()));
   b.intro ||= todayISO();
-  if (gradeName === "again") {
-    b.box = 0;
-    b.wrong += 1;
-  } else {
-    b.box = Math.min(b.box + (gradeName === "easy" ? 2 : 1), INTERVAL_DAYS.length - 1);
-  }
-  b.due = Date.now() + INTERVAL_DAYS[b.box] * DAY;
   b.last = new Date().toISOString();
   logEvent("review", null, { card: c.key, ok: gradeName !== "again", grade: gradeName });
   scheduleSave();

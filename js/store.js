@@ -23,7 +23,7 @@ const lsKey = () => (isGuestAccount() ? `${LS_KEY}:${backend.user.user.toLowerCa
 const serverURL = () => (backend.user ? `api/progress?user=${encodeURIComponent(backend.user.user)}` : "api/progress");
 
 function emptyProgress() {
-  return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, review: {}, events: [] };
+  return { version: 1, steps: {}, code: {}, quiz: {}, checklist: {}, notes: {}, review: {}, pyquiz: {}, events: [] };
 }
 
 /** Save time in ms. Old server copies have a zone-less local stamp; Date.parse reads it as local time. */
