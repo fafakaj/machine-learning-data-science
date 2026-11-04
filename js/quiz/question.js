@@ -67,7 +67,7 @@ export function renderQuestion(root, q, opts) {
           placeholder="имя метода ${esc(q.of)}" aria-label="Имя метода ${esc(q.of)}"><button class="btn primary big" type="submit">Проверить</button></form>`
     : `<div class="qz-opts">${order.map((k) => `<button class="qz-opt ${q.mono ? "mono" : ""}" data-pick="${k}">${inline(q.options[k])}</button>`).join("")}</div>`;
   root.innerHTML = `${opts.head}
-    <div class="qz-stage">
+    <div class="qz-stage" data-qid="${q.id}">
       <p class="qz-topic">${esc(opts.topic)}</p>
       <div class="qz-prompt md">${md(q.q)}</div>
       ${q.code ? `<pre class="code">${esc(q.code)}</pre>` : ""}

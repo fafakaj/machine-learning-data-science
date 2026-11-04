@@ -463,6 +463,140 @@ async function savedProgress(ready, file = PROGRESS) {
     await m.close();
   });
 
+  // ---------------------------------------------------------------- Quiz ML (phone 390×844)
+  const BANK = JSON.parse(fs.readFileSync(`${__dirname}/../data/pyquiz.json`, "utf8"));
+  const Q = new Map(BANK.questions.map((q) => [q.id, q]));
+  const qz = await (await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true })).newPage();
+  qz.on("pageerror", (e) => errors.push(`quiz: ${e.message}`));
+  const qzOpen = async (hash, sel) => {
+    await qz.goto(`${BASE}/quiz.html${hash}`);
+    await qz.waitForSelector(sel);
+  };
+  /** Answers the question on screen, right or wrong; returns its id. */
+  const qzAnswer = async (right) => {
+    const id = await qz.getAttribute(".qz-stage", "data-qid");
+    const q = Q.get(id);
+    if (q.type === "input") {
+      await qz.fill(".qz-input input", right ? q.answer[0] : "nosuchmethod");
+      await qz.click(".qz-input button");
+    } else {
+      await qz.click(`[data-pick="${right ? q.answer : (q.answer + 1) % q.options.length}"]`);
+    }
+    await qz.waitForSelector(".qz-sheet");
+    return id;
+  };
+  /** Plays a round to the results; `wrongFirst` answers the first question wrong. Returns the ids in order. */
+  const qzRound = async (n, { wrongFirst = false } = {}) => {
+    const ids = [];
+    for (let i = 0; i < n; i++) {
+      await qz.waitForSelector(`.qz-count:text("${i + 1} из ${n}")`);
+      ids.push(await qzAnswer(!(wrongFirst && i === 0)));
+      await qz.click(".qz-next .btn");
+    }
+    await qz.waitForSelector(".qz-score");
+    return ids;
+  };
+  const plainMd = (s) => s.replace(/`([^`]*)`/g, "$1").replace(/\*\*?([^*]+)\*\*?/g, "$1");
+
+  await check("Quiz ML: ссылка в шапке сайта; «Случайные 10» дают 10 разных вопросов темы и итог", async () => {
+    await page.goto(`${BASE}/?today=2026-10-26#/`);
+    assert(await page.$('header.top a[href="quiz.html"]'), "в шапке нет ссылки на Quiz ML");
+    await qzOpen("#/topic/list-o", "[data-mode=random]");
+    await qz.click("[data-mode=random]");
+    const ids = await qzRound(10);
+    assert(new Set(ids).size === 10, `повторы в раунде: ${ids}`);
+    assert(ids.every((id) => Q.get(id).topic === "list-o"), `вопрос не из темы: ${ids}`);
+    assert((await qz.textContent(".qz-score")).trim() === "10 из 10", "счёт не 10 из 10");
+  });
+
+  await check("Quiz ML: ошибка в «Умных 10» ставит этот вопрос первым в следующем раунде", async () => {
+    await qzOpen("#/topic/dict-o", "[data-mode=smart]");
+    await qz.click("[data-mode=smart]");
+    const [missed] = await qzRound(10, { wrongFirst: true });
+    await qz.click("[data-again]");
+    await qz.waitForSelector(".qz-count");
+    const first = await qz.getAttribute(".qz-stage", "data-qid");
+    assert(first === missed, `первым ${first}, а ошибка была в ${missed}`);
+  });
+
+  await check("Quiz ML: неверный ответ показывает разбор выбранного варианта; ввод str.RSPLIT() засчитан", async () => {
+    const q = BANK.questions.find((x) => x.type === "choice" && x.options.length === 4 && x.topic === "set-o");
+    await qzOpen(`#/q/${q.id}`, ".qz-opt");
+    const k = (q.answer + 2) % 4;
+    await qz.click(`[data-pick="${k}"]`);
+    await qz.waitForSelector("[data-mistake]");
+    const shown = (await qz.textContent("[data-mistake]")).replace(/\s+/g, " ");
+    const want = plainMd(q.wrong[String(k)]).replace(/\s+/g, " ").slice(0, 40);
+    assert(shown.includes(want), `«В чём ошибка» не для варианта ${k}: ${shown.slice(0, 80)}`);
+    await qz.click(".qz-all summary");
+    assert((await qz.$$(".qz-all li")).length === 2, "в «Разборе всех вариантов» не 2 остальных варианта");
+    await qzOpen("#/q/str-m-rsplit", ".qz-input input");
+    await qz.fill(".qz-input input", " str.RSPLIT() ");
+    await qz.click(".qz-input button");
+    assert((await qz.getAttribute(".qz-sheet", "data-verdict")) === "ok", "str.RSPLIT() не засчитан");
+  });
+
+  await check("Quiz ML: двойное касание варианта записывает ответ один раз", async () => {
+    const q = BANK.questions.find((x) => x.type === "choice" && x.topic === "conc-theory");
+    await qzOpen(`#/q/${q.id}`, ".qz-opt");
+    await qz.dblclick(`[data-pick="${q.answer}"]`);
+    const p = await savedProgress((x) => x.pyquiz?.[q.id]);
+    assert(p?.pyquiz?.[q.id]?.seen === 1, `seen = ${p?.pyquiz?.[q.id]?.seen}`);
+    assert(p.pyquiz[q.id].box === 1 && p.pyquiz[q.id].last === "ok", JSON.stringify(p.pyquiz[q.id]));
+  });
+
+  await check("Quiz ML: каталог — все вопросы темы, статус после ответа, статус после перезагрузки", async () => {
+    const n = BANK.questions.filter((x) => x.topic === "set-m").length;
+    await qzOpen("#/catalog/set-m", ".qz-cat");
+    assert((await qz.$$(".qz-cat")).length === n, `в каталоге не ${n} строк`);
+    const first = await qz.getAttribute(".qz-cat >> nth=0", "data-qid");
+    assert(await qz.$(`.qz-cat.is-new[data-qid="${first}"]`), "первый вопрос не «не решал»");
+    await qz.click(".qz-cat >> nth=0");
+    await qz.waitForSelector(".qz-stage");
+    await qzAnswer(false);
+    await qz.click(".qz-back");
+    await qz.waitForSelector(`.qz-cat.is-bad[data-qid="${first}"]`);
+    await savedProgress((x) => x.pyquiz?.[first]);
+    await qz.reload();
+    await qz.waitForSelector(`.qz-cat.is-bad[data-qid="${first}"]`, { timeout: 5000 });
+    assert((await qz.textContent(`.qz-cat[data-qid="${first}"] small`)).includes("коробка 0"), "нет номера коробки");
+  });
+
+  await check("Quiz ML: «Свой набор» из двух тем — 20 вопросов только из них, выбор запомнен", async () => {
+    await qzOpen("#/custom", ".qz-check");
+    await qz.evaluate(() => localStorage.removeItem("quizml-custom"));
+    await qz.reload();
+    await qz.waitForSelector(".qz-check");
+    await qz.check('.qz-check input[value="str-o"]');
+    await qz.check('.qz-check input[value="conc-pick"]');
+    assert((await qz.textContent("[data-start]")).includes("20 вопросов"), "кнопка не «20 вопросов»");
+    await qz.click("[data-start]");
+    const ids = await qzRound(20);
+    assert(new Set(ids).size === 20, "повторы в своём наборе");
+    const topics = new Set(ids.map((id) => Q.get(id).topic));
+    assert([...topics].every((t) => t === "str-o" || t === "conc-pick"), `чужие темы: ${[...topics]}`);
+    await qzOpen("#/custom", ".qz-check");
+    const checked = await qz.$$eval(".qz-check input:checked", (els) => els.map((e) => e.value).sort());
+    assert(checked.join() === "conc-pick,str-o", `запомнен выбор ${checked}`);
+  });
+
+  await check("Quiz ML: прогресс без ключа pyquiz (старая копия) не ломает страницу", async () => {
+    // Let the last debounced save of the round land first, then leave the page so nothing writes over the edit.
+    await qz.waitForTimeout(1500);
+    await qz.goto("about:blank");
+    const p = JSON.parse(fs.readFileSync(PROGRESS, "utf8"));
+    delete p.pyquiz;
+    p.saved_at = new Date(Date.now() + 60000).toISOString();
+    fs.writeFileSync(PROGRESS, JSON.stringify(p));
+    await qzOpen("#/", ".qz-row");
+    assert((await qz.textContent(".qz-row")).includes("верно 0 из"), "счётчик темы не обнулён");
+    await qzOpen("#/q/str-m-rsplit", ".qz-input input");
+    await qzAnswer(true);
+    const saved = await savedProgress((x) => x.pyquiz?.["str-m-rsplit"]);
+    assert(saved?.pyquiz?.["str-m-rsplit"]?.last === "ok", "ответ не записан в pyquiz");
+    assert(Object.keys(saved.steps).length === Object.keys(p.steps).length, "потерялись шаги сайта");
+  });
+
   await check("Нет ошибок JavaScript на странице", async () => {
     assert(errors.length === 0, errors.join("\n"));
   });
