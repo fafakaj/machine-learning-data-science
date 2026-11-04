@@ -63,3 +63,6 @@ async function main() {
 }
 
 main();
+
+// The shortcut on the phone works offline; the worker covers quiz.html only, the rest of the site is left alone.
+navigator.serviceWorker?.register("quiz-sw.js", { scope: "./quiz" }).catch((err) => console.warn("service worker", err));

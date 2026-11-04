@@ -597,6 +597,33 @@ async function savedProgress(ready, file = PROGRESS) {
     assert(Object.keys(saved.steps).length === Object.keys(p.steps).length, "потерялись шаги сайта");
   });
 
+  await check("Quiz ML: ярлык ставится (нет ошибок установки), без сети раунд проходится", async () => {
+    const octx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    const o = await octx.newPage();
+    o.on("pageerror", (e) => errors.push(`quiz offline: ${e.message}`));
+    await o.goto(`${BASE}/quiz.html#/`);
+    await o.waitForSelector(".qz-row");
+    await o.evaluate(() => navigator.serviceWorker.ready);
+    const cdp = await octx.newCDPSession(o);
+    const { installabilityErrors } = await cdp.send("Page.getInstallabilityErrors");
+    assert(installabilityErrors.length === 0, `ошибки установки: ${JSON.stringify(installabilityErrors)}`);
+    assert(await o.evaluate(() => Boolean(navigator.serviceWorker.controller)), "service worker не управляет страницей");
+    await octx.setOffline(true);
+    await o.reload();
+    await o.waitForSelector(".qz-row", { timeout: 8000 });
+    await o.goto(`${BASE}/quiz.html#/topic/code`);
+    await o.click("[data-mode=random]");
+    for (let i = 0; i < 10; i++) {
+      await o.waitForSelector(`.qz-count:text("${i + 1} из 10")`);
+      await o.click(".qz-opt >> nth=0");
+      await o.click(".qz-next .btn");
+    }
+    await o.waitForSelector(".qz-score");
+    const kept = await o.evaluate(() => Object.keys(JSON.parse(localStorage.getItem("path-progress-backup")).pyquiz).length);
+    assert(kept >= 10, `без сети в копию браузера записано ${kept} ответов`);
+    await octx.close();
+  });
+
   await check("Нет ошибок JavaScript на странице", async () => {
     assert(errors.length === 0, errors.join("\n"));
   });

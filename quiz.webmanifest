@@ -1,0 +1,19 @@
+{
+  "id": "quiz.html",
+  "name": "Quiz ML",
+  "short_name": "Quiz ML",
+  "description": "Викторина по Python: сложность и методы list, dict, set, str, оценка кода, параллелизм.",
+  "lang": "ru",
+  "start_url": "quiz.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f5f7",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "img/quiz-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "img/quiz-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
