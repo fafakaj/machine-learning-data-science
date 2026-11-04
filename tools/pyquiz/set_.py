@@ -1,6 +1,6 @@
 """set: complexity (TimeComplexity table or measured) and methods (checked by asserts)."""
 
-from . import O1, OLOG, ON, ONLOG, ON2, STD, TC
+from . import O1, OLOG, ON, ON2, ONLOG, STD, TC
 
 SET_SRC = STD + "#set-types-set-frozenset"
 LS, LT = "len(s)", "len(t)"

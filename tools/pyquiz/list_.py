@@ -1,6 +1,6 @@
 """list: complexity (checked against the TimeComplexity table) and methods (checked by asserts)."""
 
-from . import O1, OLOG, ON, ONLOG, ON2, STD, TC, TUT_LISTS
+from . import O1, OLOG, ON, ON2, ONLOG, STD, TC, TUT_LISTS
 
 LIST_SRC = STD + "#mutable-sequence-types"
 

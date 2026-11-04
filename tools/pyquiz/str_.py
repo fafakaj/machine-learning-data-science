@@ -1,6 +1,6 @@
 """str: complexity (measured: the TimeComplexity wiki has no str table) and methods (checked by asserts)."""
 
-from . import O1, OLOG, ON, ONLOG, ON2, STD
+from . import O1, OLOG, ON, ON2, ONLOG, STD
 
 STR_SRC = STD + "#string-methods"
 UNICODE_C = "https://github.com/python/cpython/blob/main/Objects/unicodeobject.c"
