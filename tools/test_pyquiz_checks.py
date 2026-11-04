@@ -98,6 +98,17 @@ class Measure(unittest.TestCase):
         linear = lambda setup, stmt, n: 2e-7 * n + 1e-9 * n * math.log2(n)  # noqa: E731
         self.assertEqual(pc.check_measure(self.q("n"), timer=linear), [])
 
+    def test_counted_lines_separate_n_from_n_log_n(self):
+        loop = "for i in range(n):\n    j = 1\n    while j < n:\n        j *= 2"
+        q = choice(measure={"by": "ops", "stmt": loop, "ns": [64, 256, 1024, 4096, 16384], "cls": "nlogn"})
+        self.assertEqual(pc.check_measure(q), [])
+        self.assertTrue(pc.check_measure({**q, "measure": {**q["measure"], "cls": "n"}}))
+
+    def test_counted_lines_include_functions_from_setup(self):
+        setup = "def walk(a):\n    for x in a:\n        pass"
+        q = choice(measure={"by": "ops", "setup": setup, "stmt": "walk(range(n))", "ns": [100, 400, 1600, 6400, 25600], "cls": "n"})
+        self.assertEqual(pc.check_measure(q), [])
+
     def test_real_timer_sees_linear_scan(self):
         q = choice(measure={"setup": "a = list(range(n))", "stmt": "-1 in a", "ns": [20000, 40000, 80000, 160000, 320000], "cls": "n"})
         self.assertEqual(pc.check_measure(q), [])

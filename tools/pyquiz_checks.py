@@ -33,10 +33,9 @@ CLASSES = {
     "n3": lambda n: float(n) ** 3,
     "2n": lambda n: 2.0**n if n < 1000 else math.inf,
 }
-# The timer barely separates these pairs: a log factor over 16x of n is within noise.
+# The timer cannot separate these pairs: a log factor over 16x of n is smaller than cache effects
+# (a 300k-element list scan already looks like n log n). Line counting ("by": "ops") separates them exactly.
 NEIGHBOURS = [{"1", "logn"}, {"n", "nlogn"}]
-NEIGHBOUR_RATIO = 1.5
-NEIGHBOUR_SLACK = 0.05
 
 
 def public_methods(tp):
@@ -119,17 +118,38 @@ def default_timer(setup, stmt, n):
     return min(t.repeat(5, number)) / number
 
 
+def count_lines(setup, stmt, n):
+    """Python lines executed by stmt (and by functions defined in setup): an exact cost of Python-level loops."""
+    g = {"n": n}
+    exec(compile(setup, "<setup>", "exec"), g)
+    code = compile(stmt, "<stmt>", "exec")
+    count = 0
+
+    def tracer(frame, event, arg):
+        nonlocal count
+        if frame.f_code.co_filename not in ("<setup>", "<stmt>"):
+            return None
+        if event == "line":
+            count += 1
+        return tracer
+
+    sys.settrace(tracer)
+    try:
+        exec(code, g)
+    finally:
+        sys.settrace(None)
+    return max(count, 1)
+
+
 def check_measure(q, timer=default_timer):
     if "measure" not in q:
         return []
     m = q["measure"]
-    times = [timer(m.get("setup", ""), m["stmt"], n) for n in m["ns"]]
-    ranking = fit_class(m["ns"], times)
-    best, best_err = ranking[0]
-    if best == m["cls"]:
-        return []
-    err = dict(ranking)[m["cls"]]
-    if {best, m["cls"]} in NEIGHBOURS and err <= max(NEIGHBOUR_RATIO * best_err, best_err + NEIGHBOUR_SLACK):
+    by_ops = m.get("by") == "ops"
+    cost = count_lines if by_ops else timer
+    ranking = fit_class(m["ns"], [cost(m.get("setup", ""), m["stmt"], n) for n in m["ns"]])
+    best = ranking[0][0]
+    if best == m["cls"] or (not by_ops and {best, m["cls"]} in NEIGHBOURS):
         return []
     top = ", ".join(f"{k} {e:.3f}" for k, e in ranking[:3])
     return [f"{q['id']}: замер даёт {best}, а ответ {m['cls']} (ошибки подгонки: {top})"]
