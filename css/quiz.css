@@ -1,0 +1,135 @@
+/* Quiz ML. One column under the thumb; every colour and size comes from the tokens of app.css.
+   The question screen is variant A of the demo: the question on top, answers at the bottom, the analysis after. */
+
+body.qz { min-height: 100dvh; -webkit-tap-highlight-color: transparent; }
+.qz code { font-size: .92em; }
+/* A type name in a topic title is part of the title, not a code sample. */
+.qz-row b code, .qz-check b code, .qz-head h1 code, .qz-back code { background: none; padding: 0; font-size: .95em; }
+
+/* ---------------------------------------------------------------- header */
+.qz-top { position: sticky; top: 0; z-index: 10; height: 56px; display: flex; align-items: center; gap: 8px;
+  padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  background: var(--surface); border-bottom: 1px solid var(--line); }
+.qz-top .nav-link { padding: 8px 10px; font-size: var(--fs-sm); color: var(--text-2); }
+.qz-top .dot { margin-right: 4px; }
+.qz-top .user { padding: 4px; }
+
+.qz-main { max-width: 600px; margin: 0 auto; padding: 16px max(16px, env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+.qz-head { margin: 8px 0 20px; }
+.qz-head h1 { font-size: var(--fs-h1); }
+.qz-head p { margin: 6px 0 0; }
+.qz-back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; color: var(--muted); font-size: var(--fs-sm); }
+.qz-back:hover { color: var(--text); text-decoration: none; }
+
+/* ---------------------------------------------------------------- lists */
+.qz-group h2 { font-size: var(--fs-sm); font-weight: 600; color: var(--muted); margin: 24px 0 8px; }
+.qz-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.qz-row, .qz-cat, .qz-check { display: grid; gap: 2px 12px; padding: 12px 16px; min-height: 60px; color: var(--text); border-top: 1px solid var(--line); }
+.qz-list > :first-child { border-top: 0; }
+.qz-row:hover, .qz-cat:hover, .qz-check:hover { background: var(--sunken); text-decoration: none; }
+.qz-row { grid-template-columns: 1fr 64px; align-items: center; }
+.qz-row b, .qz-check b { display: block; font-weight: 600; }
+.qz-row small, .qz-cat small, .qz-check small { color: var(--muted); font-size: var(--fs-sm); }
+.qz-meter { height: 6px; background: var(--sunken); border-radius: 99px; overflow: hidden; }
+.qz-meter i { display: block; height: 100%; background: var(--ok-solid); border-radius: 99px; }
+
+.qz-custom { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: var(--r); background: var(--accent); color: var(--accent-ink); }
+.qz-custom:hover { background: var(--accent-hover); text-decoration: none; }
+.qz-custom-t { flex: 1; }
+.qz-custom b { display: block; font-size: var(--fs-lg); }
+.qz-custom small { font-size: var(--fs-sm); opacity: .85; }
+
+.qz-cat { grid-template-columns: 20px 1fr; align-items: start; }
+.qz-cat .qz-st { margin-top: 3px; }
+.qz-cat small { grid-column: 2; }
+.qz-cat-t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qz-cat.is-new .qz-st { color: var(--line-strong); }
+.qz-cat.is-ok .qz-st { color: var(--ok); }
+.qz-cat.is-bad .qz-st { color: var(--bad); }
+
+.qz-check { grid-template-columns: 24px 1fr; align-items: center; cursor: pointer; }
+.qz-check input { width: 22px; height: 22px; margin: 0; accent-color: var(--accent); }
+
+/* ---------------------------------------------------------------- topic */
+.qz-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.qz-stat b { display: block; font-size: var(--fs-h1); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.qz-stat span { font-size: var(--fs-sm); color: var(--muted); }
+.qz-modes { display: grid; gap: 10px; margin-top: 24px; }
+.qz-mode { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; min-height: 64px; padding: 14px 16px; text-align: left;
+  font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r); cursor: pointer; }
+.qz-mode:hover { border-color: var(--accent); text-decoration: none; }
+.qz-mode b { font-size: var(--fs-lg); }
+.qz-mode small { font-size: var(--fs-sm); color: var(--muted); line-height: 1.4; }
+.qz-mode.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.qz-mode.primary:hover { background: var(--accent-hover); }
+.qz-mode.primary small { color: inherit; opacity: .85; }
+
+/* The Leitner ladder: one column per box, its height is the number of questions in it. */
+.qz-ladder { margin: 28px 0 0; }
+.qz-rungs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; align-items: end; height: 96px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+.qz-rung { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%; }
+.qz-rung i { display: block; width: 100%; min-height: 2px; border-radius: 4px 4px 0 0; background: var(--accent); }
+.qz-rung.fresh i { background: var(--line-strong); }
+.qz-rung .n { font-size: var(--fs-xs); font-weight: 600; font-variant-numeric: tabular-nums; }
+.qz-rung-labels { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-top: 4px; text-align: center; font-size: var(--fs-xs); color: var(--muted); }
+.qz-ladder figcaption { margin-top: 12px; line-height: 1.5; }
+
+/* ---------------------------------------------------------------- question */
+.qz-q { display: flex; flex-direction: column; min-height: 100dvh; padding-top: 8px; }
+.qz-qtop { display: flex; align-items: center; gap: 12px; min-height: 48px; }
+.qz-segs { flex: 1; display: flex; gap: 3px; }
+.qz-segs i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+.qz-segs i.now { background: var(--text-2); }
+.qz-segs i.ok { background: var(--ok-solid); }
+.qz-segs i.bad { background: var(--bad); }
+.qz-count { font-size: var(--fs-sm); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.qz-stage { flex: 1; }
+.qz-topic { margin: 12px 0 6px; font-size: var(--fs-sm); color: var(--muted); }
+.qz-prompt { font-size: 19px; font-weight: 600; line-height: 1.4; text-wrap: pretty; }
+.qz-stage pre.code { margin-top: 14px; }
+.qz-answer { margin-top: 24px; }
+.qz-opts { display: grid; gap: 8px; }
+.qz-opt { min-height: 52px; padding: 12px 16px; text-align: left; font: inherit; line-height: 1.35; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r); cursor: pointer; transition: border-color .15s, background .15s; }
+.qz-opt.mono { font-family: var(--mono); font-size: 15px; }
+.qz-opt:hover:not(:disabled) { border-color: var(--accent); }
+.qz-opt:disabled { cursor: default; }
+.qz-opt.right { background: var(--ok-soft); border-color: var(--ok-solid); color: var(--ok); font-weight: 600; }
+.qz-opt.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 2px; }
+.qz-opt.dim { opacity: .55; }
+.qz-input { display: flex; gap: 8px; }
+.qz-input .answer { flex: 1; min-width: 0; min-height: 52px; font-size: 16px; }
+.qz-input .btn { min-height: 52px; }
+.qz-input .answer.right { border-color: var(--ok-solid); background: var(--ok-soft); color: var(--ok); }
+.qz-input .answer.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
+.qz-reveal { display: block; margin: 12px auto 0; min-height: 44px; }
+
+.qz-sheet { margin-top: 16px; padding: 16px; display: grid; gap: 6px; scroll-margin-top: 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); animation: qz-rise .2s ease-out; }
+@keyframes qz-rise { from { transform: translateY(8px); opacity: .4; } to { transform: none; opacity: 1; } }
+.qz-verdict { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--fs-h2); }
+.qz-verdict .ico { width: 22px; height: 22px; stroke-width: 2.4; }
+.qz-sheet.is-ok { border-color: color-mix(in srgb, var(--ok-solid) 45%, var(--line)); }
+.qz-sheet.is-ok .qz-verdict { color: var(--ok); }
+.qz-sheet.is-bad { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+.qz-sheet.is-bad .qz-verdict { color: var(--bad); }
+.qz-sheet h3 { margin: 10px 0 0; font-size: var(--fs-sm); font-weight: 600; color: var(--muted); }
+.qz-right { margin: 4px 0 0; }
+.qz-all { margin-top: 6px; }
+.qz-all summary { min-height: 44px; display: flex; align-items: center; color: var(--accent); font-weight: 600; cursor: pointer; }
+.qz-all ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.qz-all li { padding-left: 12px; border-left: 3px solid var(--line); }
+.qz-all li b { display: block; }
+.qz-all li b.mono { font-family: var(--mono); font-size: 15px; }
+.qz-src { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 10px 0 0; font-size: var(--fs-sm); color: var(--muted); }
+.qz-src a { overflow-wrap: anywhere; }
+
+/* Buttons that stay under the thumb at the bottom of the screen. */
+.qz-dock { position: sticky; bottom: 0; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px;
+  margin-top: 16px; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 30%); }
+.qz-dock .btn { min-height: 52px; }
+
+/* ---------------------------------------------------------------- results */
+.qz-score { margin: 4px 0 0 !important; font-size: 56px; font-weight: 700; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.qz-actions { display: grid; gap: 8px; margin-top: 24px; }
+.qz-actions .btn { min-height: 52px; }

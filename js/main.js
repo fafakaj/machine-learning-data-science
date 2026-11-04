@@ -60,6 +60,7 @@ function header({ menu = false } = {}) {
         <span class="muted">${p.done} из ${p.total} шагов</span>
       </div>
       <nav class="nav">
+        <a class="nav-link" href="quiz.html" title="Quiz ML: викторина по Python">${icon("help")}<span class="nav-label">Quiz ML</span></a>
         <a class="nav-link" href="#/review" title="Повторение">${icon("repeat")}<span class="nav-label">Повторение</span>${due ? `<span class="count">${due}</span>` : ""}</a>
         <a class="nav-link" href="#/tutor" title="Визуализатор кода: выполнение по шагам">${icon("step")}<span class="nav-label">Визуализатор</span></a>
         <a class="nav-link" href="#/map" title="Карта курса">${icon("map")}<span class="nav-label">Карта курса</span></a>
