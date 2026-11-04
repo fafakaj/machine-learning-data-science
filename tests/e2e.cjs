@@ -507,6 +507,12 @@ async function savedProgress(ready, file = PROGRESS) {
     assert(new Set(ids).size === 10, `повторы в раунде: ${ids}`);
     assert(ids.every((id) => Q.get(id).topic === "list-o"), `вопрос не из темы: ${ids}`);
     assert((await qz.textContent(".qz-score")).trim() === "10 из 10", "счёт не 10 из 10");
+    await qz.click(".qz-list a >> nth=0");
+    await qz.waitForSelector('.qz-sheet[data-verdict="ok"]');
+    await qzOpen(`#/catalog/list-o`, ".qz-cat");
+    await qz.click(`.qz-cat[data-qid="${ids[0]}"]`);
+    await qz.waitForSelector(".qz-opt");
+    assert(!(await qz.$(".qz-sheet")) && (await qz.isEnabled(".qz-opt >> nth=0")), "вопрос из каталога открылся уже отвеченным");
   });
 
   await check("Quiz ML: ошибка в «Умных 10» ставит этот вопрос первым в следующем раунде", async () => {

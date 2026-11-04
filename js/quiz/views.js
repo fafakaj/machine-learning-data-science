@@ -304,7 +304,7 @@ function renderResults() {
     .map((id) => {
       const q = bank.byId.get(id);
       const ok = round.answers[id]?.ok;
-      return `<a class="qz-cat ${ok ? "is-ok" : "is-bad"}" href="#/q/${id}">${icon(ok ? "check" : "close", "qz-st")}
+      return `<a class="qz-cat ${ok ? "is-ok" : "is-bad"}" href="#/a/${id}">${icon(ok ? "check" : "close", "qz-st")}
           <span class="qz-cat-t">${esc(plain(q.q))}</span><small>${ok ? "верно" : "ошибка"}, открыть разбор</small></a>`;
     })
     .join("");
@@ -319,11 +319,12 @@ function renderResults() {
   app.querySelector("[data-again]").addEventListener("click", () => startRound(round.again(), round.title, { again: round.again, back: round.back }));
 }
 
-/** One question by link: from the catalog it can be answered; from the results it opens with the analysis. */
-function renderSingle(id) {
+/** One question by link: #/q/<id> (catalog) can be answered; #/a/<id> (results) opens the round's answer with the analysis. */
+function renderSingle(id, { fromRound = false } = {}) {
   const q = bank.byId.get(id);
   if (!q) return renderHome();
-  const fromResults = round && round.i >= round.ids.length && round.answers[id];
+  const fromResults = fromRound && round?.answers[id];
+  if (fromRound && !fromResults) return renderSingle(id);
   const ids = bank.byTopic.get(q.topic);
   const next = ids[ids.indexOf(id) + 1];
   const backHash = fromResults ? "#/run" : `#/catalog/${q.topic}`;
@@ -349,5 +350,6 @@ export function render() {
   if (route === "custom") return renderCustom();
   if (route === "run") return renderRun();
   if (route === "q") return renderSingle(arg);
+  if (route === "a") return renderSingle(arg, { fromRound: true });
   return renderHome();
 }
