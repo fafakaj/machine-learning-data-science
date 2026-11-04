@@ -331,3 +331,62 @@ QUESTIONS = [
         "src": [DICT_SRC],
     },
 ]
+
+# Second batch: falsy values with get, pop without a default, items, setdefault on an existing key.
+QUESTIONS += [
+    {
+        "id": "dict-m-get-falsy", "topic": "dict-m", "type": "choice",
+        "q": "Что вернёт `{'k': 0}.get('k', 5)`?",
+        "options": ["`0`", "`5`", "`None`", "`False`"],
+        "answer": 0, "covers": ["dict.get"],
+        "check": "assert {'k': 0}.get('k', 5) == 0",
+        "why": "get возвращает значение по умолчанию, только если ключа нет. Ключ 'k' есть, его значение 0, поэтому вернётся 0. "
+               "Ловушка в коде вида d.get(k) or 5: там 0 заменился бы на 5, потому что 0 считается ложью.",
+        "wrong": {
+            "1": "5 вернулось бы при отсутствии ключа. get не проверяет, ложное ли значение.",
+            "2": "None — значение по умолчанию, когда ключа нет и второй аргумент не передан.",
+            "3": "get возвращает то, что лежит в словаре, без приведения к bool.",
+        },
+        "src": [DICT_SRC],
+    },
+    {
+        "id": "dict-m-pop-missing", "topic": "dict-m", "type": "choice",
+        "q": "Что произойдёт при `{}.pop('x')`?",
+        "options": ["Исключение KeyError", "Вернётся `None`", "Вернётся `{}`", "Ничего, вызов игнорируется"],
+        "answer": 0, "covers": ["dict.pop"],
+        "check": "try:\n    {}.pop('x')\n    raise AssertionError\nexcept KeyError:\n    pass\nassert {}.pop('x', None) is None",
+        "why": "pop(key) без второго аргумента требует, чтобы ключ был. Если ключа нет, он бросает KeyError. "
+               "pop(key, default) вернёт default и ничего не бросит.",
+        "wrong": {
+            "1": "None вернул бы get('x') или pop('x', None). Без значения по умолчанию pop бросает KeyError.",
+            "2": "pop возвращает значение удалённого ключа, а не словарь.",
+            "3": "pop не молчит при отсутствии ключа, так делает только вариант с default.",
+        },
+        "src": [DICT_SRC],
+    },
+    {
+        "id": "dict-m-items", "topic": "dict-m", "type": "input", "of": "dict",
+        "q": "Каким методом словаря пройти циклом сразу по ключам и значениям?",
+        "code": "d = {'a': 1}\nfor k, v in d.???():\n    print(k, v)  # a 1",
+        "answer": ["items"], "covers": ["dict.items"],
+        "check": "assert list({'a': 1}.items()) == [('a', 1)]",
+        "why": "items() возвращает живое представление пар (ключ, значение) в порядке вставки. "
+               "В цикле пару сразу распаковывают в две переменные. Это быстрее, чем перебирать ключи и брать d[k].",
+        "src": [DICT_SRC],
+    },
+    {
+        "id": "dict-m-setdefault-existing", "topic": "dict-m", "type": "choice",
+        "q": "`d = {'k': 1}`. Что вернёт `d.setdefault('k', 2)` и чему станет равно `d`?",
+        "options": ["`1`, `d` не изменится", "`2`, `d == {'k': 2}`", "`None`, `d` не изменится", "`1`, `d == {'k': 2}`"],
+        "answer": 0, "covers": ["dict.setdefault"],
+        "check": "d = {'k': 1}\nassert d.setdefault('k', 2) == 1 and d == {'k': 1}",
+        "why": "setdefault пишет значение, только если ключа нет. Ключ 'k' уже есть, поэтому словарь не меняется, "
+               "а метод возвращает текущее значение 1.",
+        "wrong": {
+            "1": "Перезапись делает d['k'] = 2 или update. setdefault существующий ключ не трогает.",
+            "2": "setdefault всегда возвращает значение ключа: текущее или только что записанное.",
+            "3": "Если вернулась 1, значит ключ уже был, и записи не было.",
+        },
+        "src": [DICT_SRC],
+    },
+]
