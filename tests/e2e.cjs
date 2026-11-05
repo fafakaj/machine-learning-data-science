@@ -630,6 +630,51 @@ async function savedProgress(ready, file = PROGRESS) {
     await octx.close();
   });
 
+  await check("Quiz ML как приложение: быстрые действия ярлыка, вкладки, «Повторить», вибрация, без жестов браузера", async () => {
+    const man = JSON.parse(fs.readFileSync(`${__dirname}/../quiz.webmanifest`, "utf8"));
+    const urls = (man.shortcuts || []).map((s) => s.url);
+    assert(urls.includes("quiz.html#/go/smart") && urls.includes("quiz.html#/custom"), `быстрые действия: ${urls}`);
+    assert(man.scope === "quiz", `scope ${man.scope}: сайт ML-дорожки открылся бы внутри приложения`);
+    const actx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await actx.addInitScript(() => {
+      window.__buzz = [];
+      Object.defineProperty(navigator, "vibrate", { value: (p) => (window.__buzz.push(p), true) });
+    });
+    const a = await actx.newPage();
+    a.on("pageerror", (e) => errors.push(`quiz app: ${e.message}`));
+    await a.goto(`${BASE}/quiz.html#/`);
+    await a.waitForSelector(".qz-tabs");
+    const css = await a.evaluate(() => {
+      const opt = getComputedStyle(document.documentElement);
+      return { over: opt.overscrollBehaviorY, touch: getComputedStyle(document.querySelector(".qz-tabs a")).touchAction };
+    });
+    assert(css.over === "none", `overscroll-behavior-y: ${css.over} (обновление жестом вниз включено)`);
+    assert(css.touch === "manipulation", `touch-action вкладки: ${css.touch} (зум двойным касанием)`);
+    assert(await a.$('.qz-top a[href="index.html"][target="_blank"]'), "ссылка на ML-дорожку откроется внутри приложения");
+    assert(!(await a.isVisible("[data-install]")), "кнопка установки видна без предложения Chrome");
+    await a.evaluate(() => {
+      const e = new Event("beforeinstallprompt", { cancelable: true });
+      window.__prompted = 0;
+      e.prompt = async () => { window.__prompted++; };
+      e.userChoice = Promise.resolve({ outcome: "accepted" });
+      window.dispatchEvent(e);
+    });
+    await a.click("[data-install]");
+    await a.waitForSelector("[data-install]", { state: "hidden" });
+    assert((await a.evaluate(() => window.__prompted)) === 1, "кнопка не вызвала окно установки Chrome");
+    const man2 = JSON.parse(fs.readFileSync(`${__dirname}/../quiz.webmanifest`, "utf8"));
+    assert(man2.theme_color !== "#ffffff", "theme_color белый: системная панель внизу будет белой");
+    await a.click('.qz-tabs a[href="#/go/smart"]');
+    await a.waitForSelector(".qz-count");
+    assert(!(await a.$(".qz-tabs")), "вкладки видны на экране вопроса");
+    assert((await a.textContent(".qz-count")).trim() === "1 из 10", "«Повторить» дал не 10 вопросов");
+    await a.click(".qz-opt >> nth=0");
+    await a.waitForSelector(".qz-sheet");
+    const buzz = await a.evaluate(() => window.__buzz.length);
+    assert(buzz === 1, `вибраций после ответа: ${buzz}`);
+    await actx.close();
+  });
+
   await check("Нет ошибок JavaScript на странице", async () => {
     assert(errors.length === 0, errors.join("\n"));
   });

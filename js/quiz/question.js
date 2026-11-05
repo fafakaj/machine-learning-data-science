@@ -98,7 +98,11 @@ export function renderQuestion(root, q, opts) {
         b.classList.add(k === q.answer ? "right" : k === value ? "wrong" : "dim");
       }
     }
-    if (record && !reveal) opts.onAnswer?.(ok, value);
+    if (record && !reveal) {
+      opts.onAnswer?.(ok, value);
+      // A short tap for a right answer, a double one for a wrong answer (Android; elsewhere vibrate is absent).
+      navigator.vibrate?.(ok ? 12 : [30, 60, 30]);
+    }
     sheet.innerHTML = sheetHTML(q, value, ok, opts);
     sheet.addEventListener("click", (e) => {
       const act = e.target.closest("[data-act]");

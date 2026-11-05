@@ -20,6 +20,7 @@ const PATHS = {
   play: '<path d="M7 5l12 7-12 7z"/>',
   step: '<path d="M5 5v14"/><path d="M9 6l10 6-10 6z"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  download: '<path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/>',
 };
 
 export const STEP_ICON = {

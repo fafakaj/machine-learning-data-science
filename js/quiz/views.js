@@ -57,6 +57,33 @@ function topicStats(id, now = Date.now()) {
   return { total: ids.length, ok, due };
 }
 
+// ---------------------------------------------------------------- install
+// Chrome offers installation through beforeinstallprompt. The page keeps the event and shows its own button on the home
+// screen instead of the browser's banner. In the installed app the event never comes, so the button stays hidden.
+let installEvent = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  installEvent = e;
+  app.querySelector("[data-install]")?.removeAttribute("hidden");
+});
+window.addEventListener("appinstalled", () => {
+  installEvent = null;
+  app.querySelector("[data-install]")?.setAttribute("hidden", "");
+});
+
+async function install(btn) {
+  const e = installEvent;
+  if (!e) return;
+  btn.disabled = true;
+  await e.prompt();
+  const { outcome } = await e.userChoice;
+  btn.disabled = false;
+  if (outcome === "accepted") {
+    installEvent = null;
+    btn.setAttribute("hidden", "");
+  }
+}
+
 // ---------------------------------------------------------------- chrome
 
 function header() {
@@ -65,7 +92,7 @@ function header() {
       <a class="brand" href="#/" aria-label="Quiz ML: все темы"><span class="logo">${icon("help")}</span><span>Quiz ML</span></a>
       <span class="spacer"></span>
       <span class="dot" data-save></span>
-      <a class="nav-link" href="index.html" title="Вернуться на ML-дорожку">${icon("trend")}<span>ML-дорожка</span></a>
+      <a class="nav-link" href="index.html" target="_blank" rel="noopener" title="Открыть ML-дорожку в браузере">${icon("trend")}<span>ML-дорожка</span></a>
       ${s ? `<button class="user" data-logout title="Выйти из аккаунта ${esc(s.user)}"><span class="avatar">${esc(s.user[0].toUpperCase())}</span></button>` : ""}
     </header>`;
 }
@@ -79,6 +106,8 @@ function bindChrome() {
       save.title = { saved: "Сохранено", pending: "Сохраняю", error: "Не удалось сохранить, повторю", local: "Сохранено только в браузере" }[s];
     });
   }
+  const inst = app.querySelector("[data-install]");
+  inst?.addEventListener("click", () => install(inst));
   app.querySelector("[data-logout]")?.addEventListener("click", () => {
     if (!confirm("Выйти из аккаунта на этом устройстве?")) return;
     logout();
@@ -86,6 +115,12 @@ function bindChrome() {
     location.reload();
   });
 }
+
+// Bottom tabs, as in a phone app. Question screens hide them: a round takes the whole screen.
+const TABS = [["#/", "list", "Темы"], ["#/go/smart", "repeat", "Повторить"], ["#/custom", "cards", "Свой набор"]];
+const tabs = (active) => `<nav class="qz-tabs" aria-label="Разделы">${TABS
+  .map(([href, ico, label]) => `<a href="${href}"${href === active ? ' aria-current="page"' : ""}>${icon(ico)}<span>${label}</span></a>`)
+  .join("")}</nav>`;
 
 const back = (href, label) => `<a class="qz-back" href="${href}">${icon("left")}<span>${label}</span></a>`;
 
@@ -117,9 +152,9 @@ function renderHome() {
   app.innerHTML = `${header()}<main class="qz-main">
       <div class="qz-head"><h1>Темы</h1>
         <p class="muted">${questionsWord(bank.byId.size)} по Python. ${dueAll ? `Пора повторить: ${dueAll}.` : "Повторять пока нечего."}</p></div>
-      <a class="qz-custom" href="#/custom"><span class="qz-custom-t"><b>Свой набор</b><small>${CUSTOM} вопросов из тем, которые вы выберете</small></span>${icon("arrow")}</a>
+      <button class="qz-install" data-install ${installEvent ? "" : "hidden"}>${icon("download")}<span><b>Установить приложение</b><small>Значок на главном экране, без браузера и без сети</small></span></button>
       ${sections}
-    </main>`;
+    </main>${tabs("#/")}`;
   bindChrome();
 }
 
@@ -155,13 +190,13 @@ function renderTopic(id) {
         <a class="qz-mode" href="#/catalog/${id}"><b>Каталог</b><small>Все ${questionsWord(st.total)} темы списком</small></a>
       </div>
       ${ladderHTML(id)}
-    </main>`;
+    </main>${tabs("#/")}`;
   bindChrome();
   app.querySelector(".qz-modes").addEventListener("click", (e) => {
     const m = e.target.closest("[data-mode]")?.dataset.mode;
     if (!m) return;
     const pick = m === "smart" ? () => pickSmart(ids, recs(), Date.now(), ROUND) : () => pickRandom(ids, ROUND);
-    startRound(pick(), `${t.title}, ${m === "smart" ? "умные" : "случайные"} ${ROUND}`, { again: pick, back: `#/topic/${id}` });
+    startRound(pick(), `${t.title}, ${m === "smart" ? "умные" : "случайные"} ${ROUND}`, { again: pick, back: `#/topic/${id}`, tab: "#/" });
   });
 }
 
@@ -190,7 +225,7 @@ function renderCatalog(id) {
       ${back(`#/topic/${id}`, titleHTML(t.title))}
       <div class="qz-head"><h1>Каталог</h1><p class="muted">${questionsWord(bank.byTopic.get(id).length)}. Коснитесь вопроса, чтобы ответить или сразу посмотреть разбор.</p></div>
       <div class="qz-list">${rows}</div>
-    </main>`;
+    </main>${tabs("#/")}`;
   bindChrome();
 }
 
@@ -225,11 +260,10 @@ function renderCustom() {
       .join("")}</div></section>`)
     .join("");
   app.innerHTML = `${header()}<main class="qz-main">
-      ${back("#/", "Все темы")}
       <div class="qz-head"><h1>Свой набор</h1><p class="muted">Выберите темы. Квиз даст ${CUSTOM} вопросов: сначала ошибки и вопросы, которым пора на повтор, потом новые.</p></div>
       ${sections}
       <div class="qz-dock"><button class="btn primary big" data-start></button></div>
-    </main>`;
+    </main>${tabs("#/custom")}`;
   bindChrome();
   const btn = app.querySelector("[data-start]");
   const pool = () => [...chosen].flatMap((id) => bank.byTopic.get(id));
@@ -250,16 +284,24 @@ function renderCustom() {
   btn.addEventListener("click", () => {
     const ids = pool();
     const pick = () => pickSmart(ids, recs(), Date.now(), CUSTOM);
-    startRound(pick(), "Свой набор", { again: pick, back: "#/custom" });
+    startRound(pick(), "Свой набор", { again: pick, back: "#/custom", tab: "#/custom" });
   });
 }
 
 // ---------------------------------------------------------------- round
 
-export function startRound(ids, title, { again = () => ids, back: backHash = "#/" } = {}) {
-  round = { title, ids, i: 0, answers: {}, again, back: backHash };
+export function startRound(ids, title, { again = () => ids, back: backHash = "#/", tab = "#/", replace = false } = {}) {
+  round = { title, ids, i: 0, answers: {}, again, back: backHash, tab };
   if (location.hash === "#/run") render();
+  else if (replace) location.replace("#/run");
   else location.hash = "#/run";
+}
+
+/** The "Повторить" tab and the shortcut on the icon: a smart round over every topic. Back from it skips this address. */
+function startSmartAll() {
+  const ids = [...bank.byId.keys()];
+  const pick = () => pickSmart(ids, recs(), Date.now(), ROUND);
+  startRound(pick(), "Повторить: все темы", { again: pick, back: "#/", tab: "#/go/smart", replace: true });
 }
 
 function segsHTML() {
@@ -308,15 +350,15 @@ function renderResults() {
           <span class="qz-cat-t">${esc(plain(q.q))}</span><small>${ok ? "верно" : "ошибка"}, открыть разбор</small></a>`;
     })
     .join("");
-  const backLabel = round.back === "#/custom" ? "К выбору тем" : "К теме";
+  const backLabel = { "#/custom": "К выбору тем", "#/": "Все темы" }[round.back] || "К теме";
   app.innerHTML = `${header()}<main class="qz-main">
       <div class="qz-head"><p class="muted">${esc(round.title)}</p><p class="qz-score">${score} из ${n}</p>
         <p class="muted">${score === n ? "Все ответы верные." : `Ошибки вернутся в следующем раунде «Умных»: их коробка теперь 0.`}</p></div>
       <div class="qz-list">${rows}</div>
       <div class="qz-actions"><button class="btn primary big" data-again>Ещё раунд</button><a class="btn big" href="${round.back}">${backLabel}</a></div>
-    </main>`;
+    </main>${tabs(round.tab)}`;
   bindChrome();
-  app.querySelector("[data-again]").addEventListener("click", () => startRound(round.again(), round.title, { again: round.again, back: round.back }));
+  app.querySelector("[data-again]").addEventListener("click", () => startRound(round.again(), round.title, { again: round.again, back: round.back, tab: round.tab }));
 }
 
 /** One question by link: #/q/<id> (catalog) can be answered; #/a/<id> (results) opens the round's answer with the analysis. */
@@ -342,9 +384,38 @@ function renderSingle(id, { fromRound = false } = {}) {
   });
 }
 
+// Depth of a screen: going to a smaller depth slides the screen back, like the system back gesture.
+const DEPTH = { "": 0, custom: 1, topic: 1, catalog: 2, go: 3, run: 3, q: 3, a: 4 };
+let depth = 0;
+
 export function render() {
+  const route = (location.hash.match(/^#\/(\w*)/) || [])[1] || "";
+  const next = DEPTH[route] ?? 0;
+  const dir = next < depth ? "back" : "forward";
+  depth = next;
+  // "go" only starts a round and moves on to #/run: the round's own render animates.
+  const still = !document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches || app.querySelector(".boot, .login") || route === "go";
+  if (still) return draw();
+  document.documentElement.dataset.nav = dir;
+  // A fast second tap starts a new transition and skips this one; that is expected, not an error.
+  document.startViewTransition(draw).ready.catch(() => {});
+}
+
+/** The status bar takes the colour of the top of the screen: the header, or the page under a question. */
+function paintStatusBar() {
+  const color = getComputedStyle(document.documentElement).getPropertyValue(app.querySelector(".qz-top") ? "--surface" : "--bg").trim();
+  for (const m of document.querySelectorAll('meta[name="theme-color"]')) m.content = color;
+}
+
+function draw() {
+  screen();
+  paintStatusBar();
+}
+
+function screen() {
   window.scrollTo(0, 0);
   const [, route = "", arg = ""] = (location.hash || "#/").match(/^#\/(\w*)\/?(.*)$/) || [];
+  if (route === "go") return startSmartAll();
   if (route === "topic") return renderTopic(arg);
   if (route === "catalog") return renderCatalog(arg);
   if (route === "custom") return renderCustom();

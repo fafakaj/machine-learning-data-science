@@ -2,6 +2,38 @@
    The question screen is variant A of the demo: the question on top, answers at the bottom, the analysis after. */
 
 body.qz { min-height: 100dvh; -webkit-tap-highlight-color: transparent; }
+
+/* ---------------------------------------------------------------- app feel
+   No pull-to-refresh and no rubber band, no zoom on a double tap, no text selection or long-press menu on controls.
+   Explanations stay selectable: a reader may copy a line of code from them. */
+html:has(body.qz) { overscroll-behavior-y: none; }
+.qz a, .qz button, .qz input, .qz label, .qz summary { touch-action: manipulation; }
+.qz-top, .qz-tabs, .qz-row, .qz-cat, .qz-check, .qz-mode, .qz-opt, .qz-install, .qz-back, .qz .btn, .qz-qtop {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* Screen changes slide a little in the direction of travel; the header and the tabs stay in place. */
+.qz-top { view-transition-name: qz-top; }
+.qz-tabs { view-transition-name: qz-tabs; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 180ms; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+::view-transition-old(root) { animation-name: qz-out; }
+::view-transition-new(root) { animation-name: qz-in; }
+:root[data-nav="back"]::view-transition-old(root) { animation-name: qz-out-back; }
+:root[data-nav="back"]::view-transition-new(root) { animation-name: qz-in-back; }
+@keyframes qz-in { from { opacity: 0; transform: translateX(24px); } }
+@keyframes qz-out { to { opacity: 0; transform: translateX(-24px); } }
+@keyframes qz-in-back { from { opacity: 0; transform: translateX(-24px); } }
+@keyframes qz-out-back { to { opacity: 0; transform: translateX(24px); } }
+
+/* Bottom tabs */
+.qz-tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: grid; grid-template-columns: repeat(3, 1fr);
+  padding: 0 max(0px, calc((100% - 600px) / 2)) env(safe-area-inset-bottom); background: var(--surface); border-top: 1px solid var(--line); }
+.qz-tabs a { height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  font-size: var(--fs-xs); font-weight: 500; color: var(--muted); }
+.qz-tabs a:hover { color: var(--text); text-decoration: none; }
+.qz-tabs a[aria-current] { color: var(--accent); }
+.qz-tabs .ico { width: 22px; height: 22px; }
+body.qz:has(.qz-tabs) .qz-main { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+body.qz:has(.qz-tabs) .qz-dock { bottom: calc(56px + env(safe-area-inset-bottom)); }
 .qz code { font-size: .92em; }
 /* A type name in a topic title is part of the title, not a code sample. */
 .qz-row b code, .qz-check b code, .qz-head h1 code, .qz-back code { background: none; padding: 0; font-size: .95em; }
@@ -28,16 +60,18 @@ body.qz { min-height: 100dvh; -webkit-tap-highlight-color: transparent; }
 .qz-list > :first-child { border-top: 0; }
 .qz-row:hover, .qz-cat:hover, .qz-check:hover { background: var(--sunken); text-decoration: none; }
 .qz-row { grid-template-columns: 1fr 64px; align-items: center; }
+.qz-install { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; text-align: left;
+  font: inherit; color: var(--text); background: var(--accent-soft); border: 1px solid transparent; border-radius: var(--r); cursor: pointer; }
+.qz-install[hidden] { display: none; }
+.qz-install:hover { border-color: var(--accent); }
+.qz-install .ico { width: 22px; height: 22px; color: var(--accent); }
+.qz-install b { display: block; color: var(--accent); font-weight: 600; }
+.qz-install small { font-size: var(--fs-sm); color: var(--text-2); }
 .qz-row b, .qz-check b { display: block; font-weight: 600; }
 .qz-row small, .qz-cat small, .qz-check small { color: var(--muted); font-size: var(--fs-sm); }
 .qz-meter { height: 6px; background: var(--sunken); border-radius: 99px; overflow: hidden; }
 .qz-meter i { display: block; height: 100%; background: var(--ok-solid); border-radius: 99px; }
 
-.qz-custom { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: var(--r); background: var(--accent); color: var(--accent-ink); }
-.qz-custom:hover { background: var(--accent-hover); text-decoration: none; }
-.qz-custom-t { flex: 1; }
-.qz-custom b { display: block; font-size: var(--fs-lg); }
-.qz-custom small { font-size: var(--fs-sm); opacity: .85; }
 
 .qz-cat { grid-template-columns: 20px 1fr; align-items: start; }
 .qz-cat .qz-st { margin-top: 3px; }

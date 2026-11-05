@@ -1,7 +1,7 @@
 // Quiz ML service worker: the quiz opens and works without a network.
 // Network first, so a deploy is seen at once; the cache answers only when the network does not.
 // Requests to other origins (the GitHub gist API) and to the local server API pass through untouched.
-const CACHE = "quizml-v1";
+const CACHE = "quizml-v2";
 const FILES = [
   "quiz.html", "quiz.webmanifest",
   "css/app.css", "css/quiz.css",

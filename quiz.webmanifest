@@ -5,15 +5,29 @@
   "description": "Викторина по Python: сложность и методы list, dict, set, str, оценка кода, параллелизм.",
   "lang": "ru",
   "start_url": "quiz.html",
-  "scope": "./",
+  "scope": "quiz",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f4f5f7",
-  "theme_color": "#ffffff",
+  "background_color": "#0e1116",
+  "theme_color": "#161a21",
   "icons": [
     { "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "img/quiz-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "img/quiz-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Повторить 10 вопросов", "short_name": "Повторить",
+      "description": "Умные 10 по всем темам: сначала ошибки и то, что пора повторить",
+      "url": "quiz.html#/go/smart",
+      "icons": [{ "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Свой набор", "short_name": "Свой набор",
+      "description": "20 вопросов из выбранных тем",
+      "url": "quiz.html#/custom",
+      "icons": [{ "src": "img/quiz-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ]
 }
