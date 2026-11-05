@@ -664,6 +664,7 @@ async function savedProgress(ready, file = PROGRESS) {
     assert((await a.evaluate(() => window.__prompted)) === 1, "кнопка не вызвала окно установки Chrome");
     const man2 = JSON.parse(fs.readFileSync(`${__dirname}/../quiz.webmanifest`, "utf8"));
     assert(man2.theme_color !== "#ffffff", "theme_color белый: системная панель внизу будет белой");
+    assert(man2.display === "fullscreen", `display ${man2.display}: кнопки навигации Android остаются на экране`);
     await a.click('.qz-tabs a[href="#/go/smart"]');
     await a.waitForSelector(".qz-count");
     assert(!(await a.$(".qz-tabs")), "вкладки видны на экране вопроса");

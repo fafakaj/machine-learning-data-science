@@ -39,14 +39,16 @@ body.qz:has(.qz-tabs) .qz-dock { bottom: calc(56px + env(safe-area-inset-bottom)
 .qz-row b code, .qz-check b code, .qz-head h1 code, .qz-back code { background: none; padding: 0; font-size: .95em; }
 
 /* ---------------------------------------------------------------- header */
-.qz-top { position: sticky; top: 0; z-index: 10; height: 56px; display: flex; align-items: center; gap: 8px;
-  padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+/* Fullscreen hides the status bar, so the top inset keeps the header clear of the camera cutout. */
+.qz-top { position: sticky; top: 0; z-index: 10; height: calc(56px + env(safe-area-inset-top)); display: flex; align-items: center; gap: 8px;
+  padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
   background: var(--surface); border-bottom: 1px solid var(--line); }
 .qz-top .nav-link { padding: 8px 10px; font-size: var(--fs-sm); color: var(--text-2); }
 .qz-top .dot { margin-right: 4px; }
 .qz-top .user { padding: 4px; }
 
 .qz-main { max-width: 600px; margin: 0 auto; padding: 16px max(16px, env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+body.qz:not(:has(.qz-top)) .qz-main { padding-top: calc(16px + env(safe-area-inset-top)); }
 .qz-head { margin: 8px 0 20px; }
 .qz-head h1 { font-size: var(--fs-h1); }
 .qz-head p { margin: 6px 0 0; }
